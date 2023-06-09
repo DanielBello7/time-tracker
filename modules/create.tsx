@@ -38,13 +38,13 @@ export default function CreateTaskPanel() {
         return setTagsInput("");
     }
 
-    const TagsOutput = data.tags.map((item) => {
+    const TagsOutput = data.tags.map((item, idx) => {
         const HandleDelete = () => {
             return setData({ ...data, tags: data.tags.filter((tag) => tag !== item) as never });
         }
 
         return (
-            <div className="border mb-1 flex items-center justify-between bg-gray-200">
+            <div className="border mb-1 flex items-center justify-between bg-gray-200" key={idx}>
                 <p className="p-2 fs-8 capitalize">
                     {item}
                 </p>
@@ -55,7 +55,7 @@ export default function CreateTaskPanel() {
         )
     });
 
-    const PeriodOutput = data.taskPeriod.map((item: any) => {
+    const PeriodOutput = data.taskPeriod.map((item: any, idx) => {
         const HandleDelete = () => {
             return setData({
                 ...data,
@@ -64,7 +64,7 @@ export default function CreateTaskPanel() {
         }
 
         return (
-            <div className="border mb-1 flex items-center justify-between bg-gray-200">
+            <div className="border mb-1 flex items-center justify-between bg-gray-200" key={idx}>
                 <p className="p-2 fs-8 capitalize">
                     {new Date(item.date).toDateString()}
                 </p>
