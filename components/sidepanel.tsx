@@ -1,4 +1,8 @@
 import { useTaskData } from "@/context/tasks.context";
+import PreviewTaskPanel from "@/modules/preview";
+import CreateTaskPanel from "@/modules/create";
+import EditTaskPanel from "@/modules/edit";
+import React from "react";
 
 export default function SidePanel() {
     const { sidePanel, ToggleSidePanel } = useTaskData();
@@ -44,30 +48,6 @@ export default function SidePanel() {
                     && <PreviewTaskPanel />
                 }
             </div>
-        </div>
-    )
-}
-
-function PreviewTaskPanel() {
-    return (
-        <div className="w-full border-t border-black">
-
-        </div>
-    )
-}
-
-function CreateTaskPanel() {
-    return (
-        <div className="w-full border-t border-black">
-
-        </div>
-    )
-}
-
-function EditTaskPanel() {
-    return (
-        <div className="w-full border-t border-black">
-
         </div>
     )
 }
