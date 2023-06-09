@@ -4,6 +4,7 @@ export interface UserDataType {
     _id: string
     password: string
     fullname: string
+    tasks: string[]
 }
 
 export interface TaskWorkingPeriod {
@@ -18,7 +19,7 @@ export interface TaskStoryMetaData {
 
 export interface TaskBugMetaData {
     isBugFixed: boolean
-    dateFixed: string
+    dateFixed: string | null
 }
 
 export interface TaskDataType {
