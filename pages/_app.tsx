@@ -5,6 +5,7 @@ import TaskContextProvider from '@/context/tasks.context';
 import '@/styles/globals.css'
 import SideBar from '@/components/sidebar';
 import Authentication from '@/components/authentication';
+import AlertModal from '@/modules/alert';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { isLoggedIn } = useApplicationData();
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 </div>
               </main>
           }
+          <AlertModal />
         </ModalContextProvider>
       </TaskContextProvider>
     </DataContextProvider>
