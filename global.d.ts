@@ -10,16 +10,6 @@ export interface UserDataType {
 export interface TaskWorkingPeriod {
     _id: string
     date: string
-    timeSpent: number
-}
-
-export interface TaskStoryMetaData {
-    body: string
-}
-
-export interface TaskBugMetaData {
-    isBugFixed: boolean
-    dateFixed: string | null
 }
 
 export interface TaskDataType {
@@ -27,9 +17,10 @@ export interface TaskDataType {
     type: "story" | "bug"
     title: string
     body: string
-    storyMeta: TaskStoryMetaData | null
-    bugMeta: TaskBugMetaData | null
-    totalTimeSpentOnTask: number
+    totalTimeSpentOnTask: {
+        amount: number
+        type: "minutes" | "seconds" | "hours"
+    }
     tags: string[]
     taskPeriod: TaskWorkingPeriod[]
     createdAt: string
