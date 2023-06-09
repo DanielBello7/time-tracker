@@ -7,12 +7,12 @@ import React from 'react';
 export default function Tasks() {
     const { sidePanel } = useTaskData();
     return (
-        <div className="border border-red-500 w-full h-full overflow-hidden flex">
+        <div className="border w-full h-full overflow-hidden flex">
             <div className={`flex flex-col h-full overflow-hidden border border-black ${sidePanel.isOpen ? "w-4/6" : "w-full"}`}>
                 <div className="w-full p-2 px-4 border-b border-black">
                     <h1 className="capitalize text-3xl font-bold">Tasks</h1>
                 </div>
-                <div className="flex flex-wrap grow w-full overflow-scroll bg-gray-100">
+                <div className="flex flex-wrap grow w-full overflow-scroll bg-gray-100 p-2">
                     {
                         tempTasks.map((item: TaskDataType, idx: number) => {
                             return <Task {...item} key={idx} />
@@ -26,7 +26,7 @@ export default function Tasks() {
 }
 
 function Task(props: TaskDataType) {
-    const { setActiveTask, ToggleSidePanel } = useTaskData();
+    const { setActiveTask, ToggleSidePanel, sidePanel } = useTaskData();
 
     const item = props;
 
@@ -53,8 +53,8 @@ function Task(props: TaskDataType) {
     }
 
     return (
-        <div className='w-2/6 p-2 h-80'>
-            <div className='h-full p-5 bg-white flex flex-col cursor-pointer hover:bg-blue-50'>
+        <div className={`${sidePanel.isOpen ? "w-3/6" : "w-2/6"} p-3 h-80`}>
+            <div className='h-full p-5 bg-white rounded flex flex-col cursor-pointer hover:bg-blue-50'>
                 <div className='flex justify-between items-center'>
                     <p className='uppercase font-bold text-gray-500'>{item.title}</p>
                     <button className='fs-7 uppercase font-bold text-gray-400 border-2 p-2 rounded hover:bg-black hover:text-white hover:border-black px-3' type='button' onClick={HandleEdit}>
