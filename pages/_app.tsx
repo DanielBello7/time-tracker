@@ -13,15 +13,15 @@ export default function App({ Component, pageProps }: AppProps) {
       <TaskContextProvider>
         <ModalContextProvider>
           {
-            !isLoggedIn
+            isLoggedIn
               ?
               <Authentication />
               :
-              <main className='border w-full h-full border-2 border-red-300 flex overflow-hidden'>
+              <main className='border w-full h-screen flex overflow-hidden'>
                 <div className='w-1/5 border border-blue-400 h-full'>
                   <SideBar />
                 </div>
-                <div className='w-4/5 border border-red-500 h-full'>
+                <div className='w-4/5 h-full'>
                   <Component {...pageProps} />
                 </div>
               </main>
