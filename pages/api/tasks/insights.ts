@@ -1,6 +1,6 @@
 import type { TaskDataType, WeekDataType, ResponseDataType, InsightDataType } from "@/global";
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { tempTasks } from '@/constants/temp';
+import data from '../../../database/TASKS.json';
 
 function SortTaskIntoWeekPeriods(data: TaskDataType[]): WeekDataType {
     const dataSortedByDate: WeekDataType = {
@@ -57,8 +57,8 @@ function SortTaskIntoWeekPeriods(data: TaskDataType[]): WeekDataType {
 }
 
 const CalculateStatsInsights = (data: TaskDataType[], type: "bug" | "story") => {
-    const bugsData = data.filter(item => item.type === type);
-    const result = SortTaskIntoWeekPeriods(bugsData);
+    const filteredData = data.filter(item => item.type === type);
+    const result = SortTaskIntoWeekPeriods(filteredData);
 
     const lastWeekStats = result.lastWeek.length;
     const perviousWeekStats = result.perviousWeek.length;
@@ -66,7 +66,8 @@ const CalculateStatsInsights = (data: TaskDataType[], type: "bug" | "story") => 
     const differenceInPercent = ((lastWeekStats - perviousWeekStats) / ((lastWeekStats + perviousWeekStats) / 2)) * 100
     return {
         amountCompleted: lastWeekStats,
-        percentage: differenceInPercent
+        percentage: differenceInPercent,
+        docs: filteredData
     }
 }
 
@@ -96,46 +97,51 @@ const CalculateGeneralInsight = (data: TaskDataType[]) => {
     }
 }
 
-const analytics_data: InsightDataType[] = [
-    {
-        additionalInfo: 'There was a -50% decline in bugs completion',
-        _id: '1',
-        description: 'This is an insight about the total amount of bugs completed last week',
-        primaryFigure: '10',
-        subExpanatory: 'Bugs completed',
-        title: 'Bugs Insight'
-    },
-    {
-        additionalInfo: 'There was a 50% increase in the stories completion',
-        _id: '2',
-        description: 'This is an insight to the total amount of stories completed last week',
-        primaryFigure: '10',
-        subExpanatory: 'Stories completed',
-        title: 'Stories Insight'
-    },
-    {
-        additionalInfo: 'There have been a 2% increase in the amount of time spent on tasks',
-        _id: '3',
-        description: 'This insight holds information about the total time spent on tasks',
-        primaryFigure: '10',
-        subExpanatory: 'hours spent on tasks',
-        title: 'Time Spent'
-    },
-]
+const GenerateAnalyticsResult = (bugsCompleted: number, storiesCompleted: number) => {
+    const analytics_data: InsightDataType[] = [
+        {
+            additionalInfo: `There was a -50% decline in bugs completion`,
+            _id: '1',
+            description: `This is an insight about the total amount of bugs completed last week`,
+            primaryFigure: `${bugsCompleted}`,
+            subExpanatory: 'Bugs completed',
+            title: 'Bugs Insight'
+        },
+        {
+            additionalInfo: `There was a 50% increase in the stories completion`,
+            _id: '2',
+            description: `This is an insight to the total amount of stories completed last week`,
+            primaryFigure: `${storiesCompleted}`,
+            subExpanatory: 'Stories completed',
+            title: 'Stories Insight'
+        },
+        {
+            additionalInfo: `There have been a 2% increase in the amount of time spent on tasks`,
+            _id: '3',
+            description: `This insight holds information about the total time spent on tasks`,
+            primaryFigure: '10',
+            subExpanatory: 'hours spent on tasks',
+            title: 'Time Spent'
+        },
+    ]
 
-export default function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<ResponseDataType>
-) {
+    return analytics_data
+}
+
+export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseDataType>) {
     if (req.method !== "GET") return res.end();
+    const { id } = req.query;
+    if (!id) return res.status(400).json({ msg: 'id required' });
 
     try {
+        const userTasks = (data as TaskDataType[]).filter((item) => item.createdBy._id === id);
+        const insightStatsForBugs = CalculateStatsInsights(userTasks, "bug");
+        const insightStatsForStories = CalculateStatsInsights(userTasks, "story");
+        const generalInsights = CalculateGeneralInsight(userTasks);
 
-        const insightStatsForBugs = CalculateStatsInsights(tempTasks, "bug");
-        const insightStatsForStories = CalculateStatsInsights(tempTasks, "story");
-        const generalInsights = CalculateGeneralInsight(tempTasks);
+        const result = GenerateAnalyticsResult(insightStatsForBugs.amountCompleted, insightStatsForStories.amountCompleted);
 
-        return res.json({ msg: 'tasks insights', payload: [] });
+        return res.json({ msg: 'tasks insights', payload: result, addition: insightStatsForBugs });
     }
     catch (error) {
         return res.status(500).json({

@@ -41,7 +41,7 @@ export default function Analytics() {
     React.useEffect(() => {
         async function GetInsights() {
             try {
-                const response = await axios.get(`/tasks/insights?email=${user?.email}`);
+                const response = await axios.get(`/tasks/insights?id=${user?._id}`);
                 setData(response.data.payload);
                 return setIsLoading(false);
             }

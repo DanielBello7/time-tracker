@@ -25,11 +25,11 @@
         ],
         "title": "User Journey",
         "totalTimeSpentOnTask": {
-            "amount": "4",
+            "amount": 4,
             "type": "hours"
         },
         "type": "story",
-        "completedAt": "Thu Jun 08 2023"
+        "completedAt": "Tue May 23 2023"
     },
     {
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
@@ -55,14 +55,13 @@
         ],
         "title": "Chart Error",
         "totalTimeSpentOnTask": {
-            "amount": "15",
+            "amount": 15,
             "type": "hours"
         },
         "type": "bug",
-        "completedAt": "Sat Jun 10 2023"
+        "completedAt": "Thu May 25 2023"
     },
     {
-        "_id": "8c98c56c-f5db-4340-aeec-f4afbdfb1469",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         "createdAt": "Sat Jun 10 2023",
         "createdBy": {
@@ -73,17 +72,23 @@
             "password": "user3",
             "tasks": []
         },
+        "_id": "8c98c56c-f5db-4340-aeec-f4afbdfb1469",
+        "taskPeriod": [
+            {
+                "_id": 0.5281723037506141,
+                "date": "Sat Jun 10 2023"
+            }
+        ],
         "tags": [
             "history"
         ],
-        "taskPeriod": [],
         "title": "Organization History",
         "totalTimeSpentOnTask": {
-            "amount": "25",
+            "amount": 25,
             "type": "minutes"
         },
         "type": "story",
-        "completedAt": "Sat Jun 10 2023"
+        "completedAt": "Wed May 31 2023"
     },
     {
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
@@ -113,14 +118,13 @@
         ],
         "title": "Analysis Error",
         "totalTimeSpentOnTask": {
-            "amount": "50",
+            "amount": 50,
             "type": "minutes"
         },
         "type": "bug",
-        "completedAt": "Thu Jan 01 1970"
+        "completedAt": "Tue May 30 2023"
     },
     {
-        "_id": "e4e5d565-f7e6-4b9f-bc81-c5e504f54bb4",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         "createdAt": "Sat Jun 10 2023",
         "createdBy": {
@@ -131,20 +135,25 @@
             "password": "user3",
             "tasks": []
         },
+        "_id": "e4e5d565-f7e6-4b9f-bc81-c5e504f54bb4",
+        "taskPeriod": [
+            {
+                "_id": 0.07200084594543354,
+                "date": "Sat Jun 10 2023"
+            }
+        ],
         "tags": [
             "code"
         ],
-        "taskPeriod": [],
         "title": "Access control correction",
         "totalTimeSpentOnTask": {
-            "amount": "13",
+            "amount": 13,
             "type": "hours"
         },
         "type": "bug",
-        "completedAt": "Sat Jun 10 2023"
+        "completedAt": "Wed May 31 2023"
     },
     {
-        "_id": "2a83cf33-2676-45db-ab42-664c8b034166",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         "createdAt": "Sat Jun 10 2023",
         "createdBy": {
@@ -155,10 +164,7 @@
             "password": "user3",
             "tasks": []
         },
-        "tags": [
-            "users",
-            "feedback"
-        ],
+        "_id": "2a83cf33-2676-45db-ab42-664c8b034166",
         "taskPeriod": [
             {
                 "_id": "0.29153385813654586A",
@@ -173,16 +179,19 @@
                 "date": "2023-06-05"
             }
         ],
+        "tags": [
+            "users",
+            "feedback"
+        ],
         "title": "User feedback data",
         "totalTimeSpentOnTask": {
-            "amount": "49",
+            "amount": 49,
             "type": "minutes"
         },
         "type": "story",
-        "completedAt": "Sat Jun 10 2023"
+        "completedAt": "Fri Jun 02 2023"
     },
     {
-        "_id": "83a6ae9a-ed4c-418f-891e-1fba2b5187fe",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         "createdAt": "Sat Jun 10 2023",
         "createdBy": {
@@ -193,18 +202,23 @@
             "password": "user3",
             "tasks": []
         },
+        "_id": "83a6ae9a-ed4c-418f-891e-1fba2b5187fe",
+        "taskPeriod": [
+            {
+                "_id": 0.4723755036051933,
+                "date": "Sat Jun 10 2023"
+            }
+        ],
         "tags": [],
-        "taskPeriod": [],
         "title": "Account Error",
         "totalTimeSpentOnTask": {
-            "amount": "3",
+            "amount": 3,
             "type": "hours"
         },
         "type": "bug",
         "completedAt": "Mon May 29 2023"
     },
     {
-        "_id": "7a5a210f-73b2-46d8-8586-4df28112640a",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         "createdAt": "Sat Jun 10 2023",
         "createdBy": {
@@ -215,16 +229,22 @@
             "password": "user3",
             "tasks": []
         },
+        "_id": "7a5a210f-73b2-46d8-8586-4df28112640a",
+        "taskPeriod": [
+            {
+                "_id": 0.28942614161400004,
+                "date": "Sat Jun 10 2023"
+            }
+        ],
         "tags": [
             "code"
         ],
-        "taskPeriod": [],
         "title": "Profile Bug",
         "totalTimeSpentOnTask": {
-            "amount": "100",
+            "amount": 100,
             "type": "seconds"
         },
         "type": "bug",
-        "completedAt": "Mon May 29 2023"
+        "completedAt": "Fri Jun 02 2023"
     }
 ]

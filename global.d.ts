@@ -46,4 +46,5 @@ export interface WeekDataType {
 export interface ResponseDataType {
     msg: string
     payload?: any
+    addition?: any
 }

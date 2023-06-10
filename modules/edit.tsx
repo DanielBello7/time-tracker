@@ -132,7 +132,7 @@ function MainComponent(props: TaskDataType) {
                 ...data,
                 completedAt: comAt,
                 totalTimeSpentOnTask: {
-                    amount: data.totalTimeSpentOnTask,
+                    amount: parseInt(data.totalTimeSpentOnTask),
                     type: data.periodType
                 }
             });

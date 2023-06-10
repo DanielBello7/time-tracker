@@ -104,7 +104,7 @@ export default function CreateTaskPanel() {
             const response = await axios.post('/tasks/create', {
                 ...data,
                 totalTimeSpentOnTask: {
-                    amount: data.totalTimeSpentOnTask,
+                    amount: parseInt(data.totalTimeSpentOnTask),
                     type: data.periodType
                 }
             });
