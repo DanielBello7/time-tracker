@@ -2,6 +2,7 @@ import type { TaskDataType, WeekDataType, ResponseDataType, InsightDataType, Ana
 import type { NextApiRequest, NextApiResponse } from 'next';
 import data from '../../../database/TASKS.json';
 
+
 function SortTaskIntoWeekPeriods(data: TaskDataType[]): WeekDataType {
     const dataSortedByDate: WeekDataType = {
         currentWeek: [],
@@ -89,8 +90,8 @@ const CalculateGeneralInsight = (data: TaskDataType[]) => {
     const differenceInPercent = ((totalTimeSpentLastWeek - totalTimeSpentPreviousWeek) / ((totalTimeSpentLastWeek + totalTimeSpentPreviousWeek) / 2)) * 100
 
     return {
-        totalTimeSpentLastWeek: totalTimeSpentLastWeek,
-        totalTimeSpentPreviousWeek: totalTimeSpentPreviousWeek,
+        totalTimeSpentLastWeek: Math.floor(totalTimeSpentLastWeek),
+        totalTimeSpentPreviousWeek: Math.floor(totalTimeSpentPreviousWeek),
         percentage: Math.floor(differenceInPercent)
     }
 }
@@ -102,7 +103,7 @@ const GenerateAnalyticsResult = (data: AnalyticsResultDataType) => {
             _id: '1',
             description: `This is an insight about the total amount of bugs completed last week`,
             primaryFigure: `${data.bugsCompleted}`,
-            subExpanatory: 'Bugs completed',
+            subExpanatory: 'Bugs completed last week',
             title: 'Bugs Insight'
         },
         {
@@ -110,7 +111,7 @@ const GenerateAnalyticsResult = (data: AnalyticsResultDataType) => {
             _id: '2',
             description: `This is an insight to the total amount of stories completed last week`,
             primaryFigure: `${data.storiesCompleted}`,
-            subExpanatory: 'Stories completed',
+            subExpanatory: 'Stories completed last week',
             title: 'Stories Insight'
         },
         {
@@ -118,7 +119,7 @@ const GenerateAnalyticsResult = (data: AnalyticsResultDataType) => {
             _id: '3',
             description: `This insight holds information about the total time spent on tasks`,
             primaryFigure: `${data.hoursCompleted}`,
-            subExpanatory: 'hours spent on tasks',
+            subExpanatory: 'hours spent on tasks last week',
             title: 'Time Spent'
         },
     ]
