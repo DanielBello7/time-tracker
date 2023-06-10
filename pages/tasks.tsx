@@ -51,13 +51,17 @@ function Task(props: TaskDataType) {
     const HandleDelete = () => { }
 
     const HandleExport = () => {
-        const result = JSON.stringify(item);
-        const element = document.createElement("a");
-        element.href = result;
-        element.download = "TASK";
-        document.append(element);
-        element.click();
-        document.removeChild(element);
+        if (typeof window !== "undefined") {
+            const result = JSON.stringify(item, undefined, 4);
+            const file = new Blob([result], { type: "application/json charset=utf-8" });
+            const element = document.createElement("a");
+            element.setAttribute("href", window.URL.createObjectURL(file));
+            element.target = "_blank";
+            element.download = item.title.replaceAll(" ", "_") + "_task";
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
     }
 
     return (
