@@ -3,7 +3,7 @@ import { useModalData } from '../context/modal.context';
 import React from 'react';
 
 function ModalBody() {
-    const { toast } = useModalData();
+    const { alert: toast } = useModalData();
     return (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity flex items-center justify-center">
             <Transition.Child
@@ -41,12 +41,13 @@ function ModalBody() {
 }
 
 export default function AlertModal() {
-    const { toast, ToggleToast } = useModalData();
+    const { alert: toast, ToggleAlert: ToggleToast } = useModalData();
 
     React.useEffect(() => {
         const timeout = setTimeout(() => ToggleToast(false), 2000);
         return () => clearTimeout(timeout);
     }, [toast.show]);
+
     return (
         <Transition.Root show={toast.show} as={React.Fragment}>
             <Dialog as="div" className="relative z-10" onClose={() => ToggleToast(false)}>

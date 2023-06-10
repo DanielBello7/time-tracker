@@ -1,38 +1,26 @@
 import type { AppProps } from 'next/app';
-import DataContextProvider, { useApplicationData } from '@/context/data.context';
+import { CookiesProvider } from 'react-cookie';
+import DataContextProvider from '@/context/data.context';
 import ModalContextProvider from '@/context/modal.context';
 import TaskContextProvider from '@/context/tasks.context';
 import '@/styles/globals.css'
-import SideBar from '@/components/sidebar';
-import Authentication from '@/components/authentication';
-import AlertModal from '@/modules/alert';
-import { CookiesProvider } from 'react-cookie';
+
+function MainLayout(props: { children: React.ReactNode }) {
+  return (
+    <DataContextProvider>
+      <TaskContextProvider>
+        <ModalContextProvider>
+          {props.children}
+        </ModalContextProvider>
+      </TaskContextProvider>
+    </DataContextProvider>
+  )
+}
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { isLoggedIn } = useApplicationData();
   return (
-    <CookiesProvider>
-      <DataContextProvider>
-        <TaskContextProvider>
-          <ModalContextProvider>
-            {
-              !isLoggedIn
-                ?
-                <Authentication />
-                :
-                <main className='border w-full h-screen flex overflow-hidden'>
-                  <div className='w-1/5 border border-blue-400 h-full'>
-                    <SideBar />
-                  </div>
-                  <div className='w-4/5 h-full'>
-                    <Component {...pageProps} />
-                  </div>
-                </main>
-            }
-            <AlertModal />
-          </ModalContextProvider>
-        </TaskContextProvider>
-      </DataContextProvider>
-    </CookiesProvider>
+    <MainLayout>
+      <Component {...pageProps} />
+    </MainLayout>
   )
 }

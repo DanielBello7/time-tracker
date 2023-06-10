@@ -1,20 +1,18 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { useApplicationData } from "@/context/data.context";
 
 export default function SideBar() {
-    const router = useRouter();
-    const currentLocation = router.pathname;
+    const { screen, setScreen } = useApplicationData();
 
     const data = [
         {
             id: 1,
             title: 'insights',
-            route: '/'
+            route: 'insights'
         },
         {
             id: 2,
             title: 'tasks',
-            route: '/tasks'
+            route: 'tasks'
         }
     ]
 
@@ -27,13 +25,13 @@ export default function SideBar() {
                 {
                     data.map((item, idx) => {
                         return (
-                            <Link
+                            <button
                                 key={idx}
-                                className={`w-full mb-2 p-2 px-3 rounded capitalize hover:bg-blue-300 font-bold ${currentLocation === item.route && "text-white bg-blue-500"}`}
-                                href={item.route}
+                                className={`w-full text-start mb-2 p-2 px-3 rounded capitalize hover:bg-blue-300 font-bold ${screen === item.route && "text-white bg-blue-500"}`}
+                                onClick={() => setScreen(item.route as "insights" | "tasks")}
                             >
                                 <p className="">{item.title}</p>
-                            </Link>
+                            </button>
                         )
                     })
                 }

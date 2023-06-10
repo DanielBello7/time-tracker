@@ -22,7 +22,7 @@ export default function PreviewTaskPanel() {
                 <div className="w-full flex flex-wrap">
                     {task.tags.map((item, idx) => {
                         return (
-                            <p className="mx-3 mb-2 p-2 border rounded">
+                            <p className="mx-3 mb-2 p-2 border rounded" key={idx}>
                                 {item}
                             </p>
                         )

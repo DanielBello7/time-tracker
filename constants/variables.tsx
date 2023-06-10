@@ -1,7 +1,7 @@
-const LOCAL_API_ENDPOINT = process.env.LOCAL_API_ENDPOINT as string;
-const LIVE_API_ENDPOINT = process.env.LIVE_API_ENDPOING as string;
-const LOCAL_BASE_URL = process.env.LOCAL_BASE_URL as string;
-const LIVE_BASE_URL = process.env.LIVE_BASE_URL as string;
+const LOCAL_API_ENDPOINT = "http://localhost:3000/api";
+const LIVE_API_ENDPOINT = "http://localhost:3000/api";
+const LOCAL_BASE_URL = "http://localhost:3000";
+const LIVE_BASE_URL = "http://localhost:3000";
 
 const LIVE = {
     API_ENDPOINT: LIVE_API_ENDPOINT,

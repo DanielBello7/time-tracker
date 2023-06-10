@@ -24,6 +24,7 @@ function InputBox({ title, length, disabled, value, setValue, type, id, classnam
                 name={id}
                 type={type}
                 id={id}
+                placeholder={title}
                 value={value}
                 autoComplete="off"
                 required
