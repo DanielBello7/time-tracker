@@ -43,12 +43,19 @@ export default function Tasks() {
                     }
 
                     {
+                        !isLoading && !isError && tasks.length < 1 &&
+                        <div className='p-3'>
+                            <h1 className='font-bold'>No task to show currently</h1>
+                        </div>
+                    }
+
+                    {
                         !isLoading && isError &&
                         <div className='p-2'>Error occured</div>
                     }
 
                     {
-                        !isLoading && tasks.length > 0 &&
+                        !isLoading && tasks.length > 0 && !isError &&
                         tasks.map((item: TaskDataType, idx: number) => {
                             return <Task {...item} key={idx} />
                         })

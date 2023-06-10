@@ -6,7 +6,7 @@ import React from "react";
 
 export default function Task(props: TaskDataType) {
     const [isDeleteLoading, setIsDeleteLoading] = React.useState(false);
-    const { setActiveTask, ToggleSidePanel, sidePanel, setTasks } = useTaskData();
+    const { setActiveTask, ToggleSidePanel, sidePanel, setTasks, activeTask } = useTaskData();
     const { ToggleAlert } = useModalData();
     const { axios } = useApplicationData();
 
@@ -29,8 +29,13 @@ export default function Task(props: TaskDataType) {
             const response = await axios.delete(`/tasks/delete?id=${props._id}`);
             setTasks((prev) => {
                 const result = prev.filter((item) => item._id !== response.data.payload);
+                if (activeTask === response.data.payload) {
+                    ToggleSidePanel(false)
+                    setActiveTask(null);
+                }
                 return result;
             });
+            setIsDeleteLoading(false);
             return ToggleAlert(true, "Task deleted")
         }
         catch (error) {
@@ -75,7 +80,7 @@ export default function Task(props: TaskDataType) {
                 </p>
                 <div className='flex'>
                     <button className='rounded hover:opacity-50 bg-red-500 text-white uppercase p-2 px-3 fs-7 font-bold' type="button" onClick={HandleDelete} disabled={isDeleteLoading && true}>
-                        {isDeleteLoading ? "Loading.." : "delete"}
+                        {isDeleteLoading ? "loading.." : "delete"}
                     </button>
 
                     <button className='ms-3 rounded hover:opacity-50 bg-blue-500 text-white uppercase p-2 px-3 fs-7 font-bold' type='button' onClick={HandleExport}>

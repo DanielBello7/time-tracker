@@ -9,31 +9,41 @@ export default function PreviewTaskPanel() {
     return (
         <div className="w-full p-3">
             <h1 className="text-2xl font-bold capitalize">{task.title}</h1>
-            <p className="mb-3">
-                <span className="uppercase fs-7 font-bold">type: </span>
-                <span className="font-bold fs-7 uppercase">{task.type}</span>
-            </p>
-            <p className="text-gray-400">
-                {task.body}
-            </p>
-            <div className="my-3">
-                <p className="mb-2 fs-7 uppercase font-bold">Tags</p>
-                <div className="w-full flex flex-wrap">
-                    {task.tags.map((item, idx) => {
-                        return (
-                            <p className="mx-3 mb-2 p-2 border rounded" key={idx}>
-                                {item}
-                            </p>
-                        )
-                    })}
-                </div>
+
+            <div className="my-2">
+                <p className="text-gray-400 fs-7 font-bold">Task Type </p>
+                <p className="uppercase font-bold">{task.type}</p>
             </div>
-            <div className="mt-3">
-                <p className="mb-2 fs-7 uppercase font-bold">Periods task was worked on</p>
+
+            <div className="mt-9">
+                <p className="text-gray-400 fs-7 font-bold">Task body</p>
+                <p className="text-gray-500 mb-9">
+                    {task.body}
+                </p>
+            </div>
+
+            {
+                task.tags.length > 0 &&
+                <div className="my-3">
+                    <p className="mb-2 font-bold fs-7 text-gray-400">Task Tags</p>
+                    <div className="w-full flex flex-wrap">
+                        {task.tags.map((item, idx) => {
+                            return (
+                                <p className="me-2 mb-2 p-2 border capitalize rounded" key={idx}>
+                                    {item}
+                                </p>
+                            )
+                        })}
+                    </div>
+                </div>
+            }
+
+            <div className="mt-9">
+                <p className="mb-2 fs-7 text-gray-400 font-bold">Periods task was worked on</p>
                 <div className="w-full mt-3">
                     {task.taskPeriod.map((item, idx) => {
                         return (
-                            <div key={idx}>
+                            <div key={idx} className="font-bold">
                                 - {new Date(item.date).toLocaleDateString("en-us", { dateStyle: "full" })}
                             </div>
                         )
@@ -41,18 +51,18 @@ export default function PreviewTaskPanel() {
                 </div>
             </div>
 
-            <div className="mt-3 fs-9">
-                <span className="text-gray-400">Total time spent on task: </span>
-                <span className="text-black">
+            <div className="mt-9 fs-9">
+                <p className="text-gray-400 fs-7 font-bold">Total time spent on task: </p>
+                <p className="text-black font-bold text-xl">
                     {task.totalTimeSpentOnTask.amount} {task.totalTimeSpentOnTask.type}
-                </span>
+                </p>
             </div>
 
-            <div className="w-full">
-                <span>This task was created on </span>
-                <span>
+            <div className="w-full mt-9">
+                <p className="text-gray-400 fs-7 font-bold">This task was created on </p>
+                <p className="font-bold">
                     {new Date(task.createdAt).toLocaleDateString("en-us", { dateStyle: "full" })}
-                </span>
+                </p>
             </div>
         </div>
     )

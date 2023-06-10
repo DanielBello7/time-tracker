@@ -3,7 +3,7 @@ import { useModalData } from '../context/modal.context';
 import React from 'react';
 
 function ModalBody() {
-    const { alert: toast } = useModalData();
+    const { alert: toast, ToggleAlert } = useModalData();
     return (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity flex items-center justify-center">
             <Transition.Child
@@ -33,7 +33,11 @@ function ModalBody() {
                         </div>
                     </div>
 
-                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse" />
+                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button className='font-bold text-white fs-7 rounded uppercase p-2 px-4 bg-red-500 hover:bg-red-800' type='button' onClick={() => ToggleAlert(false)}>
+                            close
+                        </button>
+                    </div>
                 </Dialog.Panel>
             </Transition.Child>
         </div>
