@@ -13,7 +13,7 @@ export default function SidePanel() {
 
     return (
         <div className={`flex flex-col border border-blue-400 overflow-hidden ${sidePanel.isOpen ? "w-2/6" : "hidden"}`}>
-            <div className="flex justify-between p-2 items-center">
+            <div className="flex justify-between p-2 items-center border-b border-black">
                 <h1 className="uppercase text-2xl font-bold">
                     {
                         sidePanel.type === "create" && "Create Task"

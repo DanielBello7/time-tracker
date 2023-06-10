@@ -8,7 +8,7 @@ export default function PreviewTaskPanel() {
     if (!task) return <TaskUnavailable />
 
     return (
-        <div className="w-full border-t border-black p-3">
+        <div className="w-full p-3">
             <h1 className="text-2xl font-bold capitalize">{task.title}</h1>
             <p className="mb-3">
                 <span className="uppercase fs-7 font-bold">type: </span>
