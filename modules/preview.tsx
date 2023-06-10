@@ -45,8 +45,8 @@ export default function PreviewTaskPanel() {
             }
 
             <div className="mt-9">
-                <p className="mb-2 fs-7 text-gray-400 font-bold">Periods task was worked on</p>
-                <div className="w-full mt-3">
+                <p className="fs-7 text-gray-400 font-bold">Periods task was worked on</p>
+                <div className="w-full">
                     {task.taskPeriod.map((item, idx) => {
                         return (
                             <div key={idx} className="font-bold">
@@ -68,6 +68,13 @@ export default function PreviewTaskPanel() {
                 <p className="text-gray-400 fs-7 font-bold">This task was created on </p>
                 <p className="font-bold">
                     {new Date(task.createdAt).toLocaleDateString("en-us", { dateStyle: "full" })}
+                </p>
+            </div>
+
+            <div className="w-full mt-9">
+                <p className="text-gray-400 fs-7 font-bold">This task was completed on </p>
+                <p className="font-bold">
+                    {new Date(task.completedAt).toLocaleDateString("en-us", { dateStyle: "full" })}
                 </p>
             </div>
         </div>

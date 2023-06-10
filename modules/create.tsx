@@ -1,4 +1,5 @@
 import { useApplicationData } from "@/context/data.context";
+import { useModalData } from "@/context/modal.context";
 import { useTaskData } from "@/context/tasks.context";
 import { AxiosError } from "axios";
 import React from "react";
@@ -7,6 +8,7 @@ export default function CreateTaskPanel() {
     const [isLoading, setIsLoading] = React.useState(false);
     const { user, axios } = useApplicationData();
     const { setTasks } = useTaskData();
+    const { ToggleAlert } = useModalData();
     const initial_data = {
         title: "",
         type: "",
@@ -15,7 +17,8 @@ export default function CreateTaskPanel() {
         tags: [],
         taskPeriod: [],
         totalTimeSpentOnTask: "0",
-        periodType: ""
+        periodType: "",
+        completedAt: ""
     }
 
     const [data, setData] = React.useState(initial_data);
@@ -108,9 +111,11 @@ export default function CreateTaskPanel() {
             setTasks(prev => ([...prev, response.data.payload]));
             setData(initial_data);
             setIsLoading(false);
+            return ToggleAlert(true, "New Task Created");
         }
         catch (error) {
-            console.log(error as AxiosError)
+            const msg: any = (error as AxiosError).response?.data
+            ToggleAlert(true, msg.msg);
             return setIsLoading(false);
         }
     }
@@ -208,6 +213,28 @@ export default function CreateTaskPanel() {
                         <option value="minutes">Minutes</option>
                         <option value="hours">Hours</option>
                     </select>
+                </div>
+            </div>
+
+            <div className={`col-span-100 sm:col-span-100 my-5 mb-6`}>
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                    date task was completed
+                </label>
+
+                <div className="w-full flex items-center mb-4">
+                    <input
+                        className="border-b-4 bg-gray-50 focus:border-b-blue-500 focus:outline-0 block w-full sm:text-sm p-2 rounded"
+                        onChange={(e) => setData({ ...data, completedAt: e.currentTarget.value })}
+                        name={"periods"}
+                        type="date"
+                        id={"periods"}
+                        required
+                        value={data.completedAt}
+                        max={new Date().toISOString().split("T")[0]}
+                        placeholder="Task Periods"
+                        autoComplete="off"
+                        disabled={isLoading && true}
+                    />
                 </div>
             </div>
 

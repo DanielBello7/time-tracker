@@ -30,7 +30,8 @@
             "amount": "10",
             "type": "hours"
         },
-        "type": "bug"
+        "type": "bug",
+        "completedAt": "Sat Jun 10 2023"
     },
     {
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -61,7 +62,8 @@
             "amount": "4",
             "type": "hours"
         },
-        "type": "story"
+        "type": "story",
+        "completedAt": "Sat Jun 10 2023"
     },
     {
         "_id": "d84ef32b-d567-4dbb-a8f3-00ba5c183234",
@@ -98,7 +100,8 @@
             "amount": "2",
             "type": "hours"
         },
-        "type": "bug"
+        "type": "bug",
+        "completedAt": "Sat Jun 10 2023"
     },
     {
         "_id": "8f189469-4d6b-48af-972f-0d0dc791999c",
@@ -122,7 +125,8 @@
             "amount": "15",
             "type": "hours"
         },
-        "type": "bug"
+        "type": "bug",
+        "completedAt": "Sat Jun 10 2023"
     },
     {
         "_id": "8c98c56c-f5db-4340-aeec-f4afbdfb1469",
@@ -145,7 +149,8 @@
             "amount": "25",
             "type": "minutes"
         },
-        "type": "story"
+        "type": "story",
+        "completedAt": "Sat Jun 10 2023"
     },
     {
         "_id": "eb6d1a59-d0ef-49fa-b53d-264258ee7419",
@@ -178,7 +183,8 @@
             "amount": "50",
             "type": "minutes"
         },
-        "type": "bug"
+        "type": "bug",
+        "completedAt": "Sat Jun 10 2023"
     },
     {
         "_id": "e4e5d565-f7e6-4b9f-bc81-c5e504f54bb4",
@@ -201,7 +207,8 @@
             "amount": "13",
             "type": "hours"
         },
-        "type": "bug"
+        "type": "bug",
+        "completedAt": "Sat Jun 10 2023"
     },
     {
         "_id": "2a83cf33-2676-45db-ab42-664c8b034166",
@@ -238,6 +245,7 @@
             "amount": "49",
             "type": "minutes"
         },
-        "type": "story"
+        "type": "story",
+        "completedAt": "Sat Jun 10 2023"
     }
 ]

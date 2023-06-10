@@ -24,6 +24,7 @@ export interface TaskDataType {
     tags: string[]
     taskPeriod: TaskWorkingPeriod[]
     createdAt: string
+    completedAt: string
     createdBy: UserDataType
 }
 

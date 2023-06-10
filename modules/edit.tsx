@@ -38,7 +38,8 @@ function MainComponent(props: TaskDataType) {
         taskPeriod: props.taskPeriod,
         tags: props.tags,
         totalTimeSpentOnTask: props.totalTimeSpentOnTask.amount.toString(),
-        periodType: props.totalTimeSpentOnTask.type
+        periodType: props.totalTimeSpentOnTask.type,
+        completedAt: props.completedAt
     }
 
     const [data, setData] = React.useState(initial_data);
@@ -238,6 +239,28 @@ function MainComponent(props: TaskDataType) {
                         <option value="minutes">Minutes</option>
                         <option value="hours">Hours</option>
                     </select>
+                </div>
+            </div>
+
+            <div className={`col-span-100 sm:col-span-100 my-5 mb-6`}>
+                <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                    date task was completed
+                </label>
+
+                <div className="w-full flex items-center mb-4">
+                    <input
+                        className="border-b-4 bg-gray-50 focus:border-b-blue-500 focus:outline-0 block w-full sm:text-sm p-2 rounded"
+                        onChange={(e) => setData({ ...data, completedAt: e.currentTarget.value })}
+                        name={"periods"}
+                        type="date"
+                        id={"periods"}
+                        required
+                        value={data.completedAt}
+                        max={new Date().toISOString().split("T")[0]}
+                        placeholder="Task Periods"
+                        autoComplete="off"
+                        disabled={isLoading && true}
+                    />
                 </div>
             </div>
 

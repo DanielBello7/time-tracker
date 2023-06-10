@@ -37,7 +37,8 @@ const tempTasks: TaskDataType[] = [
             amount: 10,
             type: "hours"
         },
-        type: "bug"
+        type: "bug",
+        completedAt: new Date().toDateString()
     },
     {
         _id: '2',
@@ -60,7 +61,8 @@ const tempTasks: TaskDataType[] = [
             amount: 5,
             type: "hours"
         },
-        type: "story"
+        type: "story",
+        completedAt: new Date().toDateString()
     }
 ]
 
