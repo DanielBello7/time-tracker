@@ -17,7 +17,7 @@ export default function handler(
     const task: TaskDataType = {
         _id: uuid(),
         body: body.body,
-        createdAt: body.createdAt,
+        createdAt: new Date().toDateString(),
         createdBy: body.createdBy,
         tags: body.tags,
         taskPeriod: body.taskPeriod,

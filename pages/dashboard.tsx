@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import SideBar from '@/components/sidebar';
 import Analytics from "@/screens/analytics";
 import React from "react";
-import AlertModal from "@/modules/alert";
 import Tasks from "@/screens/tasks";
 import Loading from "@/components/loading";
 
@@ -36,7 +35,6 @@ export default function Insights() {
                     && <Tasks />
                 }
             </div>
-            <AlertModal />
         </main>
     )
 }

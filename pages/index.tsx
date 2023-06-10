@@ -3,7 +3,6 @@ import { useModalData } from "@/context/modal.context";
 import { useRouter } from "next/router";
 import InputBox from "../components/inputbox";
 import React from "react";
-import AlertModal from "@/modules/alert";
 import Loading from "@/components/loading";
 
 enum SCREEN { REGISTER, LOGIN }
@@ -57,7 +56,6 @@ export default function Authentication() {
                     }
                 </div>
             </div>
-            <AlertModal />
         </React.Fragment>
     )
 }

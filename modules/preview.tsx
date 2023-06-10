@@ -1,9 +1,8 @@
 import { useTaskData } from "@/context/tasks.context";
-import { tempTasks } from "@/constants/temp";
 
 export default function PreviewTaskPanel() {
-    const { activeTask } = useTaskData();
-    const task = tempTasks.find((item) => item._id === activeTask);
+    const { activeTask, tasks } = useTaskData();
+    const task = tasks.find((item) => item._id === activeTask);
 
     if (!task) return <TaskUnavailable />
 
@@ -61,7 +60,7 @@ export default function PreviewTaskPanel() {
 
 function TaskUnavailable() {
     return (
-        <div className="w-full">
+        <div className="w-full p-3">
             <h1>Task currently unavailable</h1>
         </div>
     )

@@ -1,8 +1,14 @@
 import type { TaskDataType } from "@/global";
 import { useTaskData } from "@/context/tasks.context";
+import { useModalData } from "@/context/modal.context";
+import { useApplicationData } from "@/context/data.context";
+import React from "react";
 
 export default function Task(props: TaskDataType) {
-    const { setActiveTask, ToggleSidePanel, sidePanel } = useTaskData();
+    const [isDeleteLoading, setIsDeleteLoading] = React.useState(false);
+    const { setActiveTask, ToggleSidePanel, sidePanel, setTasks } = useTaskData();
+    const { ToggleAlert } = useModalData();
+    const { axios } = useApplicationData();
 
     const item = props;
 
@@ -16,7 +22,22 @@ export default function Task(props: TaskDataType) {
         ToggleSidePanel(true, "edit");
     }
 
-    const HandleDelete = () => { }
+    const HandleDelete = async () => {
+        setIsDeleteLoading(true);
+
+        try {
+            const response = await axios.delete(`/tasks/delete?id=${props._id}`);
+            setTasks((prev) => {
+                const result = prev.filter((item) => item._id !== response.data.payload);
+                return result;
+            });
+            return ToggleAlert(true, "Task deleted")
+        }
+        catch (error) {
+            ToggleAlert(true, (error as Error).message);
+            return setIsDeleteLoading(false);
+        }
+    }
 
     const HandleExport = () => {
         if (typeof window !== "undefined") {
@@ -29,6 +50,7 @@ export default function Task(props: TaskDataType) {
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
+            return ToggleAlert(true, "Task Exported. Check your downloads");
         }
     }
 
@@ -52,8 +74,8 @@ export default function Task(props: TaskDataType) {
                     <span>{item.createdAt}</span>
                 </p>
                 <div className='flex'>
-                    <button className='rounded hover:opacity-50 bg-red-500 text-white uppercase p-2 px-3 fs-7 font-bold' type="button" onClick={HandleDelete}>
-                        delete
+                    <button className='rounded hover:opacity-50 bg-red-500 text-white uppercase p-2 px-3 fs-7 font-bold' type="button" onClick={HandleDelete} disabled={isDeleteLoading && true}>
+                        {isDeleteLoading ? "Loading.." : "delete"}
                     </button>
 
                     <button className='ms-3 rounded hover:opacity-50 bg-blue-500 text-white uppercase p-2 px-3 fs-7 font-bold' type='button' onClick={HandleExport}>

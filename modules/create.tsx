@@ -1,17 +1,16 @@
-// import { v4 as uuid } from 'uuid';
 import { useApplicationData } from "@/context/data.context";
+import { useTaskData } from "@/context/tasks.context";
 import React from "react";
 
 export default function CreateTaskPanel() {
     const [isLoading, setIsLoading] = React.useState(false);
-    const { user } = useApplicationData();
+    const { user, axios } = useApplicationData();
+    const { setTasks } = useTaskData();
     const initial_data = {
-        _id: "",
         title: "",
         type: "",
         body: "",
         createdBy: user!,
-        createdAt: new Date().toDateString(),
         tags: [],
         taskPeriod: [],
         totalTimeSpentOnTask: "0",
@@ -79,7 +78,7 @@ export default function CreateTaskPanel() {
         )
     });
 
-    const HandleSubmit = (event: React.FormEvent) => {
+    const HandleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!data.title.trim() || !data.type.trim() || !data.body.trim() || !data.periodType.trim()) return
         if (parseInt(data.totalTimeSpentOnTask) <= 0) return
@@ -87,7 +86,10 @@ export default function CreateTaskPanel() {
             setData({
                 ...data,
                 taskPeriod: [
-                    { _id: 'A', date: new Date().toDateString() }
+                    {
+                        _id: Math.random().toString() + 'A',
+                        date: new Date().toDateString()
+                    }
                 ] as never
             })
         }
@@ -95,7 +97,16 @@ export default function CreateTaskPanel() {
         setIsLoading(true)
 
         try {
-
+            const response = await axios.post('/tasks/create', {
+                ...data,
+                totalTimeSpentOnTask: {
+                    amount: data.totalTimeSpentOnTask,
+                    type: data.periodType
+                }
+            });
+            setTasks(prev => ([...prev, response.data.payload]));
+            setData(initial_data);
+            setIsLoading(false);
         }
         catch (error: any) {
             return setIsLoading(false);
@@ -119,7 +130,7 @@ export default function CreateTaskPanel() {
                     autoComplete="off"
                     placeholder="Task Title"
                     required
-                    disabled={false}
+                    disabled={isLoading && true}
                 />
             </div>
 
@@ -132,6 +143,7 @@ export default function CreateTaskPanel() {
                     className="border-b-4 bg-gray-50 focus:border-b-blue-500 focus:outline-0 block w-full sm:text-sm p-2 mb-4 rounded"
                     value={data.type}
                     required
+                    disabled={isLoading && true}
                     onChange={(e) => setData({ ...data, type: e.currentTarget.value as "bug" | "story" })}
                 >
                     <option value="">Select a task type</option>
@@ -151,6 +163,7 @@ export default function CreateTaskPanel() {
                     placeholder="Task Body"
                     value={data.body}
                     required
+                    disabled={isLoading && true}
                     onChange={(e) => setData({ ...data, body: e.currentTarget.value })}
                 />
             </div>
@@ -176,7 +189,7 @@ export default function CreateTaskPanel() {
                         placeholder="Total time spent"
                         autoComplete="off"
                         required
-                        disabled={false}
+                        disabled={isLoading && true}
                     />
 
                     <div className="px-2"></div>
@@ -212,7 +225,7 @@ export default function CreateTaskPanel() {
                         value={tagsInput}
                         placeholder="Task Tags"
                         autoComplete="off"
-                        disabled={false}
+                        disabled={isLoading && true}
                     />
                     <button className="p-1 px-3 ms-3 border-2 border-black rounded text-2xl hover:scale-110 hover:bg-black hover:text-white" type="button" onClick={HandleAddTag}>
                         +
@@ -241,7 +254,7 @@ export default function CreateTaskPanel() {
                         value={periodInput}
                         placeholder="Task Periods"
                         autoComplete="off"
-                        disabled={false}
+                        disabled={isLoading && true}
                     />
                     <button className="p-1 px-3 ms-3 border-2 border-black rounded text-2xl hover:scale-110 hover:bg-black hover:text-white"
                         type="button"

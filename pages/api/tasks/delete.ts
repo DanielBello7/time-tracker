@@ -11,8 +11,10 @@ export default function handler(
 ) {
     if (req.method !== "DELETE") return res.end();
 
+    const { id } = req.query;
+
     try {
-        return res.json({ msg: 'task deleted' });
+        return res.json({ msg: 'task deleted', payload: id });
     }
     catch (error) {
         return res.status(500).json({

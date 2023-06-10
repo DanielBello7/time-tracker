@@ -1,9 +1,9 @@
 import type { AppProps } from 'next/app';
-import { CookiesProvider } from 'react-cookie';
 import DataContextProvider from '@/context/data.context';
 import ModalContextProvider from '@/context/modal.context';
 import TaskContextProvider from '@/context/tasks.context';
 import '@/styles/globals.css'
+import AlertModal from '@/modules/alert';
 
 function MainLayout(props: { children: React.ReactNode }) {
   return (
@@ -11,6 +11,7 @@ function MainLayout(props: { children: React.ReactNode }) {
       <TaskContextProvider>
         <ModalContextProvider>
           {props.children}
+          <AlertModal />
         </ModalContextProvider>
       </TaskContextProvider>
     </DataContextProvider>
