@@ -1,107 +1,8 @@
-import type { TaskDataType, InsightDataType, WeekDataType } from "@/global";
-import { tempTasks } from "@/constants/temp";
+import type { InsightDataType } from "@/global";
+import { useApplicationData } from "@/context/data.context";
 import { useTaskData } from "@/context/tasks.context";
-
-function GetBugsStats(data: TaskDataType[]): WeekDataType {
-    const bugsData = data.filter(item => item.type === "bug");
-
-    const dataSortedByDate: WeekDataType = {
-        currentWeek: [],
-        lastWeek: [],
-        perviousWeek: []
-    }
-
-    data.forEach(task => {
-        const taskDate = new Date(task.createdAt).getTime();
-
-        const currentWeekStart = new Date(
-            new Date().setDate(
-                new Date().getDate() - new Date().getDay() - 1
-            )
-        ).getTime();
-
-        const currentWeekEnd = new Date(
-            new Date().setDate(
-                new Date().getDate() - new Date().getDay() + 6
-            )
-        ).getTime();
-
-        const previousWeekStart = new Date(
-            new Date().setDate(
-                new Date().getDate() - new Date().getDay() - 8
-            )
-        ).getTime();
-
-        const previousWeekEnd = new Date(
-            new Date().setDate(
-                new Date().getDate() - new Date().getDay() - 1
-            )
-        ).getTime();
-
-        const TwoWeekAgoStart = new Date(
-            new Date().setDate(
-                new Date().getDate() - new Date().getDay() - 15
-            )
-        ).getTime();
-
-        const TwoWeeksAgoEnd = new Date(
-            new Date().setDate(
-                new Date().getDate() - new Date().getDay() - 8
-            )
-        ).getTime();
-
-        if (currentWeekStart < taskDate && currentWeekEnd > taskDate) dataSortedByDate.currentWeek.push(task);
-        if (previousWeekStart < taskDate && previousWeekEnd > taskDate) dataSortedByDate.perviousWeek.push(task);
-        if (TwoWeekAgoStart < taskDate && TwoWeeksAgoEnd > taskDate) dataSortedByDate.lastWeek.push(task);
-    })
-
-    return dataSortedByDate;
-}
-
-export default function Analytics() {
-    const { tasks } = useTaskData();
-    const result = GetBugsStats(tempTasks);
-    console.log(result);
-
-    const analytics_data: InsightDataType[] = [
-        {
-            additionalInfo: 'There was a -50% decline in bugs completion',
-            _id: '1',
-            description: 'This is an insight about the total amount of bugs completed last week',
-            primaryFigure: '10',
-            subExpanatory: 'Bugs completed',
-            title: 'Bugs Insight'
-        },
-        {
-            additionalInfo: 'There was a 50% increase in the stories completion',
-            _id: '2',
-            description: 'This is an insight to the total amount of stories completed last week',
-            primaryFigure: '10',
-            subExpanatory: 'Stories completed',
-            title: 'Stories Insight'
-        },
-        {
-            additionalInfo: 'There have been a 2% increase in the amount of time spent on tasks',
-            _id: '3',
-            description: 'This insight holds information about the total time spent on tasks',
-            primaryFigure: '10',
-            subExpanatory: 'hours spent on tasks',
-            title: 'Time Spent'
-        },
-    ]
-    return (
-        <div className="border border-black flex flex-col h-full w-full overflow-hidden">
-            <div className="p-2 border-b border-black">
-                <h1 className="text-3xl font-bold">Insights</h1>
-            </div>
-            <div className="w-full flex grow border border-blue-500 overflow-scroll p-3">
-                {analytics_data.map((item, idx) => {
-                    return <Insight {...item} key={idx} />
-                })}
-            </div>
-        </div>
-    )
-}
+import Loading from "@/components/loading";
+import React from "react";
 
 function Insight(props: InsightDataType) {
     return (
@@ -123,6 +24,63 @@ function Insight(props: InsightDataType) {
                 <p className="fs-8">
                     {props.additionalInfo}
                 </p>
+            </div>
+        </div>
+    )
+}
+
+export default function Analytics() {
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    const [error, setError] = React.useState<Error | null>(null);
+    const [data, setData] = React.useState<InsightDataType[]>([]);
+
+    const { axios, user } = useApplicationData();
+    const { tasks } = useTaskData();
+
+    React.useEffect(() => {
+        async function GetInsights() {
+            try {
+                const response = await axios.get(`/tasks/insight?email=${user?.email}`);
+                setData(response.data.payload);
+                return setIsLoading(false);
+            }
+            catch (error) {
+                setIsError(true);
+                setError(error as Error);
+                return setIsLoading(false);
+            }
+        }
+        GetInsights();
+    }, [user, tasks]);
+
+    return (
+        <div className="border border-black flex flex-col h-full w-full overflow-hidden">
+            <div className="p-2 border-b border-black">
+                <h1 className="text-3xl font-bold">Insights</h1>
+            </div>
+            <div className="w-full flex grow border border-blue-500 overflow-scroll p-3">
+                {
+                    !isLoading && !isError && data.map((item, idx) => {
+                        return <Insight {...item} key={idx} />
+                    })
+                }
+
+                {
+                    data.length < 1 &&
+                    <div className="p-3 font-bold">
+                        No insights to show currently
+                    </div>
+                }
+
+                {
+                    isLoading && <Loading />
+                }
+
+                {
+                    !isLoading && isError &&
+                    <div className="p-3 font-bold">{error?.message}</div>
+                }
             </div>
         </div>
     )

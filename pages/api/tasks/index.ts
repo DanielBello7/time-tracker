@@ -1,14 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { tempTasks } from '@/constants/temp';
-
-type Data = {
-    msg: string
-    payload?: any
-}
+import { ResponseDataType } from '@/global';
 
 export default function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse<ResponseDataType>
 ) {
     if (req.method !== "GET") return res.end();
 

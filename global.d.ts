@@ -41,3 +41,8 @@ export interface WeekDataType {
     perviousWeek: TaskDataType[]
     lastWeek: TaskDataType[]
 }
+
+export interface ResponseDataType {
+    msg: string
+    payload?: any
+}

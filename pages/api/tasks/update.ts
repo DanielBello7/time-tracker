@@ -1,14 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { TaskDataType } from '@/global';
-
-type Data = {
-    msg: string
-    payload?: any
-}
+import { TaskDataType, ResponseDataType } from '@/global';
 
 export default function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse<ResponseDataType>
 ) {
     if (req.method !== "PATCH") return res.end();
     const body = req.body;

@@ -1,15 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { TaskDataType } from '@/global';
+import { ResponseDataType, TaskDataType } from '@/global';
 import { v4 as uuid } from 'uuid';
-
-type Data = {
-    msg: string
-    payload?: any
-}
 
 export default function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse<ResponseDataType>
 ) {
     if (req.method !== "POST") return res.end();
     const body = req.body;

@@ -1,13 +1,9 @@
+import { ResponseDataType } from '@/global';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-type Data = {
-    payload?: any
-    msg: string
-}
 
 export default function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse<ResponseDataType>
 ) {
     if (req.method !== "DELETE") return res.end();
 
