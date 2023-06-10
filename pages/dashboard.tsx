@@ -1,5 +1,6 @@
 import { useApplicationData } from "@/context/data.context";
 import { useRouter } from "next/router";
+import { useTaskData } from "@/context/tasks.context";
 import SideBar from '@/components/sidebar';
 import Analytics from "@/screens/analytics";
 import React from "react";
@@ -8,13 +9,32 @@ import Loading from "@/components/loading";
 
 export default function Insights() {
     const [isLoading, setIsLoading] = React.useState(true);
-    const { isLoggedIn, user, screen } = useApplicationData();
+    const { isLoggedIn, user, screen, axios } = useApplicationData();
+    const { setTasks } = useTaskData();
     const router = useRouter();
 
     React.useLayoutEffect(() => {
         setIsLoading(true)
         if (!isLoggedIn || !user) router.push("/");
         else setIsLoading(false)
+    }, []);
+
+    React.useEffect(() => {
+        async function GetTasks() {
+            // setIsLoading(true);
+            try {
+                const response = await axios.get('/tasks');
+                setTasks(response.data.payload);
+                // return setIsLoading(false);
+            }
+            catch (error) {
+                // setIsError(true);
+                // setError(error as Error);
+                // return setIsLoading(false);
+            }
+        }
+
+        GetTasks();
     }, []);
 
     if (isLoading) return <Loading />

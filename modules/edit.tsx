@@ -283,6 +283,7 @@ function MainComponent(props: TaskDataType) {
                         name={"periods"}
                         type="date"
                         id={"periods"}
+                        max={new Date().toISOString().split("T")[0]}
                         value={periodInput}
                         placeholder="Task Periods"
                         autoComplete="off"

@@ -252,6 +252,7 @@ export default function CreateTaskPanel() {
                         type="date"
                         id={"periods"}
                         value={periodInput}
+                        max={new Date().toISOString().split("T")[0]}
                         placeholder="Task Periods"
                         autoComplete="off"
                         disabled={isLoading && true}

@@ -26,3 +26,18 @@ export interface TaskDataType {
     createdAt: string
     createdBy: UserDataType
 }
+
+export interface InsightDataType {
+    _id: string
+    primaryFigure: string
+    description: string
+    subExpanatory: string
+    title: string
+    additionalInfo: string
+}
+
+export interface WeekDataType {
+    currentWeek: TaskDataType[]
+    perviousWeek: TaskDataType[]
+    lastWeek: TaskDataType[]
+}
