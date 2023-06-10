@@ -5,6 +5,7 @@ import Analytics from "@/screens/analytics";
 import React from "react";
 import AlertModal from "@/modules/alert";
 import Tasks from "@/screens/tasks";
+import Loading from "@/components/loading";
 
 export default function Insights() {
     const [isLoading, setIsLoading] = React.useState(true);
@@ -17,7 +18,7 @@ export default function Insights() {
         else setIsLoading(false)
     }, []);
 
-    if (isLoading) return <div className="flex w-full h-screen items-center justify-center">LOADING...</div>
+    if (isLoading) return <Loading />
 
     return (
         <main className='border w-full h-screen flex overflow-hidden'>

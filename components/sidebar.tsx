@@ -1,7 +1,9 @@
 import { useApplicationData } from "@/context/data.context";
+import { useRouter } from "next/router";
 
 export default function SideBar() {
-    const { screen, setScreen } = useApplicationData();
+    const { screen, setScreen, setUser, setIsLoggedIn } = useApplicationData();
+    const router = useRouter();
 
     const data = [
         {
@@ -15,6 +17,13 @@ export default function SideBar() {
             route: 'tasks'
         }
     ]
+
+    const HandleLogout = () => {
+        setIsLoggedIn(false);
+        setUser(null);
+        setScreen("insights");
+        return router.push("/");
+    }
 
     return (
         <div className="w-full h-full overflow-hidden flex flex-col">
@@ -35,6 +44,11 @@ export default function SideBar() {
                         )
                     })
                 }
+            </div>
+            <div className="p-2">
+                <button className="w-full uppercase font-bold fs-8 bg-red-500 text-white hover:bg-red-800 p-2 px-3 rounded" type="button" onClick={HandleLogout}>
+                    logout
+                </button>
             </div>
         </div>
     )

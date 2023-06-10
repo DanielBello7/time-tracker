@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import InputBox from "../components/inputbox";
 import React from "react";
 import AlertModal from "@/modules/alert";
+import Loading from "@/components/loading";
 
 enum SCREEN { REGISTER, LOGIN }
 type ACTIVE_SCREEN = SCREEN.LOGIN | SCREEN.REGISTER;
@@ -13,6 +14,7 @@ interface AuthenticationSubComponentProps {
 }
 
 export default function Authentication() {
+    const [isLoading, setIsLoading] = React.useState(true);
     const [screen, setScreen] = React.useState<ACTIVE_SCREEN>(SCREEN.LOGIN);
     const [hide, setHide] = React.useState(false);
     const { isLoggedIn } = useApplicationData();
@@ -25,9 +27,13 @@ export default function Authentication() {
     }
 
     React.useLayoutEffect(() => {
+        setIsLoading(true);
         if (!isLoggedIn && pathname !== "/") router.push("/");
-        if (isLoggedIn && pathname === "/") router.push("/");
+        else if (isLoggedIn && pathname === "/") router.push("/dashboard");
+        setIsLoading(false)
     }, []);
+
+    if (isLoading) return <Loading />
 
     return (
         <React.Fragment>
