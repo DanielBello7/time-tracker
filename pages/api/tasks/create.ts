@@ -21,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         taskPeriod: body.taskPeriod,
         title: body.title,
         totalTimeSpentOnTask: body.totalTimeSpentOnTask,
-        type: body.type
+        type: body.type,
+        completedAt: new Date(body.completedAt).toDateString()
     }
 
     try {

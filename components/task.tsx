@@ -61,9 +61,11 @@ export default function Task(props: TaskDataType) {
 
     return (
         <div className={`${sidePanel.isOpen ? "w-3/6" : "w-2/6"} p-3 h-80`}>
-            <div className='h-full p-5 bg-white rounded flex flex-col cursor-pointer hover:bg-blue-50'>
+            <div className={`h-full p-5 bg-white rounded flex flex-col cursor-pointer hover:bg-blue-50 ${activeTask === props._id && "border border-black bg-blue-50"}`}>
                 <div className='flex justify-between items-center'>
-                    <p className='uppercase font-bold text-gray-500'>{item.title}</p>
+                    <p className='uppercase font-bold text-gray-500'>
+                        {item.title.slice(0, 18).trim()}{item.title.length > 18 && "..."}
+                    </p>
                     <button className='fs-7 uppercase font-bold text-gray-400 border-2 p-2 rounded hover:bg-black hover:text-white hover:border-black px-3' type='button' onClick={HandleEdit}>
                         Edit Task
                     </button>
@@ -75,8 +77,8 @@ export default function Task(props: TaskDataType) {
                     {item.body.slice(0, 150)}{item.body.length > 150 && "..."}
                 </p>
                 <p className='text-gray-400 my-3 fs-9'>
-                    <span>Created: </span>
-                    <span>{item.createdAt}</span>
+                    <span>Completed: </span>
+                    <span>{item.completedAt}</span>
                 </p>
                 <div className='flex'>
                     <button className='rounded hover:opacity-50 bg-red-500 text-white uppercase p-2 px-3 fs-7 font-bold' type="button" onClick={HandleDelete} disabled={isDeleteLoading && true}>

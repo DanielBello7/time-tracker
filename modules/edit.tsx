@@ -3,6 +3,7 @@ import { useTaskData } from "@/context/tasks.context";
 import { useApplicationData } from "@/context/data.context";
 import { useModalData } from "@/context/modal.context";
 import React from "react";
+import Loading from "@/components/loading";
 
 export default function EditTaskPanel() {
     const [data, setData] = React.useState<TaskDataType | null>(null);
@@ -11,16 +12,19 @@ export default function EditTaskPanel() {
 
     const GetEditData = React.useCallback(() => {
         setIsLoading(true);
-        const task = tasks.find((item) => item._id === activeTask);
-        if (task) setData(task);
-        setIsLoading(false);
-    }, [activeTask]);
+        setTimeout(() => {
+            const task = tasks.find((item) => item._id === activeTask);
+            if (task) setData(task);
+            else setData(null);
+            setIsLoading(false);
+        }, 500);
+    }, [activeTask, tasks]);
 
     React.useEffect(() => {
         GetEditData();
     }, [GetEditData]);
 
-    if (isLoading) return <div className="p-3 font-bold uppercase">Loading...</div>
+    if (isLoading) return <Loading />
     if (!data) return <UnavailableTask />
     return <MainComponent {...data} />
 }
@@ -39,9 +43,10 @@ function MainComponent(props: TaskDataType) {
         tags: props.tags,
         totalTimeSpentOnTask: props.totalTimeSpentOnTask.amount.toString(),
         periodType: props.totalTimeSpentOnTask.type,
-        completedAt: props.completedAt
+        completedAt: ""
     }
 
+    const [comAt, setCompAt] = React.useState(props.completedAt);
     const [data, setData] = React.useState(initial_data);
     const [tagsInput, setTagsInput] = React.useState("");
     const [periodInput, setPeriodInput] = React.useState("");
@@ -125,6 +130,7 @@ function MainComponent(props: TaskDataType) {
             const response = await axios.patch(`/tasks/update?id=${props._id}`, {
                 ...props,
                 ...data,
+                completedAt: comAt,
                 totalTimeSpentOnTask: {
                     amount: data.totalTimeSpentOnTask,
                     type: data.periodType
@@ -152,7 +158,7 @@ function MainComponent(props: TaskDataType) {
         <form className="w-full p-3" onSubmit={HandleSubmit}>
             <div className={`col-span-100 sm:col-span-100`}>
                 <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
-                    task title {activeTask}
+                    task title
                 </label>
 
                 <input
@@ -250,14 +256,14 @@ function MainComponent(props: TaskDataType) {
                 <div className="w-full flex items-center mb-4">
                     <input
                         className="border-b-4 bg-gray-50 focus:border-b-blue-500 focus:outline-0 block w-full sm:text-sm p-2 rounded"
-                        onChange={(e) => setData({ ...data, completedAt: e.currentTarget.value })}
-                        name={"periods"}
+                        onChange={(e) => setCompAt(e.currentTarget.value)}
+                        name={"completion"}
                         type="date"
-                        id={"periods"}
+                        id={"completion"}
                         required
-                        value={data.completedAt}
+                        value={new Date(comAt).toISOString().split("T")[0]}
                         max={new Date().toISOString().split("T")[0]}
-                        placeholder="Task Periods"
+                        placeholder="Task completion"
                         autoComplete="off"
                         disabled={isLoading && true}
                     />
