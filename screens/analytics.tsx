@@ -41,7 +41,7 @@ export default function Analytics() {
     React.useEffect(() => {
         async function GetInsights() {
             try {
-                const response = await axios.get(`/tasks/insight?email=${user?.email}`);
+                const response = await axios.get(`/tasks/insights?email=${user?.email}`);
                 setData(response.data.payload);
                 return setIsLoading(false);
             }
@@ -67,7 +67,7 @@ export default function Analytics() {
                 }
 
                 {
-                    data.length < 1 &&
+                    !isLoading && !isError && data.length < 1 &&
                     <div className="p-3 font-bold">
                         No insights to show currently
                     </div>
@@ -79,7 +79,7 @@ export default function Analytics() {
 
                 {
                     !isLoading && isError &&
-                    <div className="p-3 font-bold">{error?.message}</div>
+                    <div className="p-3 font-bold">Error: {error?.message}</div>
                 }
             </div>
         </div>

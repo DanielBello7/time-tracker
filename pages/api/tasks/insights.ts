@@ -2,7 +2,7 @@ import type { TaskDataType, WeekDataType, ResponseDataType, InsightDataType } fr
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { tempTasks } from '@/constants/temp';
 
-function GetTasksStats(data: TaskDataType[]): WeekDataType {
+function SortTaskIntoWeekPeriods(data: TaskDataType[]): WeekDataType {
     const dataSortedByDate: WeekDataType = {
         currentWeek: [],
         lastWeek: [],
@@ -56,6 +56,46 @@ function GetTasksStats(data: TaskDataType[]): WeekDataType {
     return dataSortedByDate;
 }
 
+const CalculateStatsInsights = (data: TaskDataType[], type: "bug" | "story") => {
+    const bugsData = data.filter(item => item.type === type);
+    const result = SortTaskIntoWeekPeriods(bugsData);
+
+    const lastWeekStats = result.lastWeek.length;
+    const perviousWeekStats = result.perviousWeek.length;
+
+    const differenceInPercent = ((lastWeekStats - perviousWeekStats) / ((lastWeekStats + perviousWeekStats) / 2)) * 100
+    return {
+        amountCompleted: lastWeekStats,
+        percentage: differenceInPercent
+    }
+}
+
+const CalculateTotalTaskTimeSpentForWeek = (data: TaskDataType[]) => {
+    const response = data.reduce((total, task) => {
+        if (task.totalTimeSpentOnTask.type === "hours")
+            return total = total + task.totalTimeSpentOnTask.amount;
+
+        else if (task.totalTimeSpentOnTask.type === "minutes")
+            return total = total + (task.totalTimeSpentOnTask.amount / 60);
+
+        else return total = total + (task.totalTimeSpentOnTask.amount / 3600);
+    }, 0);
+    return response
+}
+
+const CalculateGeneralInsight = (data: TaskDataType[]) => {
+    const response = SortTaskIntoWeekPeriods(data);
+    const totalTimeSpentLastWeek = CalculateTotalTaskTimeSpentForWeek(response.lastWeek);
+    const totalTimeSpentPreviousWeek = CalculateTotalTaskTimeSpentForWeek(response.perviousWeek);
+
+    const differenceInPercent = ((totalTimeSpentLastWeek - totalTimeSpentPreviousWeek) / ((totalTimeSpentLastWeek + totalTimeSpentPreviousWeek) / 2)) * 100
+
+    return {
+        totalTimeSpentLastWeek: totalTimeSpentLastWeek,
+        percentage: differenceInPercent
+    }
+}
+
 const analytics_data: InsightDataType[] = [
     {
         additionalInfo: 'There was a -50% decline in bugs completion',
@@ -91,31 +131,7 @@ export default function handler(
 
     try {
 
-        const CalculateBugsInsights = () => {
-            const bugsData = tempTasks.filter(item => item.type === "bug");
-            const result = GetTasksStats(bugsData);
-            return result;
-        }
 
-        const CalculateInsights = () => {
-            const bugsData = tempTasks.filter(item => item.type === "story");
-            const result = GetTasksStats(bugsData);
-            return result;
-        }
-
-        const CalculateGeneralInsight = () => {
-            const result = tempTasks.reduce((total, task) => {
-                if (task.totalTimeSpentOnTask.type === "hours")
-                    return total = total + task.totalTimeSpentOnTask.amount;
-
-                else if (task.totalTimeSpentOnTask.type === "minutes")
-                    return total = total + (task.totalTimeSpentOnTask.amount / 60);
-
-                else return total = total + (task.totalTimeSpentOnTask.amount / 3600);
-            }, 0);
-
-            return result;
-        }
 
         return res.json({ msg: 'tasks insights', payload: [] });
     }
