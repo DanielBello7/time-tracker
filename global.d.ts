@@ -48,3 +48,12 @@ export interface ResponseDataType {
     payload?: any
     addition?: any
 }
+
+export interface AnalyticsResultDataType {
+    bugsCompleted: number
+    storiesCompleted: number
+    hoursCompleted: number
+    bugsPercentage: number
+    storiesPercentage: number
+    hoursPercentage: number
+}

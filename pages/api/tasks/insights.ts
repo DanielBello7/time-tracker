@@ -1,4 +1,4 @@
-import type { TaskDataType, WeekDataType, ResponseDataType, InsightDataType } from "@/global";
+import type { TaskDataType, WeekDataType, ResponseDataType, InsightDataType, AnalyticsResultDataType } from "@/global";
 import type { NextApiRequest, NextApiResponse } from 'next';
 import data from '../../../database/TASKS.json';
 
@@ -10,7 +10,7 @@ function SortTaskIntoWeekPeriods(data: TaskDataType[]): WeekDataType {
     }
 
     data.forEach(task => {
-        const taskDate = new Date(task.createdAt).getTime();
+        const taskDate = new Date(task.completedAt).getTime();
 
         const currentWeekStart = new Date(
             new Date().setDate(
@@ -65,22 +65,19 @@ const CalculateStatsInsights = (data: TaskDataType[], type: "bug" | "story") => 
 
     const differenceInPercent = ((lastWeekStats - perviousWeekStats) / ((lastWeekStats + perviousWeekStats) / 2)) * 100
     return {
-        amountCompleted: lastWeekStats,
-        percentage: differenceInPercent,
-        docs: filteredData
+        amountCompletedLastWeek: lastWeekStats,
+        amountCompletedPreviousWeek: perviousWeekStats,
+        percentage: Math.floor(differenceInPercent)
     }
 }
 
 const CalculateTotalTaskTimeSpentForWeek = (data: TaskDataType[]) => {
     const response = data.reduce((total, task) => {
-        if (task.totalTimeSpentOnTask.type === "hours")
-            return total = total + task.totalTimeSpentOnTask.amount;
-
-        else if (task.totalTimeSpentOnTask.type === "minutes")
-            return total = total + (task.totalTimeSpentOnTask.amount / 60);
-
+        if (task.totalTimeSpentOnTask.type === "hours") return total = total + task.totalTimeSpentOnTask.amount;
+        else if (task.totalTimeSpentOnTask.type === "minutes") return total = total + (task.totalTimeSpentOnTask.amount / 60);
         else return total = total + (task.totalTimeSpentOnTask.amount / 3600);
     }, 0);
+
     return response
 }
 
@@ -93,33 +90,34 @@ const CalculateGeneralInsight = (data: TaskDataType[]) => {
 
     return {
         totalTimeSpentLastWeek: totalTimeSpentLastWeek,
-        percentage: differenceInPercent
+        totalTimeSpentPreviousWeek: totalTimeSpentPreviousWeek,
+        percentage: Math.floor(differenceInPercent)
     }
 }
 
-const GenerateAnalyticsResult = (bugsCompleted: number, storiesCompleted: number) => {
+const GenerateAnalyticsResult = (data: AnalyticsResultDataType) => {
     const analytics_data: InsightDataType[] = [
         {
-            additionalInfo: `There was a -50% decline in bugs completion`,
+            additionalInfo: `There was a ${data.bugsPercentage}% ${data.bugsPercentage < 0 ? "decline" : "increase"} in bugs completion`,
             _id: '1',
             description: `This is an insight about the total amount of bugs completed last week`,
-            primaryFigure: `${bugsCompleted}`,
+            primaryFigure: `${data.bugsCompleted}`,
             subExpanatory: 'Bugs completed',
             title: 'Bugs Insight'
         },
         {
-            additionalInfo: `There was a 50% increase in the stories completion`,
+            additionalInfo: `There was a ${data.storiesPercentage}% ${data.storiesPercentage < 0 ? "decline" : "increase"} in the stories completion`,
             _id: '2',
             description: `This is an insight to the total amount of stories completed last week`,
-            primaryFigure: `${storiesCompleted}`,
+            primaryFigure: `${data.storiesCompleted}`,
             subExpanatory: 'Stories completed',
             title: 'Stories Insight'
         },
         {
-            additionalInfo: `There have been a 2% increase in the amount of time spent on tasks`,
+            additionalInfo: `There have been a ${data.hoursPercentage}% ${data.hoursPercentage < 0 ? "decline" : "increase"} in the amount of time spent on tasks`,
             _id: '3',
             description: `This insight holds information about the total time spent on tasks`,
-            primaryFigure: '10',
+            primaryFigure: `${data.hoursCompleted}`,
             subExpanatory: 'hours spent on tasks',
             title: 'Time Spent'
         },
@@ -139,9 +137,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
         const insightStatsForStories = CalculateStatsInsights(userTasks, "story");
         const generalInsights = CalculateGeneralInsight(userTasks);
 
-        const result = GenerateAnalyticsResult(insightStatsForBugs.amountCompleted, insightStatsForStories.amountCompleted);
+        const result = GenerateAnalyticsResult({
+            bugsCompleted: insightStatsForBugs.amountCompletedLastWeek,
+            bugsPercentage: insightStatsForBugs.percentage,
+            storiesCompleted: insightStatsForStories.amountCompletedLastWeek,
+            storiesPercentage: insightStatsForStories.percentage,
+            hoursCompleted: generalInsights.totalTimeSpentLastWeek,
+            hoursPercentage: generalInsights.percentage
+        });
 
-        return res.json({ msg: 'tasks insights', payload: result, addition: insightStatsForBugs });
+        return res.json({ msg: 'tasks insights', payload: result, addition: insightStatsForStories });
     }
     catch (error) {
         return res.status(500).json({
