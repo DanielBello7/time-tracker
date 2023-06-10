@@ -1,11 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ResponseDataType, TaskDataType } from '@/global';
 import { v4 as uuid } from 'uuid';
+import data from '../../../database/TASKS.json';
+import path from 'path';
+import utilities from 'util';
+import fs_module from 'fs';
 
-export default function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<ResponseDataType>
-) {
+const writeFile = utilities.promisify(fs_module.writeFile);
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseDataType>) {
     if (req.method !== "POST") return res.end();
     const body = req.body;
 
@@ -22,6 +25,7 @@ export default function handler(
     }
 
     try {
+        await writeFile(path.join(__dirname, "../../../../../database/TASKS.json"), JSON.stringify([...data, task], undefined, 4));
         return res.json({ msg: 'task created', payload: task });
     }
     catch (error) {

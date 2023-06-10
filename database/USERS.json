@@ -1,1 +1,37 @@
-[]
+[
+    {
+        "_id": "A",
+        "createdAt": "Sat, Jun 10, 2023",
+        "email": "user1@gmail.com",
+        "fullname": "user1 user1",
+        "password": "user1",
+        "tasks": [
+            "1",
+            "2"
+        ]
+    },
+    {
+        "_id": "B",
+        "createdAt": "Sat, Jun 10, 2023",
+        "email": "user2@gmail.com",
+        "fullname": "user2 user2",
+        "password": "user2",
+        "tasks": []
+    },
+    {
+        "_id": "592f4128-07ea-482d-93c7-f47909eeb1b5",
+        "createdAt": "Sat Jun 10 2023",
+        "email": "user3@gmail.com",
+        "fullname": "user3 user3",
+        "password": "user3",
+        "tasks": []
+    },
+    {
+        "_id": "e95421eb-1546-484e-9909-ba472d0743be",
+        "createdAt": "Sat Jun 10 2023",
+        "email": "user4@gmail.com",
+        "fullname": "user4 user4",
+        "password": "user4",
+        "tasks": []
+    }
+]

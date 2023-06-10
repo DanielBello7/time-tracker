@@ -1,6 +1,7 @@
 import { useApplicationData } from "@/context/data.context";
 import { useModalData } from "@/context/modal.context";
 import { useRouter } from "next/router";
+import { AxiosError } from "axios";
 import InputBox from "../components/inputbox";
 import React from "react";
 import Loading from "@/components/loading";
@@ -67,18 +68,31 @@ function RegisterComponent(props: AuthenticationSubComponentProps) {
     const [confirm, setConfirm] = React.useState("");
     const [isLoading, setIsLoading] = React.useState(false);
 
-    const HandleSubmit = (event: React.FormEvent) => {
+    const { axios, setUser } = useApplicationData();
+    const { ToggleAlert } = useModalData();
+
+    const HandleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        if (!fullname.trim() || !email.trim() || !password.trim() || !confirm.trim()) return
-        if (password !== confirm) return
+        if (!fullname.trim() || !email.trim() || !password.trim() || !confirm.trim()) return ToggleAlert(true, "Incomplete fields");
+        if (password !== confirm) return ToggleAlert(true, "Passwords dont match");
         props.setHide(true);
         setIsLoading(true);
 
         try {
-
-        }
-        catch (error: any) {
+            const response = await axios.post('/register', { email, password, fullname });
+            setUser(response.data.payload);
+            setFullname("");
+            setEmail("");
+            setPassword("");
+            setConfirm("");
+            setIsLoading(false);
             props.setHide(false);
+            return ToggleAlert(true, "user account created");
+        }
+        catch (error) {
+            props.setHide(false);
+            const msg: any = (error as AxiosError).response?.data;
+            ToggleAlert(true, msg.msg)
             return setIsLoading(false);
         }
     }

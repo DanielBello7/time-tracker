@@ -1,16 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { tempTasks } from '@/constants/temp';
-import { ResponseDataType } from '@/global';
+import { ResponseDataType, TaskDataType } from '@/global';
+import data from '../../../database/TASKS.json';
 
-export default function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<ResponseDataType>
-) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseDataType>) {
     if (req.method !== "GET") return res.end();
 
     try {
         const { id } = req.query;
-        const findTask = tempTasks.find((item) => item._id === id);
+        const findTask = (data as TaskDataType[]).find((item) => item._id === id);
         if (!findTask) return res.status(404).json({ msg: 'task not found' });
         return res.json({ msg: 'task found', payload: findTask });
     }

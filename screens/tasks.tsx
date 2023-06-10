@@ -10,7 +10,7 @@ export default function Tasks() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
     const [error, setError] = React.useState<Error | null>(null);
-    const { axios } = useApplicationData();
+    const { axios, user } = useApplicationData();
     const { setTasks } = useTaskData();
 
     const { sidePanel, ToggleSidePanel, tasks } = useTaskData();
@@ -19,7 +19,7 @@ export default function Tasks() {
         async function GetTasks() {
             setIsLoading(true);
             try {
-                const response = await axios.get('/tasks');
+                const response = await axios.get(`/tasks?id=${user?._id}`);
                 setTasks(response.data.payload);
                 return setIsLoading(false);
             }

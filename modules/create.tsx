@@ -1,5 +1,6 @@
 import { useApplicationData } from "@/context/data.context";
 import { useTaskData } from "@/context/tasks.context";
+import { AxiosError } from "axios";
 import React from "react";
 
 export default function CreateTaskPanel() {
@@ -108,7 +109,8 @@ export default function CreateTaskPanel() {
             setData(initial_data);
             setIsLoading(false);
         }
-        catch (error: any) {
+        catch (error) {
+            console.log(error as AxiosError)
             return setIsLoading(false);
         }
     }

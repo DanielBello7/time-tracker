@@ -1,10 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { TaskDataType, ResponseDataType } from '@/global';
+import data from '../../../database/TASKS.json';
+import path from 'path';
+import utilities from 'util';
+import fs_module from 'fs';
 
-export default function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<ResponseDataType>
-) {
+const writeFile = utilities.promisify(fs_module.writeFile);
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseDataType>) {
     if (req.method !== "PATCH") return res.end();
     const body = req.body;
     const { id } = req.query;
@@ -22,6 +25,12 @@ export default function handler(
     }
 
     try {
+        const updated = (data as TaskDataType[]).map((item) => {
+            if (item._id === id) item = task;
+            return item;
+        });
+
+        await writeFile(path.join(__dirname, "../../../../../database/TASKS.json"), JSON.stringify(updated, undefined, 4));
         return res.json({ msg: 'task updated', payload: task });
     }
     catch (error) {
