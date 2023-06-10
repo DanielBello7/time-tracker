@@ -12,13 +12,14 @@ export default function handler(
 ) {
     if (req.method !== "PATCH") return res.end();
     const body = req.body;
+    const { id } = req.query;
 
     const task: TaskDataType = {
         body: body.body,
         createdAt: body.createdAt,
         createdBy: body.createdBy,
-        _id: body._id,
-        taskPeriod: body.taskPeriod,
+        _id: id as string,
+        taskPeriod: body.taskPeriod.length < 1 ? [{ _id: Math.random(), date: new Date().toDateString() }] : body.taskPeriod,
         tags: body.tags,
         title: body.title,
         totalTimeSpentOnTask: body.totalTimeSpentOnTask,

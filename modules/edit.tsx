@@ -1,16 +1,17 @@
 import { TaskDataType } from "@/global";
 import { useTaskData } from "@/context/tasks.context";
-import { tempTasks } from "@/constants/temp";
+import { useApplicationData } from "@/context/data.context";
+import { useModalData } from "@/context/modal.context";
 import React from "react";
 
 export default function EditTaskPanel() {
     const [data, setData] = React.useState<TaskDataType | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
-    const { activeTask } = useTaskData();
+    const { activeTask, tasks } = useTaskData();
 
     const GetEditData = React.useCallback(() => {
         setIsLoading(true);
-        const task = tempTasks.find((item) => item._id === activeTask);
+        const task = tasks.find((item) => item._id === activeTask);
         if (task) setData(task);
         setIsLoading(false);
     }, [activeTask]);
@@ -19,14 +20,16 @@ export default function EditTaskPanel() {
         GetEditData();
     }, [GetEditData]);
 
-    if (isLoading) return <div className="p-3">Loading...</div>
+    if (isLoading) return <div className="p-3 font-bold uppercase">Loading...</div>
     if (!data) return <UnavailableTask />
     return <MainComponent {...data} />
 }
 
 function MainComponent(props: TaskDataType) {
     const [isLoading, setIsLoading] = React.useState(false);
-    const { activeTask } = useTaskData();
+    const { activeTask, setTasks, setActiveTask, ToggleSidePanel } = useTaskData();
+    const { axios } = useApplicationData();
+    const { ToggleAlert } = useModalData();
 
     const initial_data = {
         title: props.title,
@@ -99,7 +102,7 @@ function MainComponent(props: TaskDataType) {
         )
     });
 
-    const HandleSubmit = (event: React.FormEvent) => {
+    const HandleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!data.title.trim() || !data.type.trim() || !data.body.trim() || !data.periodType.trim()) return
         if (parseInt(data.totalTimeSpentOnTask) <= 0) return
@@ -107,7 +110,10 @@ function MainComponent(props: TaskDataType) {
             setData({
                 ...data,
                 taskPeriod: [
-                    { _id: 'A', date: new Date().toDateString() }
+                    {
+                        _id: 'A',
+                        date: new Date().toDateString()
+                    }
                 ] as never
             })
         }
@@ -115,9 +121,28 @@ function MainComponent(props: TaskDataType) {
         setIsLoading(true)
 
         try {
-
+            const response = await axios.patch(`/tasks/update?id=${props._id}`, {
+                ...props,
+                ...data,
+                totalTimeSpentOnTask: {
+                    amount: data.totalTimeSpentOnTask,
+                    type: data.periodType
+                }
+            });
+            setTasks((prev) => {
+                const result = prev.map((item) => {
+                    if (item._id === response.data.payload._id) item = response.data.payload
+                    return item
+                });
+                return result
+            });
+            ToggleSidePanel(false);
+            setActiveTask(null);
+            setIsLoading(false);
+            return ToggleAlert(true, "Task Updated!");
         }
-        catch (error: any) {
+        catch (error) {
+            ToggleAlert(true, (error as Error).message);
             return setIsLoading(false);
         }
     }

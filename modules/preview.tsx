@@ -1,14 +1,20 @@
 import { useTaskData } from "@/context/tasks.context";
 
 export default function PreviewTaskPanel() {
-    const { activeTask, tasks } = useTaskData();
+    const { activeTask, tasks, ToggleSidePanel } = useTaskData();
     const task = tasks.find((item) => item._id === activeTask);
 
     if (!task) return <TaskUnavailable />
 
     return (
         <div className="w-full p-3">
-            <h1 className="text-2xl font-bold capitalize">{task.title}</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold capitalize">{task.title}</h1>
+
+                <button className="fs-7 uppercase p-2 px-4 rounded bg-blue-500 hover:bg-blue-800 text-white font-bold" onClick={() => ToggleSidePanel(true, "edit")} type="button">
+                    edit
+                </button>
+            </div>
 
             <div className="my-2">
                 <p className="text-gray-400 fs-7 font-bold">Task Type </p>

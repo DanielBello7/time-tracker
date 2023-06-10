@@ -9,7 +9,7 @@ import Loading from '@/components/loading';
 export default function Tasks() {
     const [isLoading, setIsLoading] = React.useState(true);
     const [isError, setIsError] = React.useState(false);
-    const [errror, setError] = React.useState<Error | null>(null);
+    const [error, setError] = React.useState<Error | null>(null);
     const { axios } = useApplicationData();
     const { sidePanel, ToggleSidePanel, setTasks, tasks } = useTaskData();
 
@@ -59,6 +59,13 @@ export default function Tasks() {
                         tasks.map((item: TaskDataType, idx: number) => {
                             return <Task {...item} key={idx} />
                         })
+                    }
+
+                    {
+                        !isLoading && !isError &&
+                        <div className='p-3 capitalize'>
+                            {error?.message}
+                        </div>
                     }
                 </div>
 
