@@ -131,7 +131,9 @@ export default function handler(
 
     try {
 
-
+        const insightStatsForBugs = CalculateStatsInsights(tempTasks, "bug");
+        const insightStatsForStories = CalculateStatsInsights(tempTasks, "story");
+        const generalInsights = CalculateGeneralInsight(tempTasks);
 
         return res.json({ msg: 'tasks insights', payload: [] });
     }
