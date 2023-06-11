@@ -7,7 +7,7 @@ export default function PreviewTaskPanel() {
     if (!task) return <TaskUnavailable />
 
     return (
-        <div className="w-full p-3">
+        <div className="w-full p-3 h-full overflow-scroll">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold capitalize">{task.title}</h1>
 
@@ -71,7 +71,7 @@ export default function PreviewTaskPanel() {
                 </p>
             </div>
 
-            <div className="w-full mt-9">
+            <div className="w-full my-9">
                 <p className="text-gray-400 fs-7 font-bold">This task was completed on </p>
                 <p className="font-bold">
                     {new Date(task.completedAt).toLocaleDateString("en-us", { dateStyle: "full" })}

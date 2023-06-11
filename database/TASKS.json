@@ -246,5 +246,43 @@
         },
         "type": "bug",
         "completedAt": "Fri Jun 02 2023"
+    },
+    {
+        "_id": "d84ef32b-d567-4dbb-a8f3-00ba5c183234",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volu.",
+        "createdAt": "Sat Jun 10 2023",
+        "createdBy": {
+            "_id": "592f4128-07ea-482d-93c7-f47909eeb1b5",
+            "createdAt": "Sat Jun 10 2023",
+            "email": "user3@gmail.com",
+            "fullname": "user3 user3",
+            "password": "user3",
+            "tasks": []
+        },
+        "tags": [
+            "code",
+            "corrections"
+        ],
+        "taskPeriod": [
+            {
+                "_id": "0.03612148513666402A",
+                "date": "2023-06-01"
+            },
+            {
+                "_id": "0.1019621737736296A",
+                "date": "2023-06-02"
+            },
+            {
+                "_id": "0.6933697027376715A",
+                "date": "2023-06-03"
+            }
+        ],
+        "title": "User Input Correction",
+        "totalTimeSpentOnTask": {
+            "amount": 2,
+            "type": "hours"
+        },
+        "type": "bug",
+        "completedAt": "Sat Jun 10 2023"
     }
 ]

@@ -37,7 +37,7 @@ export default function Authentication() {
 
     return (
         <React.Fragment>
-            <div className="w-full h-screen flex items-center justify-center">
+            <div className="w-full bg-white h-screen flex items-center justify-center">
                 <div className="w-1/4">
                     {
                         screen === SCREEN.LOGIN

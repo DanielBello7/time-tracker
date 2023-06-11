@@ -155,7 +155,7 @@ function MainComponent(props: TaskDataType) {
     }
 
     return (
-        <form className="w-full p-3" onSubmit={HandleSubmit}>
+        <form className="w-full p-3 overflow-scroll h-full" onSubmit={HandleSubmit}>
             <div className={`col-span-100 sm:col-span-100`}>
                 <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
                     task title

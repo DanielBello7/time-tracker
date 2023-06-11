@@ -55,11 +55,11 @@ export default function Analytics() {
     }, [user, tasks]);
 
     return (
-        <div className="border border-black flex flex-col h-full w-full overflow-hidden">
+        <div className="flex flex-col h-full w-full overflow-hidden">
             <div className="p-2 border-b border-black">
                 <h1 className="text-3xl font-bold">Insights</h1>
             </div>
-            <div className="w-full flex grow border border-blue-500 overflow-scroll p-3">
+            <div className="w-full flex grow overflow-scroll p-3">
                 {
                     !isLoading && !isError && data.map((item, idx) => {
                         return <Insight {...item} key={idx} />

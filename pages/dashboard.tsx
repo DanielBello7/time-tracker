@@ -20,11 +20,11 @@ export default function Insights() {
 
     if (isLoading) return <Loading />
     return (
-        <main className='border w-full h-screen flex overflow-hidden'>
-            <div className='w-1/5 border border-blue-400 h-full'>
+        <main className='border border-black bg-white w-full h-screen flex overflow-hidden'>
+            <div className='w-1/5 h-full border border-black'>
                 <SideBar />
             </div>
-            <div className="w-4/5 h-full border border-red-500">
+            <div className="w-4/5 h-full border border-black">
                 {
                     screen === "insights"
                     && <Analytics />

@@ -6,11 +6,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0px;
   padding: 0px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 * {
   box-sizing: border-box;
   /* transition: 0.4s ease-in-out all; */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }
 
 .fs-7 {

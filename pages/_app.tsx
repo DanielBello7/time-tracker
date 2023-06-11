@@ -2,8 +2,8 @@ import type { AppProps } from 'next/app';
 import DataContextProvider from '@/context/data.context';
 import ModalContextProvider from '@/context/modal.context';
 import TaskContextProvider from '@/context/tasks.context';
-import '@/styles/globals.css'
 import AlertModal from '@/modules/alert';
+import '@/styles/globals.css'
 
 function MainLayout(props: { children: React.ReactNode }) {
   return (
