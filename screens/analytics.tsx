@@ -74,7 +74,7 @@ function AnalyticsInsight() {
             <h1 className="text-gray-500 font-bold uppercase p-9 pb-0">
                 Analyics Insights
             </h1>
-            <div className="w-full flex overflow-scroll p-5 pt-0">
+            <div className="w-full flex overflow-scroll p-5 pt-3">
                 {
                     !isLoading && !isError && data.map((item, idx) => {
                         return <Insight {...item} key={idx} />

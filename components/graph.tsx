@@ -20,7 +20,7 @@ export default function LineGraphInsight() {
         responsive: true,
         plugins: {
             legend: {
-                display: false,
+                display: true,
                 position: 'bottom' as const,
             }
         },
@@ -51,17 +51,35 @@ export default function LineGraphInsight() {
     ];
 
     const colors = React.useMemo(() => {
-        return { a: Math.random() * 255, b: Math.random() * 255, c: Math.random() * 255, d: Math.random() }
+        return {
+            bugs: {
+                a: Math.random() * 255,
+                b: Math.random() * 255,
+                c: Math.random() * 255,
+                d: Math.random()
+            },
+            stories: {
+                a: Math.random() * 255,
+                b: Math.random() * 255,
+                c: Math.random() * 255,
+                d: Math.random()
+            }
+        }
     }, []);
 
     const output = React.useMemo(() => ({
         labels: labels,
         datasets: [
             {
-                label: 'Total Accounts',
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                backgroundColor: `rgba(${colors.a}, ${colors.b}, ${colors.c}, ${colors.d})`,
-            }
+                label: 'Bugs',
+                data: [1, 1, 2, 5, 2, 8, 4, 8, 9, 10, 10, 12],
+                backgroundColor: `rgba(${colors.bugs.a}, ${colors.bugs.b}, ${colors.bugs.c}, ${colors.bugs.d})`,
+            },
+            {
+                label: 'Stories',
+                data: [1, 2, 2, 2, 1, 6, 6, 3, 6, 10, 11, 12],
+                backgroundColor: `rgba(${colors.stories.a}, ${colors.stories.b}, ${colors.stories.c}, ${colors.stories.d})`,
+            },
         ]
     }), []);
 
