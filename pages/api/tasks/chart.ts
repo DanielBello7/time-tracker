@@ -1,6 +1,6 @@
 import type { ResponseDataType, TaskDataType } from '@/global';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { CalculateTimeSpentInsight } from '../../../modules/analysis';
+import { CalculateTimeSpentInsight, SortTaskIntoWeekPeriods } from '../../../modules/analysis';
 import data from '../../../database/TASKS.json';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseDataType>) {

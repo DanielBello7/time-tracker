@@ -10,6 +10,7 @@ import {
     LineElement,
     Tooltip,
     CategoryScale,
+    LineOptions
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useApplicationData } from '@/context/data.context';
@@ -120,7 +121,7 @@ function ChartComponent(props: ChartComponentProps) {
                 label: 'Bugs',
                 data: [
                     props.bugsInsights.totalTimeSpentPreviousWeek,
-                    props.bugsInsights.totalTimeSpentPreviousWeek,
+                    props.bugsInsights.totalTimeSpentLastWeek,
                     props.bugsInsights.totalTimeSpentThisWeek
                 ],
                 backgroundColor: `rgba(${colors.bugs.a}, ${colors.bugs.b}, ${colors.bugs.c}, ${colors.bugs.d})`,
@@ -130,7 +131,7 @@ function ChartComponent(props: ChartComponentProps) {
                 label: 'Stories',
                 data: [
                     props.storiesInsights.totalTimeSpentPreviousWeek,
-                    props.storiesInsights.totalTimeSpentPreviousWeek,
+                    props.storiesInsights.totalTimeSpentLastWeek,
                     props.storiesInsights.totalTimeSpentThisWeek
                 ],
                 backgroundColor: `rgba(${colors.stories.a}, ${colors.stories.b}, ${colors.stories.c}, ${colors.stories.d})`,
