@@ -1,6 +1,6 @@
 import type { TaskDataType, ResponseDataType, InsightDataType, AnalyticsResultDataType } from "@/global";
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { CalculateGeneralInsight, CalculateStatsInsights } from '../../../modules/analysis';
+import { CalculateTimeSpentInsight, CalculateStatsInsights } from '../../../modules/analysis';
 import data from '../../../database/TASKS.json';
 
 const GenerateAnalyticsResult = (data: AnalyticsResultDataType) => {
@@ -43,7 +43,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
         const userTasks = (data as TaskDataType[]).filter((item) => item.createdBy._id === id);
         const insightStatsForBugs = CalculateStatsInsights(userTasks, "bug");
         const insightStatsForStories = CalculateStatsInsights(userTasks, "story");
-        const generalInsights = CalculateGeneralInsight(userTasks);
+        const generalInsights = CalculateTimeSpentInsight(userTasks);
 
         const result = GenerateAnalyticsResult({
             bugsCompleted: insightStatsForBugs.amountCompletedLastWeek,

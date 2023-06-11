@@ -1,5 +1,6 @@
 import type { ResponseDataType, TaskDataType } from '@/global';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { CalculateTimeSpentInsight } from '../../../modules/analysis';
 import data from '../../../database/TASKS.json';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseDataType>) {
@@ -9,9 +10,19 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
 
     try {
         const userTasks = (data as TaskDataType[]).filter((item) => item.createdBy._id === id);
+        const userBugsTasks = userTasks.filter((item) => item.type === "bug");
+        const userStoriesTasks = userTasks.filter((item) => item.type === "story");
 
+        const bugsInsights = CalculateTimeSpentInsight(userBugsTasks);
+        const storiesInsights = CalculateTimeSpentInsight(userStoriesTasks);
 
-        return res.json({ msg: 'tasks insights', payload: [] });
+        return res.json({
+            msg: 'chart insights',
+            payload: {
+                bugsInsights,
+                storiesInsights
+            }
+        });
     }
     catch (error) {
         return res.status(500).json({

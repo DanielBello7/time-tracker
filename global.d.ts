@@ -57,3 +57,15 @@ export interface AnalyticsResultDataType {
     storiesPercentage: number
     hoursPercentage: number
 }
+
+export interface ChartInsightDataType {
+    totalTimeSpentLastWeek: number;
+    totalTimeSpentPreviousWeek: number;
+    totalTimeSpentThisWeek: number;
+    percentage: number;
+}
+
+export interface ChartComponentProps {
+    storiesInsights: ChartInsightDataType
+    bugsInsights: ChartInsightDataType
+}

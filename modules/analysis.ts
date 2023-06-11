@@ -79,8 +79,9 @@ const CalculateTotalTaskTimeSpentForWeek = (data: TaskDataType[]) => {
     return response
 }
 
-const CalculateGeneralInsight = (data: TaskDataType[]) => {
+const CalculateTimeSpentInsight = (data: TaskDataType[]) => {
     const response = SortTaskIntoWeekPeriods(data);
+    const totalTimeSpentThisWeek = CalculateTotalTaskTimeSpentForWeek(response.currentWeek);
     const totalTimeSpentLastWeek = CalculateTotalTaskTimeSpentForWeek(response.lastWeek);
     const totalTimeSpentPreviousWeek = CalculateTotalTaskTimeSpentForWeek(response.perviousWeek);
 
@@ -89,13 +90,14 @@ const CalculateGeneralInsight = (data: TaskDataType[]) => {
     return {
         totalTimeSpentLastWeek: Math.floor(totalTimeSpentLastWeek),
         totalTimeSpentPreviousWeek: Math.floor(totalTimeSpentPreviousWeek),
+        totalTimeSpentThisWeek: Math.floor(totalTimeSpentThisWeek),
         percentage: Math.floor(differenceInPercent)
     }
 }
 
 export {
     SortTaskIntoWeekPeriods,
-    CalculateGeneralInsight,
+    CalculateTimeSpentInsight,
     CalculateStatsInsights,
     CalculateTotalTaskTimeSpentForWeek
 }
