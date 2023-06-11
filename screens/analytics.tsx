@@ -3,6 +3,21 @@ import { useApplicationData } from "@/context/data.context";
 import { useTaskData } from "@/context/tasks.context";
 import Loading from "@/components/loading";
 import React from "react";
+import LineGraphInsight from "@/components/graph";
+
+export default function Analytics() {
+    return (
+        <div className="flex flex-col h-full w-full overflow-hidden">
+            <div className="p-2 border-b border-black">
+                <h1 className="text-3xl font-bold">Insights</h1>
+            </div>
+            <div className="w-full flex flex-col grow overflow-scroll">
+                <AnalyticsInsight />
+                <LineGraphInsight />
+            </div>
+        </div>
+    )
+}
 
 function Insight(props: InsightDataType) {
     return (
@@ -29,7 +44,7 @@ function Insight(props: InsightDataType) {
     )
 }
 
-export default function Analytics() {
+function AnalyticsInsight() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
     const [error, setError] = React.useState<Error | null>(null);
@@ -55,11 +70,11 @@ export default function Analytics() {
     }, [user, tasks]);
 
     return (
-        <div className="flex flex-col h-full w-full overflow-hidden">
-            <div className="p-2 border-b border-black">
-                <h1 className="text-3xl font-bold">Insights</h1>
-            </div>
-            <div className="w-full flex grow overflow-scroll p-3">
+        <React.Fragment>
+            <h1 className="text-gray-500 font-bold uppercase p-9 pb-0">
+                Analyics Insights
+            </h1>
+            <div className="w-full flex overflow-scroll p-5 pt-0">
                 {
                     !isLoading && !isError && data.map((item, idx) => {
                         return <Insight {...item} key={idx} />
@@ -82,6 +97,6 @@ export default function Analytics() {
                     <div className="p-3 font-bold">Error: {error?.message}</div>
                 }
             </div>
-        </div>
+        </React.Fragment>
     )
 }
