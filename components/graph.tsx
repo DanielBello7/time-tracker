@@ -31,23 +31,17 @@ export default function LineGraphInsight() {
                 grid: {
                     display: true
                 }
+            },
+            x: {
+                beginAtZero: true
             }
         }
     }
 
     const labels = [
-        "January",
-        "Febuary",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "Previous Week",
+        "Last Week",
+        "This week",
     ];
 
     const colors = React.useMemo(() => {
@@ -72,13 +66,15 @@ export default function LineGraphInsight() {
         datasets: [
             {
                 label: 'Bugs',
-                data: [1, 1, 2, 5, 2, 8, 4, 8, 9, 10, 10, 12],
+                data: [4, 5, 10],
                 backgroundColor: `rgba(${colors.bugs.a}, ${colors.bugs.b}, ${colors.bugs.c}, ${colors.bugs.d})`,
+                borderColor: `rgba(${colors.bugs.a}, ${colors.bugs.b}, ${colors.bugs.c}, ${colors.bugs.d})`,
             },
             {
                 label: 'Stories',
-                data: [1, 2, 2, 2, 1, 6, 6, 3, 6, 10, 11, 12],
+                data: [1, 9, 12],
                 backgroundColor: `rgba(${colors.stories.a}, ${colors.stories.b}, ${colors.stories.c}, ${colors.stories.d})`,
+                borderColor: `rgba(${colors.stories.a}, ${colors.stories.b}, ${colors.stories.c}, ${colors.stories.d})`,
             },
         ]
     }), []);
