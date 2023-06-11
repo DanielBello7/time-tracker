@@ -7,12 +7,12 @@ import React from "react";
 function Insight(props: InsightDataType) {
     return (
         <div className="w-1/3 h-52 p-3">
-            <div className="w-full border h-full rounded bg-gray-50 p-3">
+            <div className="w-full flex flex-col border h-full rounded bg-gray-50 p-3">
                 <h1 className="font-bold text-3xl">
                     {props.title}
                 </h1>
 
-                <p className="fs-7 text-gray-500">
+                <p className="fs-7 mt-2 text-gray-500 flex">
                     {props.description}
                 </p>
 

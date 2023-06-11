@@ -12,7 +12,7 @@ export default function SidePanel() {
     }
 
     return (
-        <div className={`flex flex-col border border-blue-400 overflow-hidden ${sidePanel.isOpen ? "w-2/6" : "hidden"}`}>
+        <div className={`flex flex-col border border-blue-400 border-t-0 border-b-0 overflow-hidden ${sidePanel.isOpen ? "w-2/6" : "hidden"}`}>
             <div className="flex justify-between p-2 items-center border-b border-blue-400">
                 <h1 className="uppercase text-2xl font-bold">
                     {

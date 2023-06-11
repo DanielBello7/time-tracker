@@ -24,7 +24,7 @@ export default function Insights() {
             <div className='w-1/5 h-full border border-black'>
                 <SideBar />
             </div>
-            <div className="w-4/5 h-full border border-black">
+            <div className="w-4/5 h-full border border-black border-s-0">
                 {
                     screen === "insights"
                     && <Analytics />

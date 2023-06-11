@@ -115,9 +115,9 @@ const GenerateAnalyticsResult = (data: AnalyticsResultDataType) => {
             title: 'Stories Insight'
         },
         {
-            additionalInfo: `There have been a ${data.hoursPercentage}% ${data.hoursPercentage < 0 ? "decline" : "increase"} in the amount of time spent on tasks`,
+            additionalInfo: `There have been a ${data.hoursPercentage}% ${data.hoursPercentage < 0 ? "decline" : "increase"} on time spent on tasks`,
             _id: '3',
-            description: `This insight holds information about the total time spent on tasks`,
+            description: `This insight holds information about the total time spent on tasks, both bug tasks and stories tasks`,
             primaryFigure: `${data.hoursCompleted}`,
             subExpanatory: 'hours spent on tasks last week',
             title: 'Time Spent'

@@ -167,8 +167,8 @@ function LoginComponent(props: AuthenticationSubComponentProps) {
             return router.push("/dashboard");
         }
         catch (error) {
-            ToggleAlert(true, "error occrured");
-            console.log('here');
+            const res: any = (error as AxiosError).response?.data;
+            ToggleAlert(true, res.msg);
             props.setHide(false);
             return setIsLoading(false);
         }
