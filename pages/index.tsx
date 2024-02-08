@@ -92,7 +92,7 @@ function RegisterComponent(props: AuthenticationSubComponentProps) {
         catch (error) {
             props.setHide(false);
             const msg: any = (error as AxiosError).response?.data;
-            ToggleAlert(true, msg.msg)
+            ToggleAlert(true, msg?.msg)
             return setIsLoading(false);
         }
     }
@@ -168,7 +168,7 @@ function LoginComponent(props: AuthenticationSubComponentProps) {
         }
         catch (error) {
             const res: any = (error as AxiosError).response?.data;
-            ToggleAlert(true, res.msg);
+            ToggleAlert(true, res?.msg);
             props.setHide(false);
             return setIsLoading(false);
         }

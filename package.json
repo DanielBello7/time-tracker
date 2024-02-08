@@ -1,5 +1,5 @@
 {
-  "name": "7-time-tracker",
+  "name": "activity-tracker",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "deploy": "npm run build && pm2 startOrRestart ecosystem.config.cjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
@@ -16,18 +17,25 @@
     "@types/react": "18.2.9",
     "@types/react-chartjs-2": "^2.5.7",
     "@types/react-dom": "18.2.4",
+    "@types/react-icons": "^3.0.0",
     "@types/uuid": "^9.0.2",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "classnames": "^2.5.1",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
+    "framer-motion": "^11.0.3",
     "next": "13.4.4",
+    "next-auth": "^4.24.5",
+    "next-connect": "^1.0.0",
     "next-router-mock": "^0.9.6",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
+    "react-icons": "^5.0.1",
+    "swr": "^2.2.4",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.3",
     "uuid": "^9.0.0"
