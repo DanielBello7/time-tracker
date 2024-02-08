@@ -1,4 +1,4 @@
-import { UserDataType, TaskDataType } from '../global';
+import { UserDataType, TaskDataType } from '../types';
 
 const tempUsers: UserDataType[] = [
     {
