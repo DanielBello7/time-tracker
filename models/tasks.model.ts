@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import type { TASK_DOC } from "@/types/task.types";
 import paginate from "mongoose-paginate-v2";
 
-const TaskSchema = new mongoose.Schema({
+const TaskSchema = new mongoose.Schema<TASK_DOC>({
   type: {
     type: String,
     required: true,
@@ -25,6 +25,10 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  shortCode: {
+    type: Number,
+    required: true
+  },
   tags: [{
     type: String,
     default: []
@@ -35,7 +39,8 @@ const TaskSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Types.ObjectId,
-    ref: "users"
+    ref: "users",
+    required: true
   },
   dateFinished: {
     type: Date,
@@ -44,7 +49,7 @@ const TaskSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 TaskSchema.set("toJSON", {
-  transform(doc, ret) {
+  transform(_doc, ret) {
     delete ret.__v
   },
 });

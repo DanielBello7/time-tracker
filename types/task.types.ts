@@ -1,5 +1,6 @@
 import type { USER } from "./user.types";
 import type { Document } from "mongoose";
+import mongoose from "mongoose";
 
 export type TASK = {
   _id: string
@@ -9,6 +10,7 @@ export type TASK = {
   timeInterval: "seconds" | "minutes" | "hours"
   body: string
   tags: string[]
+  shortCode: number
   dateStarted: string | Date
   createdBy: USER
   createdAt: string | Date
@@ -24,8 +26,9 @@ export interface TASK_DOC extends Document {
   timeInterval: "seconds" | "minutes" | "hours"
   body: string
   tags: string[]
+  shortCode: number
   dateStarted: Date
-  createdBy: string
+  createdBy: typeof mongoose.Types.ObjectId
   createdAt: Date
   updatedAt: Date
   dateFinished: Date

@@ -7,6 +7,10 @@ const UserSchema = new mongoose.Schema<USER_DOC>({
     type: String,
     required: true
   },
+  avatar: {
+    type: String || null,
+    default: null
+  },
   position: {
     type: String,
     required: true
