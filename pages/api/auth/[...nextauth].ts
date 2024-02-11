@@ -1,12 +1,15 @@
 import type { NextAuthOptions } from "next-auth";
-import { sync_database_connection, async_database_connection } from "@/modules/database-connection";
+import { sync_database_connection } from "@/lib/database-connection";
 import { variables } from "@/constants";
 import Credentials from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
 import bcrypt from "bcrypt";
 import UserService from "@/services/users.service";
 
-async_database_connection();
+
+UserService.getUsers()
+  .then((e) => console.log(e))
+  .catch((ee) => console.log(ee));
 
 export const authenticationOptions: NextAuthOptions = {
   providers: [
@@ -19,9 +22,10 @@ export const authenticationOptions: NextAuthOptions = {
       async authorize(credentials): Promise<any> {
         try {
           const { email, password }: any = credentials;
-          const response = await UserService.findUserUsingEmail(email);
-          const confirm = bcrypt.compareSync(password, response.password);
-          if (confirm) return response;
+          console.log("here")
+          // const response = await UserService.findUserUsingEmail(email);
+          // const confirm = bcrypt.compareSync(password, response.password);
+          // if (confirm) return response;
           return null
         } catch (error) {
           return null;

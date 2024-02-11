@@ -3,7 +3,7 @@ import { variables } from "@/constants";
 import mongoose from "mongoose";
 import paginate from "mongoose-paginate-v2";
 import bcrypt from "bcrypt";
-import ensureError from "@/modules/ensure-error";
+import ensureError from "@/lib/ensure-error";
 
 const UserSchema = new mongoose.Schema<USER_DOC>({
   name: {

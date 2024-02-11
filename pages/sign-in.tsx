@@ -6,10 +6,6 @@ export default function SignInPage() {
 }
 
 SignInPage.getLayout = function (page: React.ReactElement) {
-  return (
-    <React.Fragment>
-      {page}
-    </React.Fragment>
-  )
+  return page
 }
 

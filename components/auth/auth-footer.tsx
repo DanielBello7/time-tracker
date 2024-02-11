@@ -31,9 +31,9 @@ const auth_links = [
 
 export default function AuthFooter() {
   return (
-    <div className="w-full border flex flex-wrap items-center justify-center">
+    <div className="w-full flex flex-wrap items-center justify-center">
       {auth_links.map((item) => (
-        <Button variant={"link"} key={item.id} className="text-gray-400"
+        <Button variant={"link"} key={item.id} className="text-gray-500"
           size={"sm"}>
           <Link href={item.href}>
             {item.title}

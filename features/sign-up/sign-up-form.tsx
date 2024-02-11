@@ -10,14 +10,13 @@ import {
 import * as React from "react";
 import AuthForm from "@/components/auth/auth-form";
 import FormInput from "@/components/auth/form-input";
-import AuthHeader from "@/components/auth/auth-header";
 
-export default function SignInForm() {
+export default function SignUpForm() {
   return (
-    <AuthForm type="sign-in">
+    <AuthForm type="sign-up">
       <Card>
         <CardHeader>
-          <CardTitle>Sign In</CardTitle>
+          <CardTitle>Sign Up</CardTitle>
           <CardDescription>
             Make changes to your account here. Click save when you're done.
           </CardDescription>
@@ -40,7 +39,7 @@ export default function SignInForm() {
           <Button className="w-full">Continue</Button>
         </CardFooter>
       </Card>
-    </AuthForm>
+    </AuthForm >
   )
 }
 
