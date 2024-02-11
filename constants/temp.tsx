@@ -1,6 +1,4 @@
-import { UserDataType, TaskDataType } from '../types';
-
-const tempUsers: UserDataType[] = [
+const tempUsers = [
     {
         _id: 'A',
         createdAt: new Date().toDateString(),
@@ -19,7 +17,7 @@ const tempUsers: UserDataType[] = [
     }
 ]
 
-const tempTasks: TaskDataType[] = [
+const tempTasks = [
     {
         _id: '1',
         body: 'Task to finish the user typing bug',
@@ -67,3 +65,4 @@ const tempTasks: TaskDataType[] = [
 ]
 
 export { tempTasks, tempUsers }
+

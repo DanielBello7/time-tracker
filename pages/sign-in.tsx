@@ -1,6 +1,15 @@
-export default function SignIn() {
+import SignIn from "@/features/sign-in";
+import * as React from "react";
+
+export default function SignInPage() {
+  return <SignIn />
+}
+
+SignInPage.getLayout = function (page: React.ReactElement) {
   return (
-    <div>Sign In</div>
+    <React.Fragment>
+      {page}
+    </React.Fragment>
   )
 }
 

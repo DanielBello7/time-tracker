@@ -1,9 +1,12 @@
-import mongoose from "mongoose";
 import type { USER_DOC } from "@/types/user.types";
+import { variables } from "@/constants";
+import mongoose from "mongoose";
 import paginate from "mongoose-paginate-v2";
+import bcrypt from "bcrypt";
+import ensureError from "@/modules/ensure-error";
 
 const UserSchema = new mongoose.Schema<USER_DOC>({
-  lastname: {
+  name: {
     type: String,
     required: true
   },
@@ -15,7 +18,7 @@ const UserSchema = new mongoose.Schema<USER_DOC>({
     type: String,
     required: true
   },
-  firstname: {
+  password: {
     type: String,
     required: true
   },
@@ -26,6 +29,10 @@ const UserSchema = new mongoose.Schema<USER_DOC>({
   isEmailVerified: {
     type: Boolean,
     default: false
+  },
+  allowNotifications: {
+    type: Boolean,
+    default: true
   },
   country: {
     type: String,
@@ -40,6 +47,18 @@ const UserSchema = new mongoose.Schema<USER_DOC>({
 UserSchema.set("toJSON", {
   transform(_doc, ret) {
     delete ret.__v;
+  }
+});
+
+UserSchema.pre("save", async function (next: mongoose.CallbackWithoutResultAndOptionalError) {
+  try {
+    const user: USER_DOC = this;
+    const password = await bcrypt.hash(user.password, variables.ENV.HASH);
+    user.password = password;
+    return next();
+  } catch (error) {
+    const err = ensureError(error);
+    next(err);
   }
 });
 
