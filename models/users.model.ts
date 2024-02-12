@@ -63,5 +63,6 @@ UserSchema.pre("save", async function (next: mongoose.CallbackWithoutResultAndOp
 });
 
 UserSchema.plugin(paginate);
-const UsersModel = mongoose.model<USER_DOC, mongoose.PaginateModel<USER_DOC>>("users", UserSchema);
+const initial = mongoose.models["users"] as unknown as mongoose.PaginateModel<USER_DOC, {}, {}>
+const UsersModel: mongoose.PaginateModel<USER_DOC, {}, {}> = initial || mongoose.model<USER_DOC, mongoose.PaginateModel<USER_DOC>>("users", UserSchema);
 export default UsersModel;

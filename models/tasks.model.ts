@@ -55,5 +55,6 @@ TaskSchema.set("toJSON", {
 });
 
 TaskSchema.plugin(paginate);
-const TasksModel = mongoose.model<TASK_DOC, mongoose.PaginateModel<TASK_DOC>>("tasks", TaskSchema);
+const initial = mongoose.models["tasks"] as unknown as mongoose.PaginateModel<TASK_DOC, {}, {}>
+const TasksModel = initial || mongoose.model<TASK_DOC, mongoose.PaginateModel<TASK_DOC>>("tasks", TaskSchema);
 export default TasksModel;

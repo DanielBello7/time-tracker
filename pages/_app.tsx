@@ -1,4 +1,5 @@
 import { SessionProvider } from "next-auth/react"
+import { Toaster } from "@/components/ui/sonner";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import "@/styles/globals.css";
@@ -18,6 +19,7 @@ export default function App(props: AppPropsWithLayout) {
     return Component.getLayout(
       <SessionProvider session={pageProps.session}>
         <Component {...pageProps} />
+        <Toaster />
       </SessionProvider>
     )
   }

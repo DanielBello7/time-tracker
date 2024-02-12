@@ -29,5 +29,6 @@ UploadSchema.set("toJSON", {
 });
 
 UploadSchema.plugin(paginate);
-const UploadsModel = mongoose.model<UPLOAD_DOC, mongoose.PaginateModel<UPLOAD_DOC>>("uploads", UploadSchema);
+const initial = mongoose.models["uploads"] as unknown as mongoose.PaginateModel<UPLOAD_DOC, {}, {}>
+const UploadsModel = initial || mongoose.model<UPLOAD_DOC, mongoose.PaginateModel<UPLOAD_DOC>>("uploads", UploadSchema);
 export default UploadsModel;

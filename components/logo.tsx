@@ -7,11 +7,12 @@ type LogoProps = {
 }
 
 export default function Logo({ size = "sm" }: LogoProps) {
-  const cn = classnames("border p-0", {
-    "w-[100px]": size === "lg",
-    "w-[90px]": size === "md",
-    "w-[80px]": size === "sm",
-  })
+  const cn = classnames("p-0", {
+    "w-[90px]": size === "lg",
+    "w-[80px]": size === "md",
+    "w-[70px]": size === "sm",
+  });
+
   return (
     <Image
       src={assets.logo}

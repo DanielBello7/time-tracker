@@ -1,19 +1,23 @@
 import { variables } from "@/constants";
 import mongoose from "mongoose";
 
-async function async_database_connection(): Promise<void> {
-  await mongoose.connect(variables.ENV.MONGO_DB_URL);
+type CachedType = {
+  conn: typeof mongoose | null
 }
 
-function sync_database_connection(): void {
-  new Promise((resolve, reject) => {
-    mongoose.connect(variables.ENV.MONGO_DB_URL)
-      .then(() => resolve(true))
-      .catch((error) => reject(error));
-  });
-}
-
-export {
-  async_database_connection,
-  sync_database_connection
+let cached: CachedType = {
+  conn: null
 };
+
+async function database_connection(): Promise<void> {
+  if (cached.conn) return
+  try {
+    const response = await mongoose.connect(variables.ENV.MONGO_DB_URL)
+    cached.conn = response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export default database_connection;
+

@@ -7,6 +7,8 @@ type FormInputProps = {
   defaultValue?: string
   title: string
   placeholder?: string
+  required?: boolean
+  isLoading?: boolean
   type?: "text" | "password" | "email"
 }
 
@@ -14,9 +16,11 @@ export default function FormInput(props: FormInputProps) {
   const {
     name,
     defaultValue,
+    required = false,
     placeholder,
     title,
-    type = "text"
+    type = "text",
+    isLoading = false,
   } = props;
 
   return (
@@ -25,7 +29,9 @@ export default function FormInput(props: FormInputProps) {
       <Input
         defaultValue={defaultValue}
         type={type}
+        required={required}
         name={name}
+        disabled={isLoading && true}
         id={name}
         placeholder={placeholder}
       />
