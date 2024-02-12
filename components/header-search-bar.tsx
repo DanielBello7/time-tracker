@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import * as React from "react";
 
-export default function SearchBar() {
+export default function HeaderSearchBar() {
   const onsubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const text = event.currentTarget.search.value;
