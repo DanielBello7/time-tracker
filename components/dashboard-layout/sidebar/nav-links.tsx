@@ -17,7 +17,7 @@ export const nav_links = [
       icon: <GrTasks />,
       id: "tasks",
       title: "Tasks",
-      href: "/dashboard/Tasks"
+      href: "/dashboard/tasks"
     },
     {
       icon: <MdFolderShared size={17} />,

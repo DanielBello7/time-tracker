@@ -1,21 +1,29 @@
-import * as React from "react";
+import { Separator } from "@radix-ui/react-select";
 import Sidebar from "./sidebar";
 import DashboardHeader from "./dashboard-header";
-import { Separator } from "@radix-ui/react-select";
+import * as React from "react";
+import classNames from "classnames";
 
 type DashboardLayoutProps = {
   children: React.ReactNode
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const main = classNames("w-full 2xl:container 2xl:p-0 2xl:border h-screen overflow-hidden flex");
+  const sidebar = classNames("hidden md:block md:w-3/12 xl:w-2/12 h-full");
+  const page = classNames("w-full grow flex flex-col md:w-9/12 xl:w-10/12 overflow-hidden");
   return (
-    <div className="w-full h-screen overflow-hidden flex">
-      <div className="hidden md:block md:w-3/12 xl:w-2/12"><Sidebar /></div>
-      <Separator className="border" />
-      <div className="w-full md:w-9/12 xl:w-10/12 flex flex-col">
-        <div><DashboardHeader /></div>
+    <div className={main}>
+      <div className={sidebar}>
+        <Sidebar />
+      </div>
+      <Separator className="hidden md:block border" />
+      <div className={page}>
+        <div className="w-full"><DashboardHeader /></div>
         <Separator className="border" />
-        <div className="flex grow">{children}</div>
+        <div className="flex grow overflow-hidden">
+          {children}
+        </div>
       </div>
     </div>
   )
