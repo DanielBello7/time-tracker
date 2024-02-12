@@ -1,7 +1,28 @@
-import logo from '@/public/next.svg';
 import logo_2 from '@/public/vercel.svg';
+import logo from '@/public/next.svg';
+
+import img_01 from "@/assets/Sample-0.svg";
+import img_02 from "@/assets/Sample-2.svg";
+import img_03 from "@/assets/Sample-3.svg";
+import img_04 from "@/assets/Sample-4.svg";
+import img_05 from "@/assets/Sample-5.svg";
+import img_06 from "@/assets/Sample-6.svg";
+import img_07 from "@/assets/Sample-7.svg";
+import img_08 from "@/assets/Sample-8.svg";
+import img_09 from "@/assets/Sample-9.svg";
 
 export {
     logo,
-    logo_2
+    logo_2,
+
+    img_01,
+    img_02,
+    img_03,
+    img_04,
+    img_05,
+    img_06,
+    img_07,
+    img_08,
+    img_09,
 }
+
