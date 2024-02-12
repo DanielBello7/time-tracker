@@ -35,10 +35,10 @@ export default React.memo(function UserImg({ img, fallbackText, size }: UserImgP
   const placeholder = selectable[Math.floor(Math.random() * 9)];
   const fallbackImg = <Image src={assets.img_01} alt="task-manager-img" />
 
-  const imgSize = classNames(`${size ? `w-[${size}] h-[${size}]` : ""}`, {
+  const imgSize = classNames({
     "uppercase": true,
-    "w-8 h-8": true
-  });
+    "w-10 h-10": true
+  }, `${size ? `w-[${size}] h-[${size}]` : ""}`);
 
   const getUserImg = React.useCallback(
     async () => {

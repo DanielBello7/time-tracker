@@ -34,7 +34,9 @@ export default function SidebarNav({
     <div className="w-full">
       {items.map((section) => (
         <nav className={cns} {...props} key={section.id}>
-          <p className="text-[0.6rem] text-gray-400 mb-3 tracking-tighter">{section.title}</p>
+          <p className="text-[0.6rem] text-gray-400 mb-3 tracking-tighter ps-2">
+            {section.title}
+          </p>
           {section.links.map((item) => (
             <Link
               className={cn(
