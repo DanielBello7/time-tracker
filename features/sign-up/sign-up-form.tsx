@@ -17,9 +17,11 @@ import { role_options } from "./role-options";
 import Spinner from "@/components/spinner";
 import axios from "axios";
 import ensureError from "@/lib/ensure-error";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
 
   const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,13 +38,13 @@ export default function SignUpForm() {
     }
     setIsLoading(true);
     try {
-      const response = await axios.post("/api/users", {
+      await axios.post("/api/users", {
         ...formData,
         phone: "unknown",
         country: "nigeria"
       });
       toast("Registration Complete", { description: "Proceed to Login" });
-      console.log(response.data);
+      router.replace("/sign-in");
     } catch (error) {
       const err = ensureError(error);
       toast("Error occured", { description: err.message });
@@ -64,7 +66,7 @@ export default function SignUpForm() {
             <FormInput
               title="Name"
               name="fullname"
-              defaultValue="john doe"
+              placeholder="John Doe"
               type="text"
               isLoading={isLoading}
               required
@@ -72,7 +74,7 @@ export default function SignUpForm() {
             <FormInput
               title="Email"
               name="email"
-              defaultValue="email@example.com"
+              placeholder="email@example.com"
               type="email"
               isLoading={isLoading}
               required

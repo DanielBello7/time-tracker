@@ -20,7 +20,7 @@ export const authenticationOptions: NextAuthOptions = {
           const { email, password }: any = credentials;
           const response = await UserService.findUserUsingEmail(email);
           const confirm = bcrypt.compareSync(password, response.password);
-          if (confirm) return response;
+          if (confirm) return response
           return null
         } catch (error) {
           return null;
@@ -39,7 +39,7 @@ export const authenticationOptions: NextAuthOptions = {
     async session({ session }) {
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, }) {
       if (user) token.user = user;
       return token;
     }
