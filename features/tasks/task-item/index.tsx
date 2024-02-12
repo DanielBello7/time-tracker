@@ -3,10 +3,14 @@ import { Badge } from "@/components/ui/badge";
 import TaskOptions from "./task-options";
 
 export default function TaskItem() {
-  const fakeText = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus itaque quibusdam hic? Nemo qui fuga labore nesciunt accusamus odit, id libero exercitationem.";
+  const fakeText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+  Natus itaque quibusdam hic? Nemo qui fuga labore nesciunt 
+  accusamus odit, id libero exercitationem.`;
+
   const date = new Date().toLocaleDateString("en-us", {
     dateStyle: "full"
   });
+
   return (
     <div className="w-full border flex flex-col justify-between p-2 px-3 rounded h-[330px]">
       <div className="w-full">
