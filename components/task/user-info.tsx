@@ -1,7 +1,7 @@
 import UserImg from "../user-img";
 
 type UserInfoProps = {
-  size?: string
+  size?: any
 }
 
 export default function UserInfo({ size }: UserInfoProps) {

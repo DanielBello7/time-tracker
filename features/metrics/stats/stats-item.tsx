@@ -10,7 +10,7 @@ export default function StatsItem() {
       <div className="space-y-1">
         <h1 className="text-3xl font-bold">41</h1>
         <p className="text-gray-400 text-xs">+20.1% from last week</p>
-        <p className="text-xs text-[#4891FF] tracking-wide">
+        <p className="text-xs text-blue-300 tracking-wide">
           This is an insight about the
           total amount of bugs completed
           last week
