@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { DrawerClose } from "@/components/ui/drawer"
 import Link from "next/link";
 
 type NavItem = {
@@ -29,16 +30,23 @@ export default function SidebarNav({
   const cns = cn(
     "flex space-x-2 flex-col space-x-0 space-y-1",
     className
-  )
+  );
+
+  const click = () => {
+    const element = document.getElementById("close-now")!;
+    element && element.click();
+  }
+
   return (
     <div className="w-full">
       {items.map((section) => (
         <nav className={cns} {...props} key={section.id}>
-          <p className="text-[0.6rem] text-gray-400 mb-3 tracking-tighter ps-2">
+          <p className="text-[0.6rem] text-gray-400 mb-1 tracking-tighter ps-2">
             {section.title}
           </p>
           {section.links.map((item) => (
             <Link
+              onClick={click}
               className={cn(
                 buttonVariants({ variant: "ghost" }),
                 pathname == item.href
