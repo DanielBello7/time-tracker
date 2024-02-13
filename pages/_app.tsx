@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import "@/styles/globals.css";
-import Layout from "@/components/layout";
+import Layout from "@/components/layout/layout";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode

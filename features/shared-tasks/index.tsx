@@ -1,5 +1,5 @@
 import SharedTasksHeader from "./shared-tasks-header";
-import DashboardScreenLayout from "@/components/dashboard-screen-layout";
+import DashboardScreenLayout from "@/components/layout/dashboard-screen-layout";
 import SharedTaskRenderer from "./shared-tasks-renderer";
 
 export default function SharedTasks() {

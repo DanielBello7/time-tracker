@@ -1,5 +1,5 @@
 import UserInfo from "@/components/task-elements/user-info";
-import SubInfo from "./sub-info";
+import SubInfo from "@/components/selected/sub-info";
 
 export default function TaskUserDetails() {
   return (
@@ -9,7 +9,7 @@ export default function TaskUserDetails() {
         Lorem ipsum dolor sit, amet consectetur adipisicing elit.
         Nemo explicabo nam voluptates, dignissimos.
       </p>
-      <UserInfo />
+      <UserInfo size="md" />
       <div className="my-5 space-y-3">
         <SubInfo
           msg="Thursday 12th July 2023"
@@ -19,10 +19,7 @@ export default function TaskUserDetails() {
           msg="Friday 22nd August 2022"
           title="task started at"
         />
-        <SubInfo
-          msg="24 Hours"
-          title="timespent"
-        />
+        <SubInfo msg="24 Hours" title="timespent" />
       </div>
     </div>
   )

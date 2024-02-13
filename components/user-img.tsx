@@ -10,10 +10,10 @@ import * as React from "react";
 type UserImgProps = {
   img?: string | null
   fallbackText?: string
-  size?: string
+  size?: "sm" | "md" | "lg"
 }
 
-export default React.memo(function UserImg({ img, fallbackText, size }: UserImgProps) {
+export default React.memo(function UserImg({ img, fallbackText, size = "sm" }: UserImgProps) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [downloaded, setDownloaded] = React.useState<string | null>(null);
   const [error, setError] = React.useState<Error | null>(null);
@@ -37,8 +37,10 @@ export default React.memo(function UserImg({ img, fallbackText, size }: UserImgP
 
   const imgSize = classNames({
     "uppercase": true,
-    "w-10 h-10": true
-  }, `${size ? `w-[${size}] h-[${size}]` : ""}`);
+    "w-8 h-8": size === "sm",
+    "w-10 h-10": size === "md",
+    "w-20 h-20": size === "lg",
+  });
 
   const getUserImg = React.useCallback(
     async () => {

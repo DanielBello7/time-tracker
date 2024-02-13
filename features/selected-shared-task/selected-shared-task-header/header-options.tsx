@@ -1,26 +1,26 @@
 import { Button } from "@/components/ui/button";
 import {
+  DropdownMenuSeparator,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuPortal,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import UserImg from "../user-img";
+import { FaEllipsisV } from "react-icons/fa";
 
-export default function UserMenu() {
+export default function SelectedSharedTaskHeaderOptions() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative w-8 h-8 rounded-full">
-          <UserImg size="sm" />
+        <Button variant="ghost" className="p-0 px-2">
+          <FaEllipsisV />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

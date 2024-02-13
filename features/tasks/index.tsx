@@ -1,5 +1,5 @@
 import TaskRenderer from "./task-renderer";
-import DashboardScreenLayout from "@/components/dashboard-screen-layout";
+import DashboardScreenLayout from "@/components/layout/dashboard-screen-layout";
 import TasksHeader from "./task-header";
 
 export default function Tasks() {
