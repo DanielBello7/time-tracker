@@ -1,4 +1,4 @@
-import DashboardLayout from "@/components/dashboard-layout";
+import DashboardLayout from "@/components/layout/dashboard-layout";
 import SelectedTask from "@/features/selected-task";
 import * as React from "react";
 

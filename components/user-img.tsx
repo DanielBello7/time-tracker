@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { assets } from "@/constants";
 import ensureError from "@/lib/ensure-error";

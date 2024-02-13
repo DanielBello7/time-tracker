@@ -13,7 +13,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import UserImg from "../user-img";
+import UserImg from "../../user-img";
 
 export default function UserMenu() {
   return (

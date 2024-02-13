@@ -1,12 +1,12 @@
 import TaskRenderer from "./task-renderer";
-import DashboardScreenLayout from "@/components/layout/dashboard-screen-layout";
+import ScreenLayout from "@/components/layout/screen-layout";
 import TasksHeader from "./task-header";
 
 export default function Tasks() {
   return (
-    <DashboardScreenLayout header={<TasksHeader />}>
+    <ScreenLayout Header={<TasksHeader />}>
       <TaskRenderer />
-    </DashboardScreenLayout>
+    </ScreenLayout>
   )
 }
 

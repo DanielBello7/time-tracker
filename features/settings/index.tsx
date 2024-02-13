@@ -1,4 +1,4 @@
-import DashboardScreenLayout from "@/components/layout/dashboard-screen-layout";
+import ScreenLayout from "@/components/layout/screen-layout";
 import SettingsHeader from "./settings-header";
 import AvatarUpdate from "./avatar-update";
 import Profile from "./profile";
@@ -7,7 +7,7 @@ import NotificationStatus from "./notification-status";
 
 export default function Settings() {
   return (
-    <DashboardScreenLayout header={<SettingsHeader />} useGrid={false} className="block lg:flex">
+    <ScreenLayout Header={<SettingsHeader />} useGrid={false} className="block lg:flex">
       <div className="w-full lg:w-1/2 py-10 px-2">
         <div className="mb-20">
           <h1 className="text-2xl">
@@ -41,6 +41,6 @@ export default function Settings() {
           <NotificationStatus />
         </div>
       </div>
-    </DashboardScreenLayout>
+    </ScreenLayout>
   )
 }

@@ -2,19 +2,38 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import * as React from "react";
 
-export default function HeaderSearchBar() {
+type HeaderSearchBarProps = {
+  isLoading?: boolean
+  submit?: (text: string) => void
+}
+
+function HeaderSearchBar({ isLoading, submit }: HeaderSearchBarProps) {
   const onsubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const text = event.currentTarget.search.value;
-    if (!text.trim()) return toast("Error occured", { description: "Type something.." });
+    if (!text.trim()) {
+      return toast("Error occured", {
+        description: "Type something.."
+      });
+    }
+    submit && submit(text);
   }
+
   return (
-    <form className="w-full" onSubmit={onsubmit}>
+    <form className="w-[250px] lg:w-[350px]" onSubmit={onsubmit}>
       <Input
+        placeholder="Search..."
         name="search"
         type="text"
-        placeholder="Search..."
+        disabled={isLoading && true}
       />
     </form>
   )
 }
+
+HeaderSearchBar.defaultProps = {
+  isLoading: false
+}
+
+
+export default HeaderSearchBar;

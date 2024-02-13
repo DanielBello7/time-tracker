@@ -2,14 +2,14 @@ import { Separator } from "@/components/ui/separator";
 import classNames from "classnames";
 
 type DashboardBodyLayoutProps = {
-  header?: React.ReactElement
+  Header?: React.ReactElement | (() => React.ReactElement)
   children?: React.ReactElement
   useGrid?: boolean
   className?: string
 }
 
-export default function DashboardScreenLayout({
-  header, children, useGrid = true, className
+export default function ScreenLayout({
+  Header, children, useGrid = true, className
 }: DashboardBodyLayoutProps) {
   const grid = classNames({
     "overflow-y-scroll overflow-x-hidden": true,
@@ -27,7 +27,7 @@ export default function DashboardScreenLayout({
 
   return (
     <div className="w-full flex flex-col grow overflow-hidden">
-      {header}
+      {typeof Header === "function" ? <Header /> : Header}
       <Separator className="border-b" />
       {
         useGrid
