@@ -13,7 +13,7 @@ export default function ScreenLayout({
 }: DashboardBodyLayoutProps) {
   const grid = classNames({
     "overflow-y-scroll overflow-x-hidden": true,
-    "w-full grow p-2": true,
+    "w-full grow p-3": true,
     "grid grid-cols-1 md:grid-cols-2": true,
     "lg:grid-cols-3": true,
     "xl:grid-cols-4 gap-1": true,
@@ -22,7 +22,7 @@ export default function ScreenLayout({
 
   const nogrid = classNames({
     "overflow-y-scroll overflow-x-hidden": true,
-    "w-full grow p-2": true
+    "w-full grow p-3": true
   }, className);
 
   return (

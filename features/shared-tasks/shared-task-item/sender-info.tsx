@@ -1,4 +1,4 @@
-import UserInfo from "@/components/task-elements/user-info";
+import UserInfo from "@/components/task/user-info";
 import { Badge } from "@/components/ui/badge";
 
 export default function SenderInfo() {

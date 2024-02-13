@@ -1,4 +1,4 @@
-import UserInfo from "@/components/task-elements/user-info";
+import UserInfo from "@/components/task/user-info";
 import SubInfo from "@/components/selected/sub-info";
 
 export default function TaskUserDetails() {

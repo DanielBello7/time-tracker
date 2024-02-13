@@ -20,7 +20,7 @@ function HeaderSearchBar({ isLoading, submit }: HeaderSearchBarProps) {
   }
 
   return (
-    <form className="w-[250px] lg:w-[350px]" onSubmit={onsubmit}>
+    <form className="w-[180px] lg:w-[350px]" onSubmit={onsubmit}>
       <Input
         placeholder="Search..."
         name="search"
