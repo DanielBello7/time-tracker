@@ -10,6 +10,7 @@ export default function SelectedTask() {
       <React.Fragment>
         <div className="w-full lg:w-2/3 py-10 px-3">
           <TaskDetails />
+          <TaskDetails />
         </div>
         <div className="w-full lg:w-1/3 py-12 px-3 lg:px-0">
           <TaskUserDetails />
