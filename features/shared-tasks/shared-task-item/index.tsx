@@ -1,6 +1,6 @@
 import SenderInfo from "./sender-info";
-import TaskBody from "@/components/task/task-body";
-import TaskFooter from "@/components/task/task-footer";
+import TaskBody from "./task-body";
+import TaskFooter from "./task-footer";
 import classNames from "classnames";
 
 export default function SharedTaskItem() {

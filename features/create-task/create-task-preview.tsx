@@ -1,5 +1,5 @@
 import SubInfo from "@/components/selected/sub-info";
-import UserInfo from "@/components/task/user-info";
+import UserInfo from "@/components/task-user-info";
 import Text from "@/components/text";
 import { Badge } from "@/components/ui/badge";
 

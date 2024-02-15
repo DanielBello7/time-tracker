@@ -10,7 +10,8 @@ type CreateTaskProps = {
   header?: (() => React.ReactElement)
 }
 
-export default function CreateTask({ defautValues, header }: CreateTaskProps) {
+export default function CreateTask(props: CreateTaskProps) {
+  const { defautValues, header } = props;
   return (
     <CreateTaskContextProvider defaultValue={defautValues}>
       <Container header={header ?? CreateTaskHeader} className="flex">

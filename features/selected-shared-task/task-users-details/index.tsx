@@ -1,5 +1,5 @@
 import SubInfo from "@/components/selected/sub-info";
-import UserInfo from "@/components/task/user-info";
+import UserInfo from "@/components/task-user-info";
 
 export default function TaskUsersDetails() {
   return (

@@ -1,4 +1,4 @@
-import SharedTaskOptions from "../../features/shared-tasks/shared-task-item/shared-task-options";
+import SharedTaskOptions from "./shared-task-options";
 import { Badge } from "@/components/ui/badge";
 
 export default function TaskBody() {
