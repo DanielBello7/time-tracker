@@ -1,9 +1,9 @@
 import CreateTask from "../create-task";
-import EditTaskHeaderOptions from "./edit-task-header/options";
+import EditTaskHeader from "./edit-task-header";
 
 export default function EditTask() {
   return (
-    <CreateTask header={EditTaskHeaderOptions} />
+    <CreateTask header={EditTaskHeader} />
   )
 }
 
