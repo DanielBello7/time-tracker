@@ -1,11 +1,11 @@
-import { useCreateTask } from "../create-context";
+import { useCreateTask } from "./create-context";
 import { Label } from "@/components/ui/label"
 import { RadioGroup } from "@/components/ui/radio-group";
 import Text from "@/components/text";
-import RadioItem from "./radio-item";
-import CreateInput from "./create-input";
+import FormRadioItem from "../../components/form/form-radio-item";
+import FormInput from "../../components/form/form-input";
 import * as React from "react";
-import CreateDatePicker from "./create-date-picker";
+import FormDatePicker from "../../components/form/form-date-picker";
 import FormSelect from "@/components/auth/form-select";
 import { Input } from "@/components/ui/input";
 
@@ -32,32 +32,32 @@ export default function CreateInputFields() {
       <div className="my-9 space-y-2">
         <Text type="sub">Task Type</Text>
         <RadioGroup defaultValue="bug" className="flex space-x-5">
-          <RadioItem title="Bug" value="bug" />
-          <RadioItem title="Story" value="story" />
+          <FormRadioItem title="Bug" value="bug" />
+          <FormRadioItem title="Story" value="story" />
         </RadioGroup>
       </div>
 
-      <CreateInput label="Task Title"
+      <FormInput label="Task Title"
         sub="Lorem ipsum dolor sit amet consectetur"
       />
 
-      <CreateInput label="Task Body" type="textarea"
+      <FormInput label="Task Body" type="textarea"
         sub="Lorem ipsum dolor sit amet consectetur"
       />
 
-      <CreateInput label="Task Tags"
+      <FormInput label="Task Tags"
         sub="Lorem ipsum dolor sit amet consectetur.
         ipsum dolor sit amet consectetur. Dolor sit
         Lorem ipsum dolor sit Lorem ipsum "
       />
 
-      <CreateDatePicker title="Date Started"
+      <FormDatePicker title="Date Started"
         sub="Lorem ipsum dolor sit amet consectetur.
         ipsum dolor sit amet consectetur. dolor sit
         Lorem ipsum dolor sit"
       />
 
-      <CreateDatePicker title="Date Finished"
+      <FormDatePicker title="Date Finished"
         sub="Lorem ipsum dolor sit amet consectetur.
         ipsum dolor sit amet consectetur. dolor sit
         Lorem ipsum dolor sit"

@@ -16,7 +16,7 @@ type CreateInputProps = {
   type?: "input" | "textarea"
 }
 
-export default function CreateInput(props: CreateInputProps) {
+export default function FormInput(props: CreateInputProps) {
   const {
     label,
     sub,

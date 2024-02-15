@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import Text from "@/components/text";
-import DatePicker from "./date-picker";
+import DatePicker from "../ui/date-picker";
 import * as React from "react";
 import classNames from "classnames";
 
@@ -12,7 +12,7 @@ type CreateDatePickerProps = {
   change?: (e: string) => void
 }
 
-export default function CreateDatePicker(props: CreateDatePickerProps) {
+export default function FormDatePicker(props: CreateDatePickerProps) {
   const {
     sub,
     title,

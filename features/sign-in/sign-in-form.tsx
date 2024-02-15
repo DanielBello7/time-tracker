@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import AuthForm from "@/components/auth/auth-form";
-import FormInput from "@/components/auth/form-input";
+import FormInput from "@/components/auth/auth-input";
 import sanitize from "@/lib/sanitize";
 import ensureError from "@/lib/ensure-error";
 import Spinner from "@/components/spinner";

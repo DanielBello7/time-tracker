@@ -6,7 +6,7 @@ type RadioItemProps = {
   value: string
 }
 
-export default function RadioItem({ title, value }: RadioItemProps) {
+export default function FormRadioItem({ title, value }: RadioItemProps) {
   return (
     <div className="flex items-center space-x-2 cursor-pointer">
       <RadioGroupItem value={value} id={value} />
