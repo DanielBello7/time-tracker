@@ -9,10 +9,10 @@ export default function CreateTask() {
   return (
     <ScreenLayout Header={CreateTaskHeader} useGrid={false} className="flex">
       <CreateTaskContextProvider>
-        <div className="border w-full md:w-7/12 py-10 overflow-scroll">
+        <div className="w-full md:w-11/12 lg:w-7/12">
           <CreateInputFields />
         </div>
-        <div className="border hidden md:block md:w-5/12 py-10 overflow-scroll">
+        <div className="hidden lg:block md:w-5/12">
           <CreateTaskPreview />
         </div>
       </CreateTaskContextProvider>

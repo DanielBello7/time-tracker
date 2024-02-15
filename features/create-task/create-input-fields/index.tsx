@@ -18,7 +18,7 @@ export default function CreateInputFields() {
   }
 
   return (
-    <form className="w-full md:w-8/12" onSubmit={onsubmit}>
+    <form className="w-full md:w-11/12 xl:w-8/12 py-10" onSubmit={onsubmit}>
       <div>
         <Text type="h1">Task Details</Text>
         <Text type="sub">
