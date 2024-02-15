@@ -1,8 +1,8 @@
 import Back from "@/components/back";
 import SelectedTaskHeaderOptions from "./header-options";
-import HeaderLayout from "@/components/layout/header-layout";
+import HeaderContainer from "@/components/header-container";
 
 export default function SelectedTaskHeader() {
-  return <HeaderLayout left={Back} right={SelectedTaskHeaderOptions} />
+  return <HeaderContainer left={Back} right={SelectedTaskHeaderOptions} />
 }
 

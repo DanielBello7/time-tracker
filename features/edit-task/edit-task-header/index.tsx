@@ -1,7 +1,7 @@
-import HeaderLayout from "@/components/layout/header-layout";
+import HeaderContainer from "@/components/header-container";
 import EditTaskHeaderOptions from "./options";
 
 export default function EditTaskHeader() {
-  return <HeaderLayout title="Edit a task" right={EditTaskHeaderOptions} />
+  return <HeaderContainer title="Edit a task" right={EditTaskHeaderOptions} />
 }
 

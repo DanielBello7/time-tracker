@@ -1,24 +1,13 @@
 import SharedTaskRenderer from "./shared-tasks-renderer";
 import SharedTasksHeader from "./shared-tasks-header";
-import EmptySharedTasks from "./empty-tasks";
 import * as React from "react";
-import Container from "@/components/layout/container";
-import ErrorComponent from "@/components/error-component";
+import Container from "@/components/container";
 
 export default function SharedTasks() {
   return (
-    <React.Fragment>
-      {
-        !true
-          ?
-          <Container header={SharedTasksHeader}>
-            <SharedTaskRenderer />
-          </Container>
-          :
-          // <EmptySharedTasks />
-          <ErrorComponent />
-      }
-    </React.Fragment>
+    <Container header={SharedTasksHeader} grid>
+      <SharedTaskRenderer />
+    </Container>
   )
 }
 

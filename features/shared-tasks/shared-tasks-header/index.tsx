@@ -1,11 +1,11 @@
 import HeaderSearchBar from "@/components/header-search-bar";
 import SharedTaskHeaderOptions from "./shared-tasks-header-options";
-import HeaderLayout from "@/components/layout/header-layout";
+import HeaderContainer from "@/components/header-container";
 import * as React from "react";
 
 export default function SharedTasksHeader() {
   return (
-    <HeaderLayout
+    <HeaderContainer
       title="Shared Tasks"
       right={
         <React.Fragment>

@@ -1,7 +1,7 @@
-import HeaderLayout from "@/components/layout/header-layout";
+import HeaderContainer from "@/components/header-container";
 import SettingsOptions from "./settings-options";
 
 export default function SettingsHeader() {
-  return <HeaderLayout title="Settings" right={SettingsOptions} />
+  return <HeaderContainer title="Settings" right={SettingsOptions} />
 }
 

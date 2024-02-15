@@ -6,7 +6,7 @@ type HeaderLayoutProps = {
   right: React.ReactNode | (() => React.ReactElement)
 }
 
-export default function HeaderLayout(props: HeaderLayoutProps) {
+export default function HeaderContainer(props: HeaderLayoutProps) {
   const {
     right: Right,
     left: Left,

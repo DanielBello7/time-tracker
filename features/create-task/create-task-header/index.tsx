@@ -1,7 +1,7 @@
-import HeaderLayout from "@/components/layout/header-layout";
+import HeaderContainer from "@/components/header-container";
 import CreateTaskHeaderOptions from "./options";
 
 export default function CreateTaskHeader() {
-  return <HeaderLayout title="Create a new task" right={CreateTaskHeaderOptions} />
+  return <HeaderContainer title="Create a new task" right={CreateTaskHeaderOptions} />
 }
 

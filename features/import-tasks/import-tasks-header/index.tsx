@@ -1,8 +1,8 @@
 import ImportTasksHeaderOptions from "./options";
-import HeaderLayout from "@/components/layout/header-layout";
+import HeaderContainer from "@/components/header-container";
 import * as React from "react";
 
 export default function ImportTasksHeader() {
-  return <HeaderLayout right={ImportTasksHeaderOptions} title="Import Tasks" />
+  return <HeaderContainer right={ImportTasksHeaderOptions} title="Import Tasks" />
 }
 

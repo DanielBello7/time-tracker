@@ -8,6 +8,7 @@ type HeaderSearchBarProps = {
 }
 
 function HeaderSearchBar({ isLoading, submit }: HeaderSearchBarProps) {
+
   const onsubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const text = event.currentTarget.search.value;
