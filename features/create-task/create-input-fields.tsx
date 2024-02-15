@@ -6,7 +6,7 @@ import FormRadioItem from "../../components/form/form-radio-item";
 import FormInput from "../../components/form/form-input";
 import * as React from "react";
 import FormDatePicker from "../../components/form/form-date-picker";
-import FormSelect from "@/components/auth/form-select";
+import FormSelect from "@/components/form/form-select";
 import { Input } from "@/components/ui/input";
 
 export default function CreateInputFields() {

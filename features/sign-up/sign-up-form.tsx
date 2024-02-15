@@ -10,7 +10,7 @@ import {
 import * as React from "react";
 import AuthForm from "@/components/auth/auth-form";
 import FormInput from "@/components/auth/auth-input";
-import FormSelect from "@/components/auth/form-select";
+import FormSelect from "@/components/form/form-select";
 import sanitize from "@/lib/sanitize";
 import { toast } from "sonner";
 import { role_options } from "./role-options";
