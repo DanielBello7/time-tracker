@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 
 export default function CreateInputFields() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const { setTitle, title } = useCreateTask();
+  const { setTitle, title, body } = useCreateTask();
 
   const onsubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -43,6 +43,7 @@ export default function CreateInputFields() {
 
       <FormInput label="Task Body" type="textarea"
         sub="Lorem ipsum dolor sit amet consectetur"
+        value={body}
       />
 
       <FormInput label="Task Tags"

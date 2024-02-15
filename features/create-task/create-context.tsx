@@ -13,6 +13,7 @@ type CreateTaskContextType = {
 
 type CreateTaskContextProviderProps = {
   children: React.ReactNode
+  defaultValue?: string
 }
 
 const CreateTaskContext = React.createContext({} as CreateTaskContextType);
@@ -22,9 +23,10 @@ export function useCreateTask() {
 }
 
 export function CreateTaskContextProvider(props: CreateTaskContextProviderProps) {
+  const { defaultValue } = props;
   const [type, setType] = React.useState<"bug" | "story">("bug");
   const [title, setTitle] = React.useState("");
-  const [body, setBody] = React.useState("");
+  const [body, setBody] = React.useState(defaultValue ?? "");
   const [tags, setTags] = React.useState<string[]>([]);
   return (
     <CreateTaskContext.Provider value={{
