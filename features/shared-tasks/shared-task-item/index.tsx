@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 export default function SharedTaskItem() {
   const cn = classNames({
-    "p-2 px-3 rounded h-[370px]": true,
+    "p-3 px-3 rounded h-[400px]": true,
     "w-full border flex flex-col justify-between": true
   });
   return (

@@ -1,9 +1,6 @@
-"use client";
-
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { DrawerClose } from "@/components/ui/drawer"
 import Link from "next/link";
 
 type NavItem = {
@@ -23,9 +20,7 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: NavGroup[]
 }
 
-export default function SidebarNav({
-  className, items, ...props
-}: SidebarNavProps) {
+export default function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   const pathname = usePathname()
   const cns = cn(
     "flex space-x-2 flex-col space-x-0 space-y-1",
@@ -39,12 +34,12 @@ export default function SidebarNav({
 
   return (
     <div className="w-full">
-      {items.map((section) => (
-        <nav className={cns} {...props} key={section.id}>
+      {items.map((section, idx) => (
+        <nav className={cns} {...props} key={idx}>
           <p className="text-[0.6rem] text-gray-400 mb-1 tracking-tighter ps-2">
             {section.title}
           </p>
-          {section.links.map((item) => (
+          {section.links.map((item, idx2) => (
             <Link
               onClick={click}
               className={cn(
@@ -54,8 +49,9 @@ export default function SidebarNav({
                   : "hover:bg-transparent hover:underline",
                 "justify-start space-x-2"
               )}
-              key={item.id}
-              href={item.href}>
+              href={item.href}
+              key={`${idx}-${idx2}`}
+            >
               {item.icon}
               <span>{item.title}</span>
             </Link>
