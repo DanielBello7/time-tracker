@@ -4,7 +4,7 @@ import SharedTaskRenderer from "./shared-tasks-renderer";
 
 export default function SharedTasks() {
   return (
-    <ScreenLayout header={<SharedTasksHeader />}>
+    <ScreenLayout header={SharedTasksHeader}>
       <SharedTaskRenderer />
     </ScreenLayout>
   )
