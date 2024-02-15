@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 import TaskOptions from "./task-options";
 
 export default function TaskItem() {
@@ -29,9 +30,11 @@ export default function TaskItem() {
         </div>
       </div>
       <div className="flex justify-end">
-        <Button variant={"link"} className="underline"
-          type="button">More
-        </Button>
+        <Link href="/dashboard/tasks/1">
+          <Button variant={"link"} className="underline">
+            More
+          </Button>
+        </Link>
       </div>
     </div>
   )

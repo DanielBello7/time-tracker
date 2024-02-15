@@ -6,7 +6,7 @@ export default function TaskRenderer() {
   return (
     <React.Fragment>
       {
-        !true
+        true
           ?
           <>
             <TaskItem />

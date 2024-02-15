@@ -1,13 +1,22 @@
-import TaskRenderer from "./task-renderer";
-import ScreenLayout from "@/components/layout/screen-layout";
 import TasksHeader from "./task-header";
+import TaskRenderer from "./task-renderer";
 import EmptyTasks from "./empty-tasks";
+import * as React from "react";
+import Container from "@/components/layout/container";
 
 export default function Tasks() {
   return (
-    <ScreenLayout header={TasksHeader} useGrid={false}>
-      {false ? <TaskRenderer /> : <EmptyTasks />}
-    </ScreenLayout>
+    <React.Fragment>
+      {
+        !false
+          ?
+          <Container header={TasksHeader}>
+            <TaskRenderer />
+          </Container>
+          :
+          <EmptyTasks />
+      }
+    </React.Fragment>
   )
 }
 

@@ -6,7 +6,7 @@ export default function SharedTaskRenderer() {
   return (
     <React.Fragment>
       {
-        true
+        !true
           ?
           <>
             <SharedTaskLoading />

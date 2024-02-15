@@ -1,4 +1,4 @@
-import ScreenLayout from "@/components/layout/screen-layout";
+import Container from "@/components/layout/container";
 import SettingsHeader from "./settings-header";
 import AvatarUpdate from "./avatar-update";
 import Profile from "./profile";
@@ -7,7 +7,7 @@ import NotificationStatus from "./notification-status";
 
 export default function Settings() {
   return (
-    <ScreenLayout header={<SettingsHeader />} useGrid={false} className="block lg:flex">
+    <Container header={<SettingsHeader />} useGrid={false} className="block lg:flex">
       <div className="w-full lg:w-1/2 py-10 px-2">
         <div className="mb-20">
           <h1 className="text-2xl">
@@ -41,6 +41,6 @@ export default function Settings() {
           <NotificationStatus />
         </div>
       </div>
-    </ScreenLayout>
+    </Container>
   )
 }

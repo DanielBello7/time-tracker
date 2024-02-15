@@ -9,7 +9,7 @@ type DashboardBodyLayoutProps = {
   className?: string
 }
 
-export default function ScreenLayout({
+export default function Container({
   header: Header, children, useGrid = true, className
 }: DashboardBodyLayoutProps) {
   const grid = classNames({

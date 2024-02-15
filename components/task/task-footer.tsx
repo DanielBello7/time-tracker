@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export default function TaskFooter() {
   return (
     <div className="flex justify-end">
-      <Button variant={"link"} className="underline"
-        type="button">More
-      </Button>
+      <Link href="/dashboard/shared-tasks/1">
+        <Button variant={"link"} className="underline">
+          More
+        </Button>
+      </Link>
     </div>
   )
 }
