@@ -5,7 +5,7 @@ import * as React from "react";
 import classNames from "classnames";
 
 type DashboardLayoutProps = {
-  children: React.ReactNode
+  children: React.ReactNode[] | React.ReactNode
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {

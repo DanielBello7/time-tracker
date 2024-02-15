@@ -2,20 +2,36 @@ import * as React from "react";
 
 type HeaderLayoutProps = {
   title?: string
-  Left?: React.ReactNode | (() => React.ReactElement)
-  Right: React.ReactNode | (() => React.ReactElement)
+  left?: React.ReactNode | (() => React.ReactElement)
+  right: React.ReactNode | (() => React.ReactElement)
 }
 
 export default function HeaderLayout(props: HeaderLayoutProps) {
-  const { Right, Left, title } = props;
+  const {
+    right: Right,
+    left: Left,
+    title
+  } = props;
+
   return (
     <div className="w-full flex p-3 py-2 items-center justify-between">
       <div className="flex items-center space-x-1">
-        {title && <h1 className="text-xl">{title}</h1>}
-        {typeof Left === "function" ? <Left /> : Left}
+        {
+          title &&
+          <h1 className="text-xl">{title}</h1>
+        }
+        {
+          typeof Left === "function"
+            ? <Left />
+            : Left
+        }
       </div>
       <div className="flex items-center space-x-1">
-        {typeof Right === "function" ? <Right /> : Right}
+        {
+          typeof Right === "function"
+            ? <Right />
+            : Right
+        }
       </div>
     </div>
   )

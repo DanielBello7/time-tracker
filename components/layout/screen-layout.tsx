@@ -3,14 +3,14 @@ import classNames from "classnames";
 import * as React from "react";
 
 type DashboardBodyLayoutProps = {
-  Header?: React.ReactElement | (() => React.ReactElement)
-  children?: React.ReactElement
+  header?: React.ReactElement | (() => React.ReactElement)
+  children?: React.ReactElement[] | React.ReactElement
   useGrid?: boolean
   className?: string
 }
 
 export default function ScreenLayout({
-  Header, children, useGrid = true, className
+  header: Header, children, useGrid = true, className
 }: DashboardBodyLayoutProps) {
   const grid = classNames({
     "overflow-y-scroll overflow-x-hidden": true,

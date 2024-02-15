@@ -6,7 +6,7 @@ import SelectedSharedTaskHeaderOptions from "./selected-shared-task-header";
 
 export default function SelectedSharedTask() {
   return (
-    <ScreenLayout Header={SelectedSharedTaskHeaderOptions} useGrid={false} className="block lg:flex">
+    <ScreenLayout header={SelectedSharedTaskHeaderOptions} useGrid={false} className="block lg:flex">
       <React.Fragment>
         <div className="w-full lg:w-2/3 py-10 px-3">
           <TaskDetails />

@@ -7,7 +7,7 @@ export default function SharedTasksHeader() {
   return (
     <HeaderLayout
       title="Shared Tasks"
-      Right={
+      right={
         <React.Fragment>
           <HeaderSearchBar />
           <SharedTaskHeaderOptions />

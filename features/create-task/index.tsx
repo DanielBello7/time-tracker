@@ -13,7 +13,7 @@ type CreateTaskProps = {
 export default function CreateTask({ defautValues, header }: CreateTaskProps) {
   return (
     <CreateTaskContextProvider defaultValue={defautValues}>
-      <ScreenLayout Header={header ?? CreateTaskHeader} useGrid={false} className="flex">
+      <ScreenLayout header={header ?? CreateTaskHeader} useGrid={false} className="flex">
         <React.Fragment>
           <div className="w-full md:w-11/12 lg:w-7/12">
             <CreateInputFields />

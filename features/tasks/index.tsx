@@ -4,7 +4,7 @@ import TasksHeader from "./task-header";
 
 export default function Tasks() {
   return (
-    <ScreenLayout Header={<TasksHeader />}>
+    <ScreenLayout header={<TasksHeader />}>
       <TaskRenderer />
     </ScreenLayout>
   )

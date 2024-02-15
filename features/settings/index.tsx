@@ -7,7 +7,7 @@ import NotificationStatus from "./notification-status";
 
 export default function Settings() {
   return (
-    <ScreenLayout Header={<SettingsHeader />} useGrid={false} className="block lg:flex">
+    <ScreenLayout header={<SettingsHeader />} useGrid={false} className="block lg:flex">
       <div className="w-full lg:w-1/2 py-10 px-2">
         <div className="mb-20">
           <h1 className="text-2xl">

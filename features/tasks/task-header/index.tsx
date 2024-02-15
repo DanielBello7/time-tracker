@@ -7,7 +7,7 @@ export default function TasksHeader() {
   return (
     <HeaderLayout
       title="Tasks"
-      Right={
+      right={
         <React.Fragment>
           <HeaderSearchBar />
           <TaskHeaderOptions />

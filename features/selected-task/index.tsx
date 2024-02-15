@@ -6,7 +6,7 @@ import TaskUserDetails from "./task-user-details";
 
 export default function SelectedTask() {
   return (
-    <ScreenLayout Header={<SelectedTaskHeader />} useGrid={false} className="block lg:flex">
+    <ScreenLayout header={<SelectedTaskHeader />} useGrid={false} className="block lg:flex">
       <React.Fragment>
         <div className="w-full lg:w-2/3 py-10 px-3">
           <TaskDetails />

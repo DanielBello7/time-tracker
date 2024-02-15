@@ -6,7 +6,7 @@ import Graph from "./graph";
 
 export default function Metrics() {
   return (
-    <ScreenLayout Header={MetricsHeader} useGrid={false}>
+    <ScreenLayout header={MetricsHeader} useGrid={false}>
       <React.Fragment>
         <Stats />
         <Graph />
