@@ -67,16 +67,17 @@
 }
 
 @layer base {
-* {
-  @apply border-border;
-}
-body {
-  @apply bg-background text-foreground;
-}
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 28px;
   -ms-overflow-style: none;
   scrollbar-width: none;
   overscroll-behavior: none;

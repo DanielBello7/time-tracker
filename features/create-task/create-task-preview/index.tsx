@@ -18,7 +18,7 @@ export default function CreateTaskPreview() {
           Story
         </Badge>
 
-        <p className="text-gray-400">
+        <p className="text-[#64748B]">
           Lorem ipsum dolor sit, amet consectetur adipisicing
           elit. Explicabo sed nemo et deleniti porro harum
           vel impedit doloremque beatae, nisi eius quas laborum
@@ -57,3 +57,5 @@ export default function CreateTaskPreview() {
   )
 }
 
+// #0036C1 bold outline
+// #4891FF bg light
