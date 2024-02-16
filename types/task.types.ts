@@ -34,3 +34,26 @@ export interface TASK_DOC extends Document {
   dateFinished: Date
 }
 
+export type NEW_TASK = {
+  type: "story" | "bug"
+  title: string
+  timeSpent: number
+  timeInterval: "seconds" | "minutes" | "hours"
+  body: string
+  tags: string[]
+  dateStarted: string
+  dateFinished: string
+}
+
+export type UPDATE_TASK = {
+  type: "story" | "bug"
+  title: string
+  timeSpent: number
+  timeInterval: "seconds" | "minutes" | "hours"
+  body: string
+  tags: string[]
+  shortCode: number
+  dateStarted: string
+  dateFinished: string
+}
+
