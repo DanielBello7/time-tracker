@@ -9,7 +9,7 @@ import SharedTasksModel from "@/models/shared-tasks.model";
 database_connection();
 
 async function findTaskUsingId(id: string): Promise<TASK_DOC> {
-  const response = await TasksModel.findOne({ _id: id });
+  const response = await TasksModel.findOne({ _id: id }).populate(["createdBy"]);
   if (response) return response;
   throw new Error("task not found");
 }
@@ -30,6 +30,16 @@ async function getTasks(): Promise<PaginateResult<TASK>> {
   return await TasksModel.paginate({}, options);
 }
 
+async function getSharedTasks(): Promise<PaginateResult<SHARED_TASK>> {
+  const options: PaginateOptions = {
+    limit: 1000,
+    populate: ["sharedTo", "sharedBy", "taskId"]
+  }
+  const response = await SharedTasksModel.paginate({}, options);
+  if (response) return response as any
+  throw new Error("task not found");
+}
+
 async function getUserTasks(userId: string): Promise<PaginateResult<TASK>> {
   const options: PaginateOptions = {
     limit: 1000,
@@ -48,45 +58,62 @@ async function getUserSharedTasks(userId: string): Promise<PaginateResult<SHARED
 
 async function createNewTasks(userId: string, data: NEW_TASK[]): Promise<TASK[]> {
   await UsersService.findUserUsingId(userId);
-  const response = await Promise.all(data.map(async (item) => {
-    const newTask = await new TasksModel({
-      type: item.type,
-      title: item.title,
-      timeSpent: item.timeSpent,
-      timeInterval: item.timeInterval,
-      body: item.body,
-      tags: item.tags,
-      shortCode: Math.random() * 9999999,
-      dateStarted: item.dateStarted,
-      createdBy: userId,
-      dateFinished: item.dateFinished,
-    }).save();
-    const findItem = await TasksModel.findOne({ _id: newTask._id }, { populate: ["createdBy"] });
-    if (findItem) return findItem
-  })) as unknown;
 
-  return response as TASK[]
+  const response = await Promise.all(data.map(async (item) => {
+    try {
+      const newTask = await new TasksModel({
+        type: item.type,
+        title: item.title,
+        timeSpent: item.timeSpent,
+        timeInterval: item.timeInterval,
+        body: item.body,
+        tags: item.tags,
+        shortCode: Math.random() * 9999999,
+        dateStarted: item.dateStarted,
+        createdBy: userId,
+        dateFinished: item.dateFinished,
+      }).save();
+      const findItem = await TasksModel.findOne({ _id: newTask._id }).populate(["createdBy"]);
+      if (findItem) return findItem
+      throw new Error("error finding item");
+    } catch (error) { return false }
+  }));
+
+  const filtered = response.filter((item) => item !== false) as unknown;
+
+  return filtered as TASK[];
 }
 
-async function shareTasks(tasks: string[], from: string, to: string): Promise<SHARED_TASK[]> {
+async function createNewSharedTasks(tasks: string[], from: string, to: string): Promise<SHARED_TASK[]> {
   await UsersService.findUserUsingId(from);
+
   await UsersService.findUserUsingId(to);
 
   const response = await Promise.all(tasks.map(async (item) => {
     try {
       const findTask = await findTaskUsingId(item);
-      const res = await new SharedTasksModel({
+      return await new SharedTasksModel({
         sharedBy: from,
         sharedTo: to,
         taskId: findTask._id
       }).save();
-      return res;
+    } catch (error) { return false }
+  }));
+
+  const populated = await Promise.all(response.map(async (item) => {
+    if (item === false) return
+    try {
+      const found = await SharedTasksModel.findOne({ _id: item._id }).populate(["sharedTo", "sharedBy", "taskId"]);
+      if (found) return found;
+      throw new Error("not found");
     } catch (error) {
-      return false
+      return false;
     }
   }));
-  const filtered = response.filter((item) => item !== false) as unknown;
-  return filtered as SHARED_TASK[]
+
+  const filtered = populated.filter((item) => item !== false) as unknown;
+
+  return filtered as SHARED_TASK[];
 }
 
 async function updateTask(taskId: string, updates: UPDATE_TASK): Promise<TASK> {
@@ -95,7 +122,7 @@ async function updateTask(taskId: string, updates: UPDATE_TASK): Promise<TASK> {
     { _id: taskId },
     { $set: { ...updates } },
     { upsert: false, new: true }
-  ) as unknown;
+  ).populate(["createdBy"]) as unknown;
   return response as TASK
 }
 
@@ -113,8 +140,9 @@ async function deleteSharedTasks(taskIds: string[]): Promise<void> {
 
 export default {
   getTasks,
-  shareTasks,
+  createNewSharedTasks,
   deleteTasks,
+  getSharedTasks,
   deleteSharedTasks,
   getUserSharedTasks,
   createNewTasks,
