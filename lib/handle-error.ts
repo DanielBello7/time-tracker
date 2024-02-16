@@ -14,7 +14,8 @@ export default function handleError(
     stack: error.stack,
     context: error.context
   }
+  const { stack, context, ...rest } = response
   return res
-    .status(statusCode).json(response);
+    .status(statusCode).json(rest);
 }
 

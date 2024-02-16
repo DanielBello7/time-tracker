@@ -3,6 +3,8 @@ import type { PaginateResult } from "mongoose";
 import UsersModel from "@/models/users.model";
 import BaseError from "@/lib/base-error";
 import database_connection from "@/lib/database-connection";
+import validateId from "@/lib/validate-id";
+import objectSanitize from "@/lib/object-sanitize";
 
 database_connection();
 
@@ -21,6 +23,7 @@ async function createNewUser(data: NEW_USER): Promise<USER> {
 }
 
 async function findUserUsingId(id: string): Promise<USER> {
+  validateId(id);
   const response = await UsersModel.findOne({ _id: id });
   if (response) return response
   throw new BaseError(404, "user not registered");
@@ -37,22 +40,26 @@ async function getUsers(): Promise<PaginateResult<USER>> {
 }
 
 async function updateUserUsingId(id: string, updates: UPDATE_USER): Promise<USER> {
+  validateId(id);
   await findUserUsingId(id);
+  const sanitized = objectSanitize(updates);
   const response = await UsersModel.findOneAndUpdate(
-    { _id: id }, updates, { upsert: false, new: true }
+    { _id: id }, { $set: { ...sanitized } }, { upsert: false, new: true }
   );
   return response as USER;
 }
 
 async function updateUserUsingEmail(email: string, updates: UPDATE_USER): Promise<USER> {
   await findUserUsingEmail(email);
+  const sanitized = objectSanitize(updates);
   const response = await UsersModel.findOneAndUpdate(
-    { email }, { $set: { ...updates } }, { upsert: false, new: true }
+    { email }, { $set: { ...sanitized } }, { upsert: false, new: true }
   );
   return response as USER;
 }
 
 async function deleteUser(userId: string): Promise<void> {
+  validateId(userId);
   await UsersModel.deleteOne({ _id: userId });
 }
 
