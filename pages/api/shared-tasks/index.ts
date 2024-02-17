@@ -77,9 +77,11 @@ router.post(async (req, res) => {
     return total
   }, {});
 
-  const registered = results.registered.map(async (item: SHARED) => {
-    return await TasksService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
-  });
+  const registered = await Promise.all(results.registered.map(async (item: SHARED) => {
+    try {
+      return await TasksService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
+    } catch (error) { return false }
+  }));
 
 
   results.notRegistered.forEach((item: { taskId: string; sharedTo: string }) => {
@@ -95,7 +97,7 @@ router.post(async (req, res) => {
   return res.json({
     status: "OK",
     msg: results.notRegistered.length > 0 ? `task shared, but some ${results.notRegistered.length} users shared to aren't registered` : "tasks shared",
-    payload: registered
+    payload: registered.filter((item) => item !== false)
   });
 });
 

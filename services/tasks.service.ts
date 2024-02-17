@@ -139,13 +139,16 @@ async function createNewSharedTasks(taskId: string, from: string, toEmail: strin
   validateId(taskId);
 
   await UsersService.findUserUsingId(from);
-  await UsersService.findUserUsingEmail(toEmail);
+  const sharedToUser = await UsersService.findUserUsingEmail(toEmail);
+
+  if (sharedToUser._id === from)
+    throw new BaseError(400, "you cannot share to yourself");
 
   const response = await findTaskUsingId(taskId);
 
   const newShared = await new SharedTasksModel({
     sharedBy: from,
-    sharedTo: toEmail,
+    sharedTo: sharedToUser._id,
     taskId: response._id
   }).save();
 
