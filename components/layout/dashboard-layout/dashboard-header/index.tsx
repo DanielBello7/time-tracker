@@ -1,5 +1,5 @@
 import HeaderMenu from "./header-menu";
-import UserMenu from "../user-menu";
+import UserMenu from "./user-menu";
 
 export default function DashboardHeader() {
   return (

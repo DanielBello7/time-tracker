@@ -6,9 +6,12 @@ import classNames from "classnames";
 
 type DashboardLayoutProps = {
   children: React.ReactNode[] | React.ReactNode
+  user?: any
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function DashboardLayout({ children, user }: DashboardLayoutProps) {
+  console.log("user - layout", user);
+
   const main = classNames({
     "w-full 2xl:container": true,
     "2xl:p-0 md:border": true,

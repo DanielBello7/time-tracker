@@ -39,6 +39,10 @@ export default function SignInForm() {
         redirect: false
       });
       if (response?.error) throw response.error
+      toast("Login Successful", {
+        description: "Signing you in now....",
+        descriptionClassName: "text-green-300",
+      });
       router.replace("/dashboard");
     } catch (error) {
       const err = ensureError(error);
@@ -62,7 +66,7 @@ export default function SignInForm() {
               title="Email"
               required
               name="email"
-              defaultValue="user@example.com"
+              placeholder="user@example.com"
               type="email"
               isLoading={isLoading}
             />

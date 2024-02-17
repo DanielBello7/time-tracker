@@ -35,7 +35,10 @@ export default React.memo(function UserImg({ img, fallbackText, size = "sm" }: U
   ];
 
   const placeholder = selectable[Math.floor(Math.random() * 9)];
-  const fallbackImg = <Image src={assets.img_01} alt="task-manager-img" />
+  const fallbackImg = <Image src={(() => {
+    const a = (Math.floor(Math.random() * selectable.length))
+    return selectable[a]
+  })()} alt="task-manager-img" />
 
   const imgSize = classNames({
     "uppercase": true,
