@@ -7,6 +7,7 @@ import UsersService from "./users.service";
 import validateId from "@/lib/validate-id";
 import SharedTasksModel from "@/models/shared-tasks.model";
 import BaseError from "@/lib/base-error";
+import objectSanitize from "@/lib/object-sanitize";
 
 database_connection();
 
@@ -20,7 +21,7 @@ async function findTaskUsingId(id: string): Promise<TASK_DOC> {
   throw new BaseError(404, "task not found");
 }
 
-async function findSharedTask(sharedTaskId: string): Promise<SHARED_TASK> {
+async function findSharedTaskUsingId(sharedTaskId: string): Promise<SHARED_TASK> {
   validateId(sharedTaskId);
   const response = await SharedTasksModel.findOne({ _id: sharedTaskId }).populate([
     {
@@ -134,58 +135,45 @@ async function createNewTasks(userId: string, data: NEW_TASK[]): Promise<TASK[]>
   return filtered as TASK[];
 }
 
-async function createNewSharedTasks(tasks: string[], from: string, to: string): Promise<SHARED_TASK[]> {
+async function createNewSharedTasks(taskId: string, from: string, toEmail: string): Promise<SHARED_TASK> {
+  validateId(taskId);
+
   await UsersService.findUserUsingId(from);
+  await UsersService.findUserUsingEmail(toEmail);
 
-  await UsersService.findUserUsingId(to);
+  const response = await findTaskUsingId(taskId);
 
-  const response = await Promise.all(tasks.map(async (item) => {
-    try {
-      validateId(item);
-      const findTask = await findTaskUsingId(item);
-      return await new SharedTasksModel({
-        sharedBy: from,
-        sharedTo: to,
-        taskId: findTask._id
-      }).save();
-    } catch (error) { return false }
-  }));
+  const newShared = await new SharedTasksModel({
+    sharedBy: from,
+    sharedTo: toEmail,
+    taskId: response._id
+  }).save();
 
-  const populated = await Promise.all(response.map(async (item) => {
-    if (item === false) return
-    try {
-      const found = await SharedTasksModel.findOne({ _id: item._id }).populate([
-        {
-          path: "sharedTo",
-          select: "-password"
-        },
-        {
-          path: "sharedBy",
-          select: "-password"
-        },
-        {
-          path: "taskId",
-          select: "-password"
-        }
-      ]);
-      if (found) return found;
-      throw new Error("not found");
-    } catch (error) {
-      return false;
+  const found = await SharedTasksModel.findOne({ _id: newShared._id }).populate([
+    {
+      path: "sharedTo",
+      select: "-password"
+    },
+    {
+      path: "sharedBy",
+      select: "-password"
+    },
+    {
+      path: "taskId",
+      select: "-password"
     }
-  }));
-
-  const filtered = populated.filter((item) => item !== false) as unknown;
-
-  return filtered as SHARED_TASK[];
+  ]) as unknown;
+  if (found) return found as SHARED_TASK;
+  throw new BaseError(500, "Unable to find newly created shared task");
 }
 
 async function updateTask(taskId: string, updates: UPDATE_TASK): Promise<TASK> {
   validateId(taskId);
   await findTaskUsingId(taskId);
+  const santized = objectSanitize(updates);
   const response = await TasksModel.findOneAndUpdate(
     { _id: taskId },
-    { $set: { ...updates } },
+    { $set: { ...santized } },
     { upsert: false, new: true }
   ).populate([{ path: "createdBy", select: "-password" }]) as unknown;
   return response as TASK
@@ -216,6 +204,6 @@ export default {
   findTaskUsingId,
   getUserTasks,
   updateTask,
-  findSharedTask
+  findSharedTaskUsingId
 }
 

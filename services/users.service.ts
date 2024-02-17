@@ -8,6 +8,12 @@ import objectSanitize from "@/lib/object-sanitize";
 
 database_connection();
 
+async function confirmIfEmailIsRegistered(email: string): Promise<boolean> {
+  const response = await UsersModel.findOne({ email });
+  if (response) return true
+  return false
+}
+
 async function createNewUser(data: NEW_USER): Promise<USER> {
   const check = await UsersModel.findOne({ email: data.email });
   if (check) throw new BaseError(401, "user already registered");
@@ -76,5 +82,6 @@ export default {
   createNewUser,
   updateUserUsingEmail,
   updateUserUsingId,
+  confirmIfEmailIsRegistered
 }
 
