@@ -6,10 +6,10 @@ import TasksService from "@/services/tasks.service";
 
 const postBodySchema = joi.object({
   tasks: joi.array().items(joi.object({
-    type: joi.string().valid(["bug", "story"]).required(),
+    type: joi.string().valid("bug", "story").required(),
     title: joi.string().required(),
-    timespent: joi.number().required(),
-    timeInterval: joi.string().valid(["seconds", "minutes", "hours"]).required(),
+    timeSpent: joi.number().required(),
+    timeInterval: joi.string().valid("seconds", "minutes", "hours").required(),
     body: joi.string().required(),
     tags: joi.array().items(joi.string()).required(),
     dateStarted: joi.string().required(),
@@ -20,6 +20,10 @@ const postBodySchema = joi.object({
 
 const deleteBodySchema = joi.object({
   tasks: joi.array().items(joi.string()).required()
+});
+
+const querySchema = joi.object({
+  createdBy: joi.string()
 });
 
 // create task
@@ -39,6 +43,18 @@ router.post(async (req, res) => {
 // get tasks
 // http://localhost:3000/api/tasks [get]
 router.get(async (req, res) => {
+  const { error, value } = querySchema.validate(req.query);
+  if (error)
+    throw new BaseError(400, error.details[0].message);
+
+  if (value.createdBy) {
+    const response = await TasksService.getUserTasks(value.createdBy);
+    return res.json({
+      status: "OK",
+      msg: "success",
+      payload: response
+    });
+  }
   const response = await TasksService.getTasks();
   return res.json({
     status: "OK",

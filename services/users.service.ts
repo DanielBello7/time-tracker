@@ -19,7 +19,9 @@ async function createNewUser(data: NEW_USER): Promise<USER> {
     country: data.country,
     password: data.password
   }).save();
-  return response;
+  const findNewUser = await UsersModel.findOne({ _id: response._id }).select("-password");
+  if (findNewUser) return findNewUser;
+  throw new BaseError(500, "cannot find newly created user");
 }
 
 async function findUserUsingId(id: string): Promise<USER> {
@@ -36,7 +38,10 @@ async function findUserUsingEmail(email: string): Promise<USER> {
 }
 
 async function getUsers(): Promise<PaginateResult<USER>> {
-  return await UsersModel.paginate({}, { limit: 1000 });
+  return await UsersModel.paginate({}, {
+    limit: 1000,
+    select: "-password"
+  });
 }
 
 async function updateUserUsingId(id: string, updates: UPDATE_USER): Promise<USER> {
@@ -45,7 +50,7 @@ async function updateUserUsingId(id: string, updates: UPDATE_USER): Promise<USER
   const sanitized = objectSanitize(updates);
   const response = await UsersModel.findOneAndUpdate(
     { _id: id }, { $set: { ...sanitized } }, { upsert: false, new: true }
-  );
+  ).select("-password");
   return response as USER;
 }
 
@@ -54,7 +59,7 @@ async function updateUserUsingEmail(email: string, updates: UPDATE_USER): Promis
   const sanitized = objectSanitize(updates);
   const response = await UsersModel.findOneAndUpdate(
     { email }, { $set: { ...sanitized } }, { upsert: false, new: true }
-  );
+  ).select("-password");
   return response as USER;
 }
 

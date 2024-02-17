@@ -52,7 +52,6 @@ export type UPDATE_TASK = {
   timeInterval: "seconds" | "minutes" | "hours"
   body: string
   tags: string[]
-  shortCode: number
   dateStarted: string
   dateFinished: string
 }

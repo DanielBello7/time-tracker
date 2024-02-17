@@ -12,7 +12,10 @@ database_connection();
 
 async function findTaskUsingId(id: string): Promise<TASK_DOC> {
   validateId(id);
-  const response = await TasksModel.findOne({ _id: id }).populate(["createdBy"]);
+  const response = await TasksModel.findOne({ _id: id }).populate({
+    path: "createdBy",
+    select: "-password"
+  });
   if (response) return response;
   throw new BaseError(404, "task not found");
 }
@@ -20,7 +23,18 @@ async function findTaskUsingId(id: string): Promise<TASK_DOC> {
 async function findSharedTask(sharedTaskId: string): Promise<SHARED_TASK> {
   validateId(sharedTaskId);
   const response = await SharedTasksModel.findOne({ _id: sharedTaskId }).populate([
-    "sharedTo", "sharedBy", "taskId"
+    {
+      path: "sharedTo",
+      select: "-password"
+    },
+    {
+      path: "sharedBy",
+      select: "-password"
+    },
+    {
+      path: "taskId",
+      select: "-password"
+    }
   ]);
   if (response) return response as any
   throw new BaseError(404, "task not found");
@@ -29,7 +43,7 @@ async function findSharedTask(sharedTaskId: string): Promise<SHARED_TASK> {
 async function getTasks(): Promise<PaginateResult<TASK>> {
   const options: PaginateOptions = {
     limit: 1000,
-    populate: ["createdBy"]
+    populate: [{ path: "createdBy", select: "-password" }],
   }
   return await TasksModel.paginate({}, options);
 }
@@ -37,7 +51,20 @@ async function getTasks(): Promise<PaginateResult<TASK>> {
 async function getSharedTasks(): Promise<PaginateResult<SHARED_TASK>> {
   const options: PaginateOptions = {
     limit: 1000,
-    populate: ["sharedTo", "sharedBy", "taskId"]
+    populate: [
+      {
+        path: "sharedTo",
+        select: "-password"
+      },
+      {
+        path: "sharedBy",
+        select: "-password"
+      },
+      {
+        path: "taskId",
+        select: "-password"
+      }
+    ]
   }
   const response = await SharedTasksModel.paginate({}, options);
   if (response) return response as any
@@ -48,7 +75,7 @@ async function getUserTasks(userId: string): Promise<PaginateResult<TASK>> {
   validateId(userId);
   const options: PaginateOptions = {
     limit: 1000,
-    populate: ["createdBy"]
+    populate: [{ path: "createdBy", select: "-password" }]
   }
   return await TasksModel.paginate({ createdBy: userId }, options);
 }
@@ -57,7 +84,20 @@ async function getUserSharedTasks(userId: string): Promise<PaginateResult<SHARED
   validateId(userId);
   const options: PaginateOptions = {
     limit: 1000,
-    populate: ["sharedTo", "sharedBy", "taskId"]
+    populate: [
+      {
+        path: "sharedTo",
+        select: "-password"
+      },
+      {
+        path: "sharedBy",
+        select: "-password"
+      },
+      {
+        path: "taskId",
+        select: "-password"
+      }
+    ]
   }
   return await SharedTasksModel.paginate({ sharedTo: userId }, options);
 }
@@ -75,12 +115,15 @@ async function createNewTasks(userId: string, data: NEW_TASK[]): Promise<TASK[]>
         timeInterval: item.timeInterval,
         body: item.body,
         tags: item.tags,
-        shortCode: Math.random() * 9999999,
+        shortCode: Math.floor(Math.random() * 9999999),
         dateStarted: item.dateStarted,
         createdBy: userId,
         dateFinished: item.dateFinished,
       }).save();
-      const findItem = await TasksModel.findOne({ _id: newTask._id }).populate(["createdBy"]);
+      const findItem = await TasksModel.findOne({ _id: newTask._id }).populate({
+        path: "createdBy",
+        select: "-password"
+      });
       if (findItem) return findItem
       throw new Error("error finding item");
     } catch (error) { return false }
@@ -111,7 +154,20 @@ async function createNewSharedTasks(tasks: string[], from: string, to: string): 
   const populated = await Promise.all(response.map(async (item) => {
     if (item === false) return
     try {
-      const found = await SharedTasksModel.findOne({ _id: item._id }).populate(["sharedTo", "sharedBy", "taskId"]);
+      const found = await SharedTasksModel.findOne({ _id: item._id }).populate([
+        {
+          path: "sharedTo",
+          select: "-password"
+        },
+        {
+          path: "sharedBy",
+          select: "-password"
+        },
+        {
+          path: "taskId",
+          select: "-password"
+        }
+      ]);
       if (found) return found;
       throw new Error("not found");
     } catch (error) {
@@ -131,7 +187,7 @@ async function updateTask(taskId: string, updates: UPDATE_TASK): Promise<TASK> {
     { _id: taskId },
     { $set: { ...updates } },
     { upsert: false, new: true }
-  ).populate(["createdBy"]) as unknown;
+  ).populate([{ path: "createdBy", select: "-password" }]) as unknown;
   return response as TASK
 }
 
