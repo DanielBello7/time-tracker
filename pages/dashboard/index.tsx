@@ -28,8 +28,6 @@ export default function DashboardPage() {
 }
 
 DashboardPage.getLayout = function (page: React.ReactElement) {
-	const a: any = this;
-	console.log("dashboard-page", page.props);
 	return (
 		<DashboardLayout>
 			{page}
