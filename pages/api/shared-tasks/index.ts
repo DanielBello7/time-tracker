@@ -22,6 +22,11 @@ const deleteBodySchema = joi.object({
   tasks: joi.array().items(joi.string()).required()
 });
 
+type SHARED = {
+  taskId: string
+  sharedTo: string
+}
+
 // get user shared tasks
 // http://localhost:3000/api/shared-tasks [get]
 // http://localhost:3000/api/shared-tasks?createdBy=:userId [get]
@@ -51,19 +56,46 @@ router.post(async (req, res) => {
   if (error)
     throw new BaseError(400, error.details[0].message);
 
-  const notRegistered = value.tasks.filter(async (item: { taskId: string; sharedTo: string }) => {
-    if (!(await UsersService.confirmIfEmailIsRegistered(item.sharedTo))) return item
-    await TasksService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
+  const userSharingTasks = await UsersService.findUserUsingId(value.sharedBy);
+
+  const filtered: SHARED[] = Array.from(new Set(value.tasks));
+
+  const seperatedPromises = filtered.map(async (current) => {
+    const check = await UsersService.confirmIfEmailIsRegistered(current.sharedTo)
+    return { check, ...current }
   });
 
-  const user = await UsersService.findUserUsingId(value.sharedBy);
+  const seperated = await Promise.all(seperatedPromises);
 
-  notRegistered.forEach((item: { taskId: string; sharedTo: string }) => {
+  const results = seperated.reduce((total: any, current: any) => {
+    const { check, ...rest } = current
+    if (!check) {
+      total.notRegistered = [...(total.notRegistered || []), rest]
+    } else {
+      total.registered = [...(total.registered || []), rest]
+    }
+    return total
+  }, {});
+
+  const registered = results.registered.map(async (item: SHARED) => {
+    return await TasksService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
+  });
+
+
+  results.notRegistered.forEach((item: { taskId: string; sharedTo: string }) => {
     sendEmail({
       subject: "New Shared Task",
       to: [{ email: item.sharedTo }],
-      textContent: `You've been shared an activity task by ${user.name}, ${user.email}. Please click the link below - ${item.taskId}`
+      textContent: `You've been shared an activity 
+      task by ${userSharingTasks.name}, ${userSharingTasks.email}. Please 
+      click the link below - ${item.taskId}`
     });
+  });
+
+  return res.json({
+    status: "OK",
+    msg: results.notRegistered.length > 0 ? `task shared, but some ${results.notRegistered.length} users shared to aren't registered` : "tasks shared",
+    payload: registered
   });
 });
 
