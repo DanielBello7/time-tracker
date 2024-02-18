@@ -1,10 +1,14 @@
 import { variables } from "@/constants";
 import { Tuple, configureStore } from "@reduxjs/toolkit";
 import userSlice from './user-slice';
+import tasksSlice from "./tasks-slice";
+import interfaceSlice from "./interface-slice";
 
 const store = configureStore({
   reducer: {
-    user: userSlice
+    tasks: tasksSlice,
+    user: userSlice,
+    interface: interfaceSlice
   },
   devTools: variables.NODE_ENV === "development",
   middleware: () => new Tuple()

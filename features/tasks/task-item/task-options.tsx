@@ -1,24 +1,24 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
   DropdownMenuSeparator,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DeleteTaskModal from "./delete-task-modal";
-import { FaEllipsisV } from "react-icons/fa";
+import DeleteTaskModal from "./delete-task-dialog";
+import { FaEllipsisV, FaAngleRight } from "react-icons/fa";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 
-export default function TaskOptions() {
+type TaskOptionsProps = {
+  _id: string
+}
+
+export default function TaskOptions({ _id }: TaskOptionsProps) {
   return (
     <AlertDialog>
       <DropdownMenu>
@@ -27,50 +27,31 @@ export default function TaskOptions() {
             <FaEllipsisV />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+        <DropdownMenuContent className="w-44">
           <DropdownMenuGroup>
+            <Link href={`/dashboard/tasks/${_id}`}>
+              <DropdownMenuItem>
+                Open
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/dashboard/tasks/edit/${_id}`}>
+              <DropdownMenuItem>
+                Edit
+                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem>
-              Profile
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Billing
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Settings
+              Export
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              Keyboard shortcuts
-              <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+              Share
+              <DropdownMenuShortcut><FaAngleRight /></DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email</DropdownMenuItem>
-                  <DropdownMenuItem>Message</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-            <DropdownMenuItem>
-              New Team
-              <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>GitHub</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuItem disabled>API</DropdownMenuItem>
+
           <DropdownMenuSeparator />
           <AlertDialogTrigger asChild>
             <DropdownMenuItem className="text-red-600">
@@ -80,7 +61,7 @@ export default function TaskOptions() {
           </AlertDialogTrigger>
         </DropdownMenuContent>
       </DropdownMenu>
-      <DeleteTaskModal />
+      <DeleteTaskModal id={_id} />
     </AlertDialog>
   )
 }

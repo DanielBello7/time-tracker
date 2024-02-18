@@ -3,10 +3,10 @@ import TasksHeader from "./task-header";
 import TaskRenderer from "./task-renderer";
 import * as React from "react";
 import Container from "@/components/container";
-import TaskLoading from "./task-loading";
 import Renderer from "@/components/renderer";
 import { useAppSelector } from "@/store/hooks";
 import useTasks from "./use-tasks";
+import TasksLoader from "./tasks-loader";
 
 export default function Tasks() {
 	const { _id } = useAppSelector((state) => state.user.user);
@@ -15,7 +15,7 @@ export default function Tasks() {
 
 	return (
 		<Container header={TasksHeader} grid>
-			<Renderer error={error} isLoading={isLoading} loader={<TaskLoading />}>
+			<Renderer error={error} isLoading={isLoading} loader={<TasksLoader />}>
 				{data && <TaskRenderer tasks={data.docs} />}
 			</Renderer>
 		</Container>

@@ -3,7 +3,7 @@ import type { USER } from "./user.types";
 import mongoose from "mongoose";
 
 export type SHARED_TASK = {
-  id: string
+  _id: string
   sharedBy: USER
   sharedTo: USER
   taskId: TASK
@@ -13,7 +13,7 @@ export type SHARED_TASK = {
 }
 
 export interface SHARED_TASK_DOC {
-  id: string
+  _id: string
   sharedBy: typeof mongoose.Types.ObjectId
   sharedTo: typeof mongoose.Types.ObjectId
   taskId: typeof mongoose.Types.ObjectId
