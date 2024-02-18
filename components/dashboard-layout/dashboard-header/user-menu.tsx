@@ -17,7 +17,7 @@ import Text from "@/components/text";
 import { useAppSelector } from "@/store/hooks";
 
 export default function UserMenu() {
-  const { } = useAppSelector((state) => state.user);
+  const { email, name } = useAppSelector((state) => state.user.user);
   return (
     <AlertDialog>
       <DropdownMenu>
@@ -28,8 +28,8 @@ export default function UserMenu() {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>
-            <Text type="md">My Account</Text>
-            <Text type="sub" className="font-normal">gokebello@gmail.com</Text>
+            <Text type="md" className="capitalize">{name}</Text>
+            <Text type="sub" className="font-normal">{email}</Text>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>

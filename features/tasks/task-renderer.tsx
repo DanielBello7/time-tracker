@@ -1,32 +1,17 @@
-import * as React from "react";
+import type { TASK } from "@/types/task.types";
 import TaskItem from "./task-item";
-import TaskLoading from "./task-loading";
+import * as React from "react";
 
-export default function TaskRenderer() {
+type TaskRendererProps = {
+  tasks?: TASK[]
+}
+
+export default function TaskRenderer({ tasks = [] }: TaskRendererProps) {
   return (
     <React.Fragment>
-      {
-        true
-          ?
-          <>
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-            <TaskItem />
-          </>
-          :
-          <>
-            <TaskLoading />
-            <TaskLoading />
-            <TaskLoading />
-            <TaskLoading />
-            <TaskLoading />
-            <TaskLoading />
-          </>
-      }
+      {tasks.map((item, idx) => (
+        <TaskItem {...item} key={idx} />
+      ))}
     </React.Fragment>
   )
 }
