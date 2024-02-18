@@ -9,8 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import AuthForm from "@/components/auth/auth-form";
-import FormInput from "@/components/auth/auth-input";
+import AuthForm from "@/components/authentication/auth-form";
+import FormInput from "@/components/authentication/auth-input";
 import sanitize from "@/lib/sanitize";
 import ensureError from "@/lib/ensure-error";
 import Spinner from "@/components/spinner";

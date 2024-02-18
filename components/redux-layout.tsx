@@ -1,16 +1,17 @@
-import store, { persistor } from "@/store";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
+import store from "@/store";
+import * as React from "react";
 
 type ReduxLayoutProps = {
   children: React.ReactNode | React.ReactNode[]
 }
+
 export default function ReduxLayout({ children }: ReduxLayoutProps) {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor} loading={null}>
+      <React.Fragment>
         {children}
-      </PersistGate>
+      </React.Fragment>
     </Provider>
   )
 }

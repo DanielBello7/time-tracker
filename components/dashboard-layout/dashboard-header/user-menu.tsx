@@ -14,8 +14,10 @@ import UserImg from "@/components/user-img";
 import LogoutDialog from "./logout-dialog";
 import Link from "next/link";
 import Text from "@/components/text";
+import { useAppSelector } from "@/store/hooks";
 
 export default function UserMenu() {
+  const { } = useAppSelector((state) => state.user);
   return (
     <AlertDialog>
       <DropdownMenu>

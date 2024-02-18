@@ -8,8 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import * as React from "react";
-import AuthForm from "@/components/auth/auth-form";
-import FormInput from "@/components/auth/auth-input";
+import AuthForm from "@/components/authentication/auth-form";
+import FormInput from "@/components/authentication/auth-input";
 import FormSelect from "@/components/form/form-select";
 import sanitize from "@/lib/sanitize";
 import { toast } from "sonner";

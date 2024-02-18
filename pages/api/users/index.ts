@@ -14,9 +14,23 @@ const postBodySchema = joi.object({
   position: joi.string().required()
 });
 
+const querySchema = joi.object({
+  email: joi.string().email()
+});
+
 // get users
 // http://localhost:3000/api/users [get]
-router.get(async (_, res) => {
+// http://localhost:3000/api/users?email={email} [get]
+router.get(async (req, res) => {
+  const { value } = querySchema.validate(req.query);
+  if (value) {
+    const response = await UsersService.findUserUsingEmail(value.email);
+    return res.json({
+      status: "OK",
+      msg: "success",
+      payload: response
+    });
+  }
   const response = await UsersService.getUsers();
   return res.json({
     status: "OK",

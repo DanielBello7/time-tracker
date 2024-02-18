@@ -1,4 +1,4 @@
-import AuthFooter from "@/components/auth/auth-footer";
+import AuthFooter from "@/components/authentication/auth-footer";
 import SignUpForm from "./sign-up-form";
 
 export default function SignUp() {

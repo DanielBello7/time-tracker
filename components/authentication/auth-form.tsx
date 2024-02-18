@@ -14,7 +14,7 @@ export default function AuthForm({ children, type }: AuthFormProps) {
         <Logo />
       </div>
 
-      <div className="w-full lg:w-[300px] py-10 px-2 md:px-0">
+      <div className="w-full sm:w-[300px] py-10 px-2 md:px-0">
         <AuthHeader current={type} />
         {children}
       </div>

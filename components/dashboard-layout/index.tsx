@@ -3,41 +3,37 @@ import Sidebar from "./sidebar";
 import DashboardHeader from "./dashboard-header";
 import * as React from "react";
 import classNames from "classnames";
+import LoadingScreen from "../loading-screen";
+import useResources from "./use-resources";
 
 type DashboardLayoutProps = {
-  children: React.ReactNode[] | React.ReactNode
+    children: React.ReactNode[] | React.ReactNode
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const main = classNames({
-    "w-full 2xl:container 2xl:p-0 md:border h-screen overflow-hidden flex": true
-  });
+    const { isLoading } = useResources();
 
-  const sidebar = classNames({
-    "hidden md:block md:w-3/12 xl:w-2/12 h-full": true
-  });
+    const main = classNames({
+        "w-full 2xl:container 2xl:p-0 md:border h-screen overflow-hidden flex": true
+    });
 
-  const page = classNames({
-    "md:w-9/12 xl:w-10/12": true,
-    "w-full h-full flex flex-col overflow-hidden": true
-  });
-
-  return (
-    <div className={main}>
-      <div className={sidebar}>
-        <Sidebar />
-      </div>
-      <Separator className="hidden md:block border" />
-      <div className={page}>
-        <div className="w-full">
-          <DashboardHeader />
+    if (isLoading) return <LoadingScreen />
+    return (
+        <div className={main}>
+            <div className={"hidden md:block md:w-3/12 xl:w-2/12 h-full"}>
+                <Sidebar />
+            </div>
+            <Separator className="hidden md:block border" />
+            <div className={"w-full h-full flex flex-col overflow-hidden md:w-9/12 xl:w-10/12"}>
+                <div className="w-full">
+                    <DashboardHeader />
+                </div>
+                <Separator className="border" />
+                <div className="flex flex-col grow overflow-hidden">
+                    {children}
+                </div>
+            </div>
         </div>
-        <Separator className="border" />
-        <div className="flex flex-col grow overflow-hidden">
-          {children}
-        </div>
-      </div>
-    </div>
-  )
+    )
 }
 
