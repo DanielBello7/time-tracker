@@ -20,7 +20,7 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: NavGroup[]
 }
 
-export default function SidebarNav({ className, items, ...props }: SidebarNavProps) {
+export default function SidebarNav({ className, items }: SidebarNavProps) {
   const pathname = usePathname()
   const cns = cn(
     "flex space-x-2 flex-col space-x-0 space-y-1",
@@ -35,7 +35,7 @@ export default function SidebarNav({ className, items, ...props }: SidebarNavPro
   return (
     <div className="w-full">
       {items.map((section, idx) => (
-        <nav className={cns} {...props} key={idx}>
+        <nav className={cns} key={idx}>
           <p className="text-[0.6rem] text-gray-400 mb-1 tracking-tighter ps-2">
             {section.title}
           </p>

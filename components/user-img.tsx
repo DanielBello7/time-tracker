@@ -17,6 +17,7 @@ type UserImgProps = {
 
 export default React.memo(function UserImg({ img, fallbackText, size = "sm" }: UserImgProps) {
   const [isLoading, setIsLoading] = React.useState(true);
+  const [rand, setRand] = React.useState(0);
   const [downloaded, setDownloaded] = React.useState<string | null>(null);
   const [error, setError] = React.useState<Error | null>(null);
   const storedImg = React.useMemo(() => img, [img]);
@@ -34,11 +35,9 @@ export default React.memo(function UserImg({ img, fallbackText, size = "sm" }: U
     assets.img_09,
   ];
 
-  const placeholder = selectable[Math.floor(Math.random() * 9)];
-  const fallbackImg = <Image src={(() => {
-    const a = (Math.floor(Math.random() * selectable.length))
-    return selectable[a]
-  })()} alt="task-manager-img" />
+  const placeholder = selectable[rand];
+
+  const fallbackImg = <Image src={placeholder} alt="task-manager-img" />
 
   const imgSize = classNames({
     "uppercase": true,
@@ -67,6 +66,7 @@ export default React.memo(function UserImg({ img, fallbackText, size = "sm" }: U
 
   React.useEffect(() => {
     getUserImg();
+    setRand(Math.floor(Math.random() * 9));
   }, [getUserImg]);
 
   return (
