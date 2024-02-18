@@ -21,7 +21,7 @@ const querySchema = joi.object({
 // get users
 // http://localhost:3000/api/users [get]
 // http://localhost:3000/api/users?email={email} [get]
-router.get(async (req, res) => {
+router.get("/api/users", async (req, res) => {
   const { value } = querySchema.validate(req.query);
   if (value) {
     const response = await UsersService.findUserUsingEmail(value.email);
@@ -41,7 +41,7 @@ router.get(async (req, res) => {
 
 // create new user
 // http://localhost:3000/api/users [post]
-router.post(async (req, res, _) => {
+router.post("/api/users", async (req, res, _) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error) throw new BaseError(400, error.details[0].message);
   const required: NEW_USER = {

@@ -1,6 +1,6 @@
-import { getSession, signOut } from "next-auth/react";
 import { useAppDispatch } from "@/store/hooks";
 import { setCurrentUser } from "@/store/user-slice";
+import { getSession } from "next-auth/react";
 import { toast } from "sonner";
 import axios from "axios";
 import * as React from "react";
@@ -19,7 +19,6 @@ export default function useResources() {
             dispatch(setCurrentUser(userinformation));
         } catch (error) {
             const err = ensureError(error);
-            signOut();
             toast("Error occured", { description: err.message });
         } finally {
             setIsLoading(false);

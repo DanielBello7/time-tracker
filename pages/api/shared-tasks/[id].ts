@@ -10,7 +10,7 @@ const querySchema = joi.object({
 
 // get user shared tasks
 // http://localhost:3000/api/shared-tasks/:id [get]
-router.get(async (req, res) => {
+router.get("/api/shared-tasks/:id", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

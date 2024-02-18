@@ -30,7 +30,7 @@ type SHARED = {
 // get user shared tasks
 // http://localhost:3000/api/shared-tasks [get]
 // http://localhost:3000/api/shared-tasks?createdBy=:userId [get]
-router.get(async (req, res) => {
+router.get("/api/shared-tasks", async (req, res) => {
   const { value } = querySchema.validate(req.query)
   if (value.createdBy) {
     const response = await TasksService.getUserSharedTasks(value.createdBy);
@@ -51,13 +51,12 @@ router.get(async (req, res) => {
 
 // create shared tasks
 // http://localhost:3000/api/shared-tasks [post]
-router.post(async (req, res) => {
+router.post("/api/shared-tasks", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
 
   const userSharingTasks = await UsersService.findUserUsingId(value.sharedBy);
-
   const filtered: SHARED[] = Array.from(new Set(value.tasks));
 
   const seperatedPromises = filtered.map(async (current) => {
@@ -83,7 +82,6 @@ router.post(async (req, res) => {
     } catch (error) { return false }
   }));
 
-
   results.notRegistered.forEach((item: { taskId: string; sharedTo: string }) => {
     sendEmail({
       subject: "New Shared Task",
@@ -104,7 +102,7 @@ router.post(async (req, res) => {
 
 // delete shared tasks
 // http://localhost:3000/api/shared-tasks [delete]
-router.delete(async (req, res) => {
+router.delete("/api/shared-tasks", async (req, res) => {
   const { error, value } = deleteBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

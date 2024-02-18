@@ -18,7 +18,7 @@ const querySchema = joi.object({
 
 // find user
 // http://localhost:3000/api/users/:userId [get]
-router.get(async (req, res) => {
+router.get("/api/users/:userId", async (req, res) => {
 	const { error, value } = querySchema.validate(req.query);
 	if (error)
 		throw new BaseError(400, error.details[0].message);
@@ -32,7 +32,7 @@ router.get(async (req, res) => {
 
 // delete user
 // http://localhost:3000/api/users/:userId [delete]
-router.delete(async (req, res) => {
+router.delete("/api/users/:userId", async (req, res) => {
 	const { value, error } = querySchema.validate(req.query);
 	if (error) throw new BaseError(401, error.details[0].message);
 	await UsersService.findUserUsingId(value.userId);
@@ -42,7 +42,7 @@ router.delete(async (req, res) => {
 
 // update user
 // http://localhost:3000/api/users/:userId [patch]
-router.patch(async (req, res) => {
+router.patch("/api/users/:userId", async (req, res) => {
 	const {
 		error: bodyError,
 		value: bodyValue

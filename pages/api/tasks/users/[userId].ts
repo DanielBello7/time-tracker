@@ -9,17 +9,15 @@ const querySchema = joi.object({
 });
 
 // get tasks
-// http://localhost:3000/api/tasks/users/:userid [get]
-router.get(async (req, res) => {
+// http://localhost:3000/api/tasks/users/:userId [get]
+router.get("/api/tasks/users/:userId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
-  console.log("here value yes", { value })
   if (error)
     throw new BaseError(400, error.details[0].message);
-
   const response = await TasksService.getUserTasks(value.userId);
   return res.json({
-    status: "OK",
     msg: "success",
+    status: "OK",
     payload: response
   });
 });

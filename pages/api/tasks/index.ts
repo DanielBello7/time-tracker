@@ -28,7 +28,7 @@ const querySchema = joi.object({
 
 // create task
 // http://localhost:3000/api/tasks [post]
-router.post(async (req, res) => {
+router.post("/api/tasks", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -43,7 +43,7 @@ router.post(async (req, res) => {
 // get tasks
 // http://localhost:3000/api/tasks [get]
 // http://localhost:3000/api/tasks?createdBy=userid [get]
-router.get(async (req, res) => {
+router.get("/api/tasks", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   console.log("here 1", { value })
   if (error)
@@ -67,7 +67,7 @@ router.get(async (req, res) => {
 
 // delete tasks 
 // http://localhost:3000/api/tasks [delete]
-router.delete(async (req, res) => {
+router.delete("/api/tasks", async (req, res) => {
   const { error, value } = deleteBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
