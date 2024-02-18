@@ -10,20 +10,16 @@ type DashboardLayoutProps = {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const main = classNames({
-    "w-full 2xl:container": true,
-    "2xl:p-0 md:border": true,
-    "h-screen overflow-hidden flex": true
+    "w-full 2xl:container 2xl:p-0 md:border h-screen overflow-hidden flex": true
   });
 
   const sidebar = classNames({
-    "hidden md:block": true,
-    "md:w-3/12 xl:w-2/12 h-full": true
+    "hidden md:block md:w-3/12 xl:w-2/12 h-full": true
   });
 
   const page = classNames({
-    "w-full h-full flex flex-col": true,
-    "overflow-hidden": true,
     "md:w-9/12 xl:w-10/12": true,
+    "w-full h-full flex flex-col overflow-hidden": true
   });
 
   return (

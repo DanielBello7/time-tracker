@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 import * as React from "react";
 import UsersService from "@/services/users.service";
-import DashboardLayout from "@/components/layout/dashboard-layout";
+import DashboardLayout from "@/components/dashboard-layout";
 import Metrics from "@/features/metrics";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
