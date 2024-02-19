@@ -12,8 +12,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FaEllipsisV } from "react-icons/fa";
+import { changeIsSelectable } from "@/store/interface-slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function TaskHeaderOptions() {
+  const { isSelectable } = useAppSelector((state) => state.interface)
+  const dispatch = useAppDispatch();
+
+  const select = () => {
+    dispatch(changeIsSelectable(isSelectable ? false : true));
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -31,8 +40,8 @@ export default function TaskHeaderOptions() {
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem>
-            Select
+          <DropdownMenuItem onClick={select}>
+            {isSelectable ? "Cancel Select" : "Select"}
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>

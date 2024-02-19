@@ -23,15 +23,15 @@ export default function TaskOptions({ _id }: TaskOptionsProps) {
     <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="p-0">
+          <Button variant="ghost" className="p-0 m-0">
             <FaEllipsisV />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-44">
+        <DropdownMenuContent className="w-44" align="end">
           <DropdownMenuGroup>
             <Link href={`/dashboard/tasks/${_id}`}>
               <DropdownMenuItem>
-                Open
+                View Details
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </DropdownMenuItem>
             </Link>

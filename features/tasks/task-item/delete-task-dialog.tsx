@@ -7,11 +7,11 @@ import {
   AlertDialogContent,
   AlertDialogAction
 } from "@/components/ui/alert-dialog";
-import deleteTask from "./delete-task";
-import { useAppDispatch } from "@/store/hooks";
+import deleteTask from "@/apis/delete-task";
+import ensureError from "@/lib/ensure-error";
 import { removeTasks } from "@/store/tasks-slice"
 import { toast } from "sonner";
-import ensureError from "@/lib/ensure-error";
+import { useAppDispatch } from "@/store/hooks";
 
 type DeleteTaskModalProps = {
   id: string
@@ -21,9 +21,10 @@ export default function DeleteTaskDialog({ id }: DeleteTaskModalProps) {
   const dispatch = useAppDispatch();
 
   const handleDelete = async () => {
-    deleteTask(id)
+    deleteTask([id])
       .then(() => {
         dispatch(removeTasks([id]));
+        toast("Task Deleted");
       })
       .catch((error) => {
         const err = ensureError(error);
