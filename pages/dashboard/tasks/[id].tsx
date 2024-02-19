@@ -2,9 +2,9 @@ import DashboardLayout from "@/components/dashboard-layout";
 import SelectedTask from "@/features/selected-task";
 import ensureError from "@/lib/ensure-error";
 import TasksService from "@/services/tasks.service";
-import type { TASK } from "@/types/task.types";
-import { GetServerSidePropsContext } from "next";
 import * as React from "react";
+import type { TASK } from "@/types/task.types";
+import type { GetServerSidePropsContext } from "next";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { params } = context

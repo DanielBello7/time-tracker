@@ -9,12 +9,30 @@ type HeaderSearchBarProps = {
   submit?: (text: string) => void
   initial?: string
   cancel?: () => void
+  value?: string
+  onchange?: (val: string) => void
 }
 
-function HeaderSearchBar({ initial, isLoading, submit, cancel }: HeaderSearchBarProps) {
+function HeaderSearchBar(props: HeaderSearchBarProps) {
+  const {
+    initial,
+    isLoading,
+    submit,
+    cancel,
+    onchange,
+    value
+  } = props;
 
   const onsubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (value && onchange) {
+      if (!value.trim()) {
+        return toast("Error occured", {
+          description: "Type something.."
+        });
+      }
+      submit && submit(value);
+    }
     const text = event.currentTarget.search.value;
     if (!text.trim()) {
       return toast("Error occured", {
@@ -28,12 +46,19 @@ function HeaderSearchBar({ initial, isLoading, submit, cancel }: HeaderSearchBar
     cancel && cancel();
   }
 
+  const handlechange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const text = event.currentTarget.value;
+    onchange && onchange(text);
+  }
+
   return (
     <form className="w-[180px] lg:w-[350px] border rounded-lg flex items-center" onSubmit={onsubmit}>
       <Input
         placeholder="Search..."
         name="search"
         className="border-0"
+        onChange={handlechange}
+        value={value}
         defaultValue={initial}
         type="text"
         disabled={isLoading && true}

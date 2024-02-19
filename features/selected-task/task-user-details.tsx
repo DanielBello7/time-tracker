@@ -1,5 +1,6 @@
-import SubInfo from "@/components/selected/sub-info";
+import SubInfo from "@/components/sub-info";
 import UserInfo from "@/components/task-user-info";
+import getDate from "@/lib/get-date";
 import type { TASK } from "@/types/task.types";
 
 type TaskUserDetailsProps = {
@@ -7,9 +8,6 @@ type TaskUserDetailsProps = {
 }
 
 export default function TaskUserDetails({ task }: TaskUserDetailsProps) {
-  const getDate = (val: string | Date) => {
-    return new Date(val).toLocaleDateString("en-us", { dateStyle: "full" });
-  }
   return (
     <div className="w-full">
       <h1 className="text-2xl">More</h1>

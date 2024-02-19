@@ -16,7 +16,9 @@ type GET_TASKS_FILTER = {
   type: string
 }
 
-async function searchUserTasksUsingTitle(userId: string, title: string): Promise<PaginateResult<TASK_DOC>> {
+async function searchUserTasksUsingTitle(
+  userId: string, title: string
+): Promise<PaginateResult<TASK_DOC>> {
   const options: PaginateOptions = {
     limit: 1000,
     populate: [{ path: "createdBy", select: "-password" }],
@@ -30,7 +32,9 @@ async function searchUserTasksUsingTitle(userId: string, title: string): Promise
   return response;
 }
 
-async function searchUserSharedTasksUsingName(userId: string, title: string): Promise<PaginateResult<SHARED_TASK_DOC>> {
+async function searchUserSharedTasksUsingName(
+  userId: string, title: string
+): Promise<PaginateResult<SHARED_TASK_DOC>> {
   const options: PaginateOptions = {
     limit: 1000,
     populate: [
@@ -55,7 +59,8 @@ async function searchUserSharedTasksUsingName(userId: string, title: string): Pr
     options
   );
   const adjusted = response.docs.filter((item) => item.taskId !== null) as any;
-  return response.docs = adjusted
+  response.docs = adjusted
+  return response
 }
 
 async function findTaskUsingId(id: string): Promise<TASK_DOC> {
@@ -147,7 +152,9 @@ async function getUserSharedTasks(userId: string): Promise<PaginateResult<SHARED
   return await SharedTasksModel.paginate({ sharedTo: userId }, options);
 }
 
-async function createNewTasks(userId: string, data: NEW_TASK[]): Promise<TASK[]> {
+async function createNewTasks(
+  userId: string, data: NEW_TASK[]
+): Promise<TASK[]> {
   validateId(userId);
   await UsersService.findUserUsingId(userId);
 
@@ -177,7 +184,9 @@ async function createNewTasks(userId: string, data: NEW_TASK[]): Promise<TASK[]>
   return response.filter((item) => item !== false) as any;
 }
 
-async function createNewSharedTasks(taskId: string, from: string, toEmail: string): Promise<SHARED_TASK> {
+async function createNewSharedTasks(
+  taskId: string, from: string, toEmail: string
+): Promise<SHARED_TASK> {
   validateId(taskId);
 
   await UsersService.findUserUsingId(from);
@@ -212,7 +221,9 @@ async function createNewSharedTasks(taskId: string, from: string, toEmail: strin
   throw new BaseError(500, "Unable to find newly created shared task");
 }
 
-async function updateTask(taskId: string, updates: UPDATE_TASK): Promise<TASK> {
+async function updateTask(
+  taskId: string, updates: UPDATE_TASK
+): Promise<TASK> {
   validateId(taskId);
   await findTaskUsingId(taskId);
   const santized = objectSanitize(updates);
@@ -238,9 +249,20 @@ async function deleteSharedTasks(taskIds: string[]): Promise<void> {
   }));
 }
 
+async function deleteUserTasks(userId: string): Promise<void> {
+  await TasksModel.deleteMany({ createdBy: userId });
+  await SharedTasksModel.deleteMany({ sharedBy: userId });
+}
+
+async function deleteTaskSharedToUser(userId: string): Promise<void> {
+  await SharedTasksModel.deleteMany({ sharedTo: userId });
+}
+
 export default {
   getTasks,
   createNewSharedTasks,
+  deleteUserTasks,
+  deleteTaskSharedToUser,
   deleteTasks,
   getSharedTasks,
   deleteSharedTasks,
