@@ -23,7 +23,8 @@ const deleteBodySchema = joi.object({
 });
 
 const querySchema = joi.object({
-  createdBy: joi.string()
+  createdBy: joi.string(),
+  type: joi.string().valid("bug", "story")
 });
 
 // create task
@@ -43,21 +44,12 @@ router.post("/api/tasks", async (req, res) => {
 // get tasks
 // http://localhost:3000/api/tasks [get]
 // http://localhost:3000/api/tasks?createdBy=userid [get]
+// http://localhost:3000/api/tasks?type=type [get]
 router.get("/api/tasks", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
-  console.log("here 1", { value })
   if (error)
     throw new BaseError(400, error.details[0].message);
-
-  if (value.createdBy) {
-    const response = await TasksService.getUserTasks(value.createdBy);
-    return res.json({
-      status: "OK",
-      msg: "success",
-      payload: response
-    });
-  }
-  const response = await TasksService.getTasks();
+  const response = await TasksService.getTasks(value);
   return res.json({
     status: "OK",
     msg: "success",

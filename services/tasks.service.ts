@@ -1,15 +1,57 @@
 import type { PaginateOptions, PaginateResult } from "mongoose";
 import type { NEW_TASK, TASK, TASK_DOC, UPDATE_TASK } from "@/types/task.types";
-import type { SHARED_TASK } from "@/types/shared-task.types";
+import type { SHARED_TASK, SHARED_TASK_DOC } from "@/types/shared-task.types";
 import TasksModel from "@/models/tasks.model";
-import database_connection from "@/lib/database-connection";
 import UsersService from "./users.service";
 import validateId from "@/lib/validate-id";
 import SharedTasksModel from "@/models/shared-tasks.model";
 import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
+import database_connection from "@/lib/database-connection";
 
 database_connection();
+
+type GET_TASKS_FILTER = {
+  createdBy: string
+  type: string
+}
+
+async function searchUserTasksUsingTitle(userId: string, title: string): Promise<PaginateResult<TASK_DOC>> {
+  const options: PaginateOptions = {
+    limit: 1000,
+    populate: [{ path: "createdBy", select: "-password" }],
+  }
+  const corrected = title.toLowerCase();
+  const response = await TasksModel.paginate({ createdBy: userId, title: { $regex: corrected } }, options);
+  return response;
+}
+
+async function searchUserSharedTasksUsingName(userId: string, title: string): Promise<PaginateResult<SHARED_TASK_DOC>> {
+  const corrected = title.toLowerCase();
+  const options: PaginateOptions = {
+    limit: 1000,
+    populate: [
+      {
+        path: "sharedTo",
+        select: "-password"
+      },
+      {
+        path: "sharedBy",
+        select: "-password"
+      },
+      {
+        path: "taskId",
+        select: "-password",
+        match: {
+          title: { $regex: corrected }
+        }
+      }
+    ]
+  }
+  const response = await SharedTasksModel.paginate({ sharedBy: userId }, options);
+  if (response) return response as any
+  throw new BaseError(404, "task not found");
+}
 
 async function findTaskUsingId(id: string): Promise<TASK_DOC> {
   validateId(id);
@@ -41,12 +83,13 @@ async function findSharedTaskUsingId(sharedTaskId: string): Promise<SHARED_TASK>
   throw new BaseError(404, "task not found");
 }
 
-async function getTasks(): Promise<PaginateResult<TASK>> {
+async function getTasks(filter: GET_TASKS_FILTER): Promise<PaginateResult<TASK>> {
   const options: PaginateOptions = {
     limit: 1000,
     populate: [{ path: "createdBy", select: "-password" }],
   }
-  return await TasksModel.paginate({}, options);
+  const sanitized = objectSanitize(filter);
+  return await TasksModel.paginate({ ...sanitized }, options);
 }
 
 async function getSharedTasks(): Promise<PaginateResult<SHARED_TASK>> {
@@ -207,6 +250,8 @@ export default {
   findTaskUsingId,
   getUserTasks,
   updateTask,
-  findSharedTaskUsingId
+  searchUserTasksUsingTitle,
+  findSharedTaskUsingId,
+  searchUserSharedTasksUsingName
 }
 

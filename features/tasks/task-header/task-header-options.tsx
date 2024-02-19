@@ -14,13 +14,23 @@ import {
 import { FaEllipsisV } from "react-icons/fa";
 import { changeIsSelectable } from "@/store/interface-slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useRouter } from "next/router";
 
 export default function TaskHeaderOptions() {
   const { isSelectable } = useAppSelector((state) => state.interface)
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const select = () => {
     dispatch(changeIsSelectable(isSelectable ? false : true));
+  }
+
+  const selectBug = () => {
+    router.push(`/dashboard/tasks?type=bug`);
+  }
+
+  const selectStory = () => {
+    router.push(`/dashboard/tasks?type=story`);
   }
 
   return (
@@ -37,16 +47,12 @@ export default function TaskHeaderOptions() {
           <Link href={"/dashboard/tasks/create"}>
             <DropdownMenuItem>
               New Task
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
           <DropdownMenuItem onClick={select}>
             {isSelectable ? "Cancel Select" : "Select"}
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Share
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             Delete All
@@ -57,8 +63,8 @@ export default function TaskHeaderOptions() {
         <DropdownMenuGroup>
           <DropdownMenuItem disabled>Types</DropdownMenuItem>
           <DropdownMenuSub>
-            <DropdownMenuItem>Stories</DropdownMenuItem>
-            <DropdownMenuItem>Bugs</DropdownMenuItem>
+            <DropdownMenuItem onClick={selectStory}>Stories</DropdownMenuItem>
+            <DropdownMenuItem onClick={selectBug}>Bugs</DropdownMenuItem>
           </DropdownMenuSub>
         </DropdownMenuGroup>
       </DropdownMenuContent>

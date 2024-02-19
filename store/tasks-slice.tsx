@@ -5,11 +5,15 @@ import type { TASK } from "@/types/task.types";
 type INITIAL_STATE = {
   tasks: TASK[]
   sharedTasks: SHARED_TASK[]
+  taskType: string
+  search: string
 }
 
 const initialState: INITIAL_STATE = {
   sharedTasks: [],
-  tasks: []
+  tasks: [],
+  taskType: "",
+  search: ""
 }
 
 const taskSlice = createSlice({
@@ -61,6 +65,18 @@ const taskSlice = createSlice({
         ...state,
         sharedTasks: []
       }
+    },
+    setTaskType: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        taskType: action.payload
+      }
+    },
+    setSearch: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        search: action.payload
+      }
     }
   }
 });
@@ -71,7 +87,9 @@ export const {
   removeSharedTasks,
   removeTasks,
   resetSharedTasks,
-  resetTasks
+  resetTasks,
+  setSearch,
+  setTaskType
 } = taskSlice.actions;
 export default taskSlice.reducer;
 
