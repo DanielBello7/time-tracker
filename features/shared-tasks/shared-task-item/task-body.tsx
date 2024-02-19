@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addSharedSelected, removeSharedSelected } from "@/store/interface-slice"
 import { Checkbox } from "@/components/ui/checkbox";
 import upperFirst from "@/lib/upper-first";
+import classNames from "classnames";
 
 type TaskBodyProps = {
   task: SHARED_TASK
@@ -19,6 +20,10 @@ export default function TaskBody({ task }: TaskBodyProps) {
     dateStyle: "full"
   });
 
+  const cn = classNames("flex items-center justify-between", {
+    "py-3": isSharedSelectable
+  })
+
   const handleChange = () => {
     if (sharedSelected.includes(_id)) {
       dispatch(removeSharedSelected([_id]));
@@ -29,7 +34,7 @@ export default function TaskBody({ task }: TaskBodyProps) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between">
+      <div className={cn}>
         <p className="text-[#4891FF] text-xs">
           #TASK {taskId.shortCode}
         </p>

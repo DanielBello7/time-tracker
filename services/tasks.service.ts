@@ -21,13 +21,16 @@ async function searchUserTasksUsingTitle(userId: string, title: string): Promise
     limit: 1000,
     populate: [{ path: "createdBy", select: "-password" }],
   }
-  const corrected = title.toLowerCase();
-  const response = await TasksModel.paginate({ createdBy: userId, title: { $regex: corrected } }, options);
+  const response = await TasksModel.paginate({
+    createdBy: userId,
+    title: {
+      $regex: title
+    }
+  }, options);
   return response;
 }
 
 async function searchUserSharedTasksUsingName(userId: string, title: string): Promise<PaginateResult<SHARED_TASK_DOC>> {
-  const corrected = title.toLowerCase();
   const options: PaginateOptions = {
     limit: 1000,
     populate: [
@@ -41,16 +44,18 @@ async function searchUserSharedTasksUsingName(userId: string, title: string): Pr
       },
       {
         path: "taskId",
-        select: "-password",
         match: {
-          title: { $regex: corrected }
+          title: { $regex: title }
         }
       }
     ]
   }
-  const response = await SharedTasksModel.paginate({ sharedBy: userId }, options);
-  if (response) return response as any
-  throw new BaseError(404, "task not found");
+  const response = await SharedTasksModel.paginate(
+    { sharedBy: userId },
+    options
+  );
+  const adjusted = response.docs.filter((item) => item.taskId !== null) as any;
+  return response.docs = adjusted
 }
 
 async function findTaskUsingId(id: string): Promise<TASK_DOC> {
@@ -75,8 +80,7 @@ async function findSharedTaskUsingId(sharedTaskId: string): Promise<SHARED_TASK>
       select: "-password"
     },
     {
-      path: "taskId",
-      select: "-password"
+      path: "taskId"
     }
   ]);
   if (response) return response as any
@@ -105,14 +109,12 @@ async function getSharedTasks(): Promise<PaginateResult<SHARED_TASK>> {
         select: "-password"
       },
       {
-        path: "taskId",
-        select: "-password"
+        path: "taskId"
       }
     ]
   }
   const response = await SharedTasksModel.paginate({}, options);
-  if (response) return response as any
-  throw new BaseError(404, "task not found");
+  return response as any;
 }
 
 async function getUserTasks(userId: string): Promise<PaginateResult<TASK>> {
@@ -138,8 +140,7 @@ async function getUserSharedTasks(userId: string): Promise<PaginateResult<SHARED
         select: "-password"
       },
       {
-        path: "taskId",
-        select: "-password"
+        path: "taskId"
       }
     ]
   }
@@ -173,9 +174,7 @@ async function createNewTasks(userId: string, data: NEW_TASK[]): Promise<TASK[]>
     } catch (error) { return false }
   }));
 
-  const filtered = response.filter((item) => item !== false) as unknown;
-
-  return filtered as TASK[];
+  return response.filter((item) => item !== false) as any;
 }
 
 async function createNewSharedTasks(taskId: string, from: string, toEmail: string): Promise<SHARED_TASK> {

@@ -22,7 +22,7 @@ export default function SharedTaskOptions({ id }: SharedTaskOptionsProps) {
     <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="p-0">
+          <Button variant="ghost" className="p-0 m-0">
             <FaEllipsisV />
           </Button>
         </DropdownMenuTrigger>
