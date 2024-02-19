@@ -15,8 +15,8 @@ export default function ImportTasks() {
     <Container header={ImportTasksHeader}>
       <ImportTaskTitle />
       <div className={grid}>
-        <TaskItem />
-        <TaskItem />
+        {/* <TaskItem />
+        <TaskItem /> */}
       </div>
     </Container>
   )

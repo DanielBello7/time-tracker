@@ -1,10 +1,15 @@
+import type { SHARED_TASK } from "@/types/shared-task.types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function TaskFooter() {
+type TaskFooterProps = {
+  task: SHARED_TASK
+}
+
+function TaskFooter({ task }: TaskFooterProps) {
   return (
     <div className="flex justify-end">
-      <Link href="/dashboard/shared-tasks/1">
+      <Link href={`/dashboard/shared-tasks/${task._id}`}>
         <Button variant={"link"} className="underline">
           More
         </Button>
@@ -13,3 +18,4 @@ export default function TaskFooter() {
   )
 }
 
+export default TaskFooter;
