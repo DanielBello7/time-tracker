@@ -11,7 +11,7 @@ import {
   DropdownMenuSub,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { FaEllipsisV } from "react-icons/fa";
+import { FaCheck, FaEllipsisV } from "react-icons/fa";
 import { changeIsSelectable } from "@/store/interface-slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
@@ -20,16 +20,25 @@ export default function TaskHeaderOptions() {
   const { isSelectable } = useAppSelector((state) => state.interface)
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { type } = router.query
 
   const select = () => {
     dispatch(changeIsSelectable(isSelectable ? false : true));
   }
 
   const selectBug = () => {
+    if (type && typeof type === "string" && type === "bug") {
+      const redirect = router.pathname.replace("type=bug", "");
+      return router.push(redirect);
+    }
     router.push(`/dashboard/tasks?type=bug`);
   }
 
   const selectStory = () => {
+    if (type && typeof type === "string" && type === "story") {
+      const redirect = router.pathname.replace("type=story", "");
+      return router.push(redirect);
+    }
     router.push(`/dashboard/tasks?type=story`);
   }
 
@@ -63,8 +72,18 @@ export default function TaskHeaderOptions() {
         <DropdownMenuGroup>
           <DropdownMenuItem disabled>Types</DropdownMenuItem>
           <DropdownMenuSub>
-            <DropdownMenuItem onClick={selectStory}>Stories</DropdownMenuItem>
-            <DropdownMenuItem onClick={selectBug}>Bugs</DropdownMenuItem>
+            <DropdownMenuItem onClick={selectStory}>
+              Stories
+              <DropdownMenuShortcut>
+                {type && typeof type === "string" && type === "story" && <FaCheck />}
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={selectBug}>
+              Bugs
+              <DropdownMenuShortcut>
+                {type && typeof type === "string" && type === "bug" && <FaCheck />}
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
           </DropdownMenuSub>
         </DropdownMenuGroup>
       </DropdownMenuContent>

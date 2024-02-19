@@ -6,14 +6,11 @@ import Container from "@/components/container";
 import Renderer from "@/components/renderer";
 import useTasks from "./use-tasks";
 import TasksLoader from "./tasks-loader";
-import { useRouter } from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
 export default function Tasks() {
-  const router = useRouter();
-  const { type, search } = router.query;
   const { _id } = useAppSelector((state) => state.user.user);
-  const { data, error, isFetching: isLoading } = useTasks(_id, type as any, search as any);
+  const { data, error, isFetching: isLoading } = useTasks(_id);
   if (error) return <ErrorComponent />
 
   return (

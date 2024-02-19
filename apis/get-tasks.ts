@@ -3,19 +3,18 @@ import type { PaginateResult } from "mongoose"
 import axios from "axios";
 
 export async function getTasks(
-  userId: string, search?: string, type?: string
+  userId: string, search?: string | null, type?: string | null
 ): Promise<PaginateResult<TASK>> {
-  if (search && search.trim().length > 1) {
-    const response = await axios.get(`/api/tasks?createdBy=${userId}&search=${search}`);
-    return response.data.payload;
+  let searchUrl = "";
+
+  if (search) {
+    searchUrl = `/api/tasks/users/${userId}?search=${search}`;
   } else {
-    if (type) {
-      const response = await axios.get(`/api/tasks?createdBy=${userId}&type=${type}`);
-      return response.data.payload;
-    }
-    const response = await axios.get(`/api/tasks?createdBy=${userId}`);
-    return response.data.payload;
+    if (type) searchUrl = `/api/tasks?createdBy=${userId}&type=${type}`;
+    else searchUrl = `/api/tasks?createdBy=${userId}`;
   }
+  const response = await axios.get(searchUrl);
+  return response.data.payload;
 }
 
 
