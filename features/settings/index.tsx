@@ -8,29 +8,48 @@ import NotificationStatus from "./notification-status";
 
 export default function Settings() {
   return (
-    <Container header={SettingsHeader} className="w-full md:w-8/12 lg:w-1/2 py-10">
+    <Container header={SettingsHeader} className="w-full md:w-8/12 lg:w-1/2 py-10 p-4">
       <div className="mb-20">
-        <Text type="h1">Profile</Text>
+        <Text type="h1" className="text-blue-400">Profile</Text>
         <p className="lg:pe-10 text-gray-400">
-          Make modifications to your account
-          here, updating avatar and change
-          essential components of your account.
+          Make modifications to your account here, updating avatar and
+          change essential components of your account.
         </p>
         <AvatarUpdate />
         <Profile />
       </div>
 
-      <div className="pb-44">
-        <Text>Notifications</Text>
+      <div className="pb-20">
+        <Text type="h1" className="text-blue-400">Notifications</Text>
         <p className="lg:pe-10 text-gray-400">
-          Make modifications to your
-          preferences relating to your
-          notifications, change this at anytime
-          based on if you want us
+          Make modifications to your preferences relating to your
+          notifications, change this at anytime based on if you want us
           sending you promotional emails.
         </p>
-        <EmailUpdate />
         <NotificationStatus />
+      </div>
+
+      <div className="pb-44">
+        <Text type="h1" className="text-blue-400">Security</Text>
+        <p className="lg:pe-10 text-gray-400">
+          Update your email attached to your
+          account as well as your account password here
+        </p>
+        <div className="my-10">
+          <Text>Email updates</Text>
+          <p className="lg:pe-10 text-gray-400 text-sm">
+            Update your email details
+          </p>
+          <EmailUpdate />
+        </div>
+
+        <div>
+          <Text>Change Password</Text>
+          <p className="lg:pe-10 text-gray-400 text-sm">
+            Update your account password
+          </p>
+          <EmailUpdate />
+        </div>
       </div>
     </Container>
   )
