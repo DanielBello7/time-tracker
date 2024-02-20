@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { USER } from "@/types/user.types";
+import type { DeepPartial } from "./types";
+import updateObject from "@/lib/update-object";
 
 type INITIAL_STATE = {
 	user: USER
@@ -18,10 +20,17 @@ const userSlice = createSlice({
 		},
 		removeCurrentUser: (state) => {
 			return { ...state, user: {} as USER }
+		},
+		updateUser: (state, action: PayloadAction<DeepPartial<USER>>) => {
+			const updated = updateObject(state.user, action.payload);
+			return {
+				...state,
+				user: updated
+			}
 		}
 	}
 });
 
-export const { setCurrentUser, removeCurrentUser } = userSlice.actions;
+export const { setCurrentUser, removeCurrentUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;
 

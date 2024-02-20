@@ -8,14 +8,13 @@ import NotificationStatus from "./notification-status";
 
 export default function Settings() {
   return (
-    <Container header={SettingsHeader} className="w-full lg:w-1/2 py-10">
+    <Container header={SettingsHeader} className="w-full md:w-8/12 lg:w-1/2 py-10">
       <div className="mb-20">
         <Text type="h1">Profile</Text>
         <p className="lg:pe-10 text-gray-400">
-          Lorem ipsum dolor sit
-          amet consectetur, adipisicing elit.
-          Laboriosam delectus, expedita et a iusto sit
-          explicabo impedit.
+          Make modifications to your account
+          here, updating avatar and change
+          essential components of your account.
         </p>
         <AvatarUpdate />
         <Profile />
@@ -24,10 +23,11 @@ export default function Settings() {
       <div className="pb-44">
         <Text>Notifications</Text>
         <p className="lg:pe-10 text-gray-400">
-          Lorem ipsum dolor sit
-          amet consectetur, adipisicing elit.
-          Laboriosam delectus, expedita et a iusto sit
-          explicabo impedit.
+          Make modifications to your
+          preferences relating to your
+          notifications, change this at anytime
+          based on if you want us
+          sending you promotional emails.
         </p>
         <EmailUpdate />
         <NotificationStatus />

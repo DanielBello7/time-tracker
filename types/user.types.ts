@@ -44,4 +44,5 @@ export type UPDATE_USER = {
   position?: string
   name?: string
   country?: string
+  allowNotifications?: boolean
 }
