@@ -1,55 +1,51 @@
 import {
+  AlertDialogDescription,
+  AlertDialogAction,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
   AlertDialogCancel,
+  AlertDialogTitle,
   AlertDialogContent,
-  AlertDialogAction
 } from "@/components/ui/alert-dialog";
-import deleteTask from "@/apis/delete-task";
 import ensureError from "@/lib/ensure-error";
-import { removeTasks } from "@/store/tasks-slice"
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
-import { useAppDispatch } from "@/store/hooks";
+import { resetTasks } from "@/store/tasks-slice";
 import { Separator } from "@/components/ui/separator";
+import deleteAllTasks from "@/apis/deleta-all-tasks";
 
-type DeleteTaskModalProps = {
-  id: string
-}
-
-export default function DeleteTaskDialog({ id }: DeleteTaskModalProps) {
+export default function DeleteAllTasksDialog() {
+  const { _id } = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
 
-  const handleDelete = async () => {
-    deleteTask([id])
+  const handleDeleteAll = () => {
+    deleteAllTasks(_id)
       .then(() => {
-        dispatch(removeTasks([id]));
-        toast("Task Deleted");
+        dispatch(resetTasks());
+        toast("All Task Deleted");
       })
       .catch((error) => {
         const err = ensureError(error);
-        toast("Error occured", { description: err.message });
+        toast("Error Occured", { description: err.message });
       });
   }
+
   return (
     <AlertDialogContent className="w-full md:w-[320px] p-0">
       <AlertDialogHeader className="p-5">
-        <AlertDialogTitle className="text-center">
-          Are you absolutely sure?
-        </AlertDialogTitle>
+        <AlertDialogTitle className="text-center">Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription className="text-center">
-          This action cannot be undone. This will permanently delete your
+          This action cannot be undone. This will permanently delete all tasks from your
           account and remove your data from our servers.
         </AlertDialogDescription>
       </AlertDialogHeader>
-      <AlertDialogFooter className="mt-2 border-t space-x-0">
+      <AlertDialogFooter className="border-t space-x-0">
         <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
           Cancel
         </AlertDialogCancel>
         <Separator orientation="vertical" />
         <AlertDialogAction className="w-1/2 text-red-600 bg-white border-0 hover:underline hover:bg-white"
-          onClick={handleDelete}>
+          onClick={handleDeleteAll}>
           Delete
         </AlertDialogAction>
       </AlertDialogFooter>

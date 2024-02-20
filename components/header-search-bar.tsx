@@ -1,8 +1,8 @@
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import * as React from "react";
-import { Button } from "./ui/button";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "sonner";
+import { Button } from "./ui/button";
+import * as React from "react";
 
 type HeaderSearchBarProps = {
   isLoading?: boolean
@@ -63,10 +63,20 @@ function HeaderSearchBar(props: HeaderSearchBarProps) {
         type="text"
         disabled={isLoading && true}
       />
-      <Button size={"icon"} variant={"ghost"} onClick={click}
-        type="button">
-        <FaTimes size={13} />
-      </Button>
+      {
+        value !== undefined
+          ?
+          value.trim()
+            ?
+            <Button size={"icon"} variant={"ghost"} onClick={click} type="button">
+              <FaTimes size={13} />
+            </Button>
+            : null
+          :
+          <Button size={"icon"} variant={"ghost"} onClick={click} type="button">
+            <FaTimes size={13} />
+          </Button>
+      }
     </form>
   )
 }

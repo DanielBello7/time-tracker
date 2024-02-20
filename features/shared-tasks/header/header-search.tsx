@@ -1,6 +1,6 @@
+import { useRouter } from "next/router";
 import * as React from "react";
 import HeaderSearchBar from "@/components/header-search-bar";
-import { useRouter } from "next/router";
 
 export default function SharedTaskHeaderSearchBar() {
   const [text, setText] = React.useState("");

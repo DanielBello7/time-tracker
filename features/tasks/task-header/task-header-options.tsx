@@ -15,6 +15,8 @@ import { FaCheck, FaEllipsisV } from "react-icons/fa";
 import { changeIsSelectable } from "@/store/interface-slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import DeleteAllTasksDialog from "./delete-all-dialog";
 
 export default function TaskHeaderOptions() {
   const { isSelectable } = useAppSelector((state) => state.interface)
@@ -43,51 +45,56 @@ export default function TaskHeaderOptions() {
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="p-0 px-2">
-          <FaEllipsisV />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Task Options</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <Link href={"/dashboard/tasks/create"}>
-            <DropdownMenuItem>
-              New Task
-              <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
+    <AlertDialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="p-0 px-2">
+            <FaEllipsisV />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          <DropdownMenuLabel>Task Options</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <Link href={"/dashboard/tasks/create"}>
+              <DropdownMenuItem>
+                New Task
+                <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem onClick={select}>
+              {isSelectable ? "Cancel Select" : "Select"}
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
-          </Link>
-          <DropdownMenuItem onClick={select}>
-            {isSelectable ? "Cancel Select" : "Select"}
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Delete All
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem disabled>Types</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuItem onClick={selectStory}>
-              Stories
-              <DropdownMenuShortcut>
-                {type && typeof type === "string" && type === "story" && <FaCheck />}
-              </DropdownMenuShortcut>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuSub>
+              <DropdownMenuItem onClick={selectStory}>
+                Show Stories
+                <DropdownMenuShortcut>
+                  {type && typeof type === "string" && type === "story" && <FaCheck />}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={selectBug}>
+                Show Bugs
+                <DropdownMenuShortcut>
+                  {type && typeof type === "string" && type === "bug" && <FaCheck />}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuSub>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem className="text-red-600">
+              Delete All
+              <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={selectBug}>
-              Bugs
-              <DropdownMenuShortcut>
-                {type && typeof type === "string" && type === "bug" && <FaCheck />}
-              </DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DropdownMenuSub>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          </AlertDialogTrigger>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DeleteAllTasksDialog />
+    </AlertDialog>
   )
 }
 

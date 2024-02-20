@@ -1,9 +1,12 @@
 import { useQuery } from "react-query";
 import { getTasks } from "@/apis/get-tasks";
 import { useRouter } from "next/router";
+import { useAppDispatch } from "@/store/hooks";
+import { addTasks } from "@/store/tasks-slice";
 
 export default function useTasks(id: string) {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { type, search } = router.query;
 
   const searchValue = search && typeof search === "string" ? search : null;
@@ -11,7 +14,12 @@ export default function useTasks(id: string) {
 
   const { data, isFetching, refetch, error } = useQuery(
     ["tasks", id, searchValue, typeValue],
-    () => getTasks(id, searchValue, typeValue)
+    () => getTasks(id, searchValue, typeValue),
+    {
+      onSuccess(data) {
+        dispatch(addTasks(data.docs));
+      },
+    }
   );
 
   return {

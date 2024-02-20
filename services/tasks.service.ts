@@ -73,7 +73,9 @@ async function findTaskUsingId(id: string): Promise<TASK_DOC> {
   throw new BaseError(404, "task not found");
 }
 
-async function findSharedTaskUsingId(sharedTaskId: string): Promise<SHARED_TASK> {
+async function findSharedTaskUsingId(
+  sharedTaskId: string
+): Promise<SHARED_TASK> {
   validateId(sharedTaskId);
   const response = await SharedTasksModel.findOne({ _id: sharedTaskId }).populate([
     {
@@ -131,7 +133,9 @@ async function getUserTasks(userId: string): Promise<PaginateResult<TASK>> {
   return await TasksModel.paginate({ createdBy: userId }, options);
 }
 
-async function getUserSharedTasks(userId: string): Promise<PaginateResult<SHARED_TASK>> {
+async function getUserSharedTasks(
+  userId: string
+): Promise<PaginateResult<SHARED_TASK>> {
   validateId(userId);
   const options: PaginateOptions = {
     limit: 1000,
@@ -249,20 +253,20 @@ async function deleteSharedTasks(taskIds: string[]): Promise<void> {
   }));
 }
 
-async function deleteUserTasks(userId: string): Promise<void> {
+async function deleteAllUserTasks(userId: string): Promise<void> {
   await TasksModel.deleteMany({ createdBy: userId });
   await SharedTasksModel.deleteMany({ sharedBy: userId });
 }
 
-async function deleteTaskSharedToUser(userId: string): Promise<void> {
+async function deleteAllTaskSharedToUser(userId: string): Promise<void> {
   await SharedTasksModel.deleteMany({ sharedTo: userId });
 }
 
 export default {
   getTasks,
   createNewSharedTasks,
-  deleteUserTasks,
-  deleteTaskSharedToUser,
+  deleteAllUserTasks,
+  deleteAllTaskSharedToUser,
   deleteTasks,
   getSharedTasks,
   deleteSharedTasks,

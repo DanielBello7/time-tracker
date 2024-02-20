@@ -10,15 +10,15 @@ import { useAppSelector } from "@/store/hooks";
 
 export default function SharedTasks() {
   const { _id } = useAppSelector((state) => state.user.user);
-  const { data, error, isFetching, refetch } = useGetSharedTasks(_id);
-
+  const { error, isFetching, refetch } = useGetSharedTasks(_id);
+  const { sharedTasks } = useAppSelector((state) => state.tasks);
   return (
-    <Container header={SharedTasksHeader} grid={data && data?.docs.length > 0}>
+    <Container header={SharedTasksHeader} grid>
       <Renderer error={error} isLoading={isFetching} refresh={refetch}
         loader={<SharedTasksLoader />}>
         {
-          data && data.docs.length > 0
-            ? <SharedTaskRenderer docs={data.docs} />
+          sharedTasks.length > 0
+            ? <SharedTaskRenderer docs={sharedTasks} />
             : <EmptySharedTasks />
         }
       </Renderer>

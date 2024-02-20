@@ -10,14 +10,15 @@ import { useAppSelector } from "@/store/hooks";
 
 export default function Tasks() {
   const { _id } = useAppSelector((state) => state.user.user);
-  const { data, error, isFetching: isLoading } = useTasks(_id);
+  const { tasks } = useAppSelector((state) => state.tasks);
+  const { error, isFetching: isLoading } = useTasks(_id);
 
   return (
-    <Container header={TasksHeader} grid={data && data.docs.length > 0}>
+    <Container header={TasksHeader} grid>
       <Renderer error={error} isLoading={isLoading} loader={<TasksLoader />}>
         {
-          data && data.docs.length > 0
-            ? <TaskRenderer tasks={data.docs} />
+          tasks.length > 0
+            ? <TaskRenderer tasks={tasks} />
             : <EmptyTasks />
         }
       </Renderer>
