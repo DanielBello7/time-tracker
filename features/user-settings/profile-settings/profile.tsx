@@ -9,6 +9,7 @@ import { updateUser } from "@/store/user-slice";
 import sanitize from "@/lib/sanitize";
 import ensureError from "@/lib/ensure-error";
 import updateAccount from "@/apis/update-account";
+import { Button } from "@/components/ui/button";
 
 export default function Profile() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -101,6 +102,12 @@ export default function Profile() {
         <p className="text-gray-400 text-xs mt-1">
           Select your country from the list
         </p>
+      </div>
+
+      <div className="w-full col-span-2 mt-3">
+        <Button className="w-3/12" variant={"secondary"}>
+          Submit
+        </Button>
       </div>
     </form>
   )

@@ -25,7 +25,7 @@ export default function NotificationStatus() {
       });
   }
   return (
-    <div className="mt-10">
+    <div className="mt-5">
       <div className="flex space-x-2">
         <Checkbox
           id="terms"

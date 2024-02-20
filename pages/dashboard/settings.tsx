@@ -1,5 +1,5 @@
 import DashboardLayout from "@/components/dashboard-layout";
-import Settings from "@/features/settings";
+import Settings from "@/features/user-settings";
 import * as React from "react";
 
 export default function SettingsPage() {
