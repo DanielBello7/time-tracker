@@ -84,7 +84,8 @@ async function confirmUserPassword(
   userId: string, password: string
 ): Promise<boolean> {
   const user = await findUserUsingId(userId);
-  if (user.password === password) return true
+  const confirm = bcrypt.compareSync(password, user.password);
+  if (confirm) return true
   return false
 }
 
@@ -116,8 +117,15 @@ async function validateUserEmail(userId: string): Promise<void> {
   );
 }
 
+async function checkEmail(email: string): Promise<boolean> {
+  const response = await UsersModel.findOne({ email });
+  if (response) return true;
+  return false;
+}
+
 export default {
   updateUserEmail,
+  checkEmail,
   updateUserPassword,
   validateUserEmail,
   findUserUsingEmail,

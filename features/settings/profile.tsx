@@ -3,10 +3,17 @@ import countryList from "react-select-country-list";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { toast } from "sonner";
+import { updateUser } from "@/store/user-slice";
+import sanitize from "@/lib/sanitize";
+import ensureError from "@/lib/ensure-error";
+import updateAccount from "@/apis/update-account";
 
 export default function Profile() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   const options = React.useMemo(() => {
     const response = countryList().getData().map((item: any) => ({
@@ -22,11 +29,35 @@ export default function Profile() {
     country: user.country ?? ""
   });
 
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!sanitize(formData)) {
+      return toast("Error occured", { description: "Incomplete field values" });
+    }
+    setIsLoading(true);
+    try {
+      await updateAccount(user._id, {
+        country: formData.country,
+        name: formData.name,
+        phone: formData.phone
+      });
+      dispatch(updateUser({ ...formData }));
+      toast("User Account Updated");
+    } catch (error) {
+      const err = ensureError(error);
+      toast("Error occured", { description: err.message });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <form className="w-full grid lg:grid-cols-2 gap-4" id="profile-form">
+    <form className="w-full grid lg:grid-cols-2 gap-4" id="profile-form"
+      onSubmit={submit}>
       <div className="w-full">
         <Label>Name</Label>
         <Input
+          disabled={isLoading && true}
           type="text"
           onChange={(e) => setFormData({
             ...formData,
@@ -42,6 +73,7 @@ export default function Profile() {
       <div className="w-full">
         <Label>Phone number</Label>
         <Input
+          disabled={isLoading && true}
           type="text"
           onChange={(e) => setFormData({
             ...formData,
@@ -57,6 +89,7 @@ export default function Profile() {
       <div className="w-full">
         <Label>Country</Label>
         <FormSelect
+          isLoading={isLoading}
           value={formData.country}
           label="Country"
           onchange={(e) => setFormData({

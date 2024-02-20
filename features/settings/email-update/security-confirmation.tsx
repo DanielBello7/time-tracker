@@ -7,6 +7,7 @@ type SecurityConfirmationProps = {
   password: string
   onEmailChange: (e: string) => void
   onPasswordChange: (e: string) => void
+  isLoading: boolean
 }
 
 export default function SecurityConfirmation(props: SecurityConfirmationProps) {
@@ -14,6 +15,7 @@ export default function SecurityConfirmation(props: SecurityConfirmationProps) {
     currentEmail,
     password,
     onEmailChange,
+    isLoading,
     onPasswordChange,
   } = props;
 
@@ -22,9 +24,11 @@ export default function SecurityConfirmation(props: SecurityConfirmationProps) {
       <div className="w-full">
         <Label>Current Email</Label>
         <Input
-          type="email"
+          disabled={isLoading && true}
           className="w-full"
+          type="email"
           required
+          placeholder="email@example.com"
           value={currentEmail}
           onChange={(e) => onEmailChange(e.currentTarget.value)}
         />
@@ -36,7 +40,9 @@ export default function SecurityConfirmation(props: SecurityConfirmationProps) {
       <div className="w-full">
         <Label>Password</Label>
         <Input
+          disabled={isLoading && true}
           type="password"
+          placeholder="**************"
           className="w-full"
           required
           value={password}

@@ -5,6 +5,7 @@ import AvatarUpdate from "./avatar-update";
 import Profile from "./profile";
 import EmailUpdate from "./email-update";
 import NotificationStatus from "./notification-status";
+import PasswordUpdate from "./password-update";
 
 export default function Settings() {
   return (
@@ -36,7 +37,7 @@ export default function Settings() {
           account as well as your account password here
         </p>
         <div className="my-10">
-          <Text>Email updates</Text>
+          <Text>Change Email</Text>
           <p className="lg:pe-10 text-gray-400 text-sm">
             Update your email details
           </p>
@@ -48,7 +49,7 @@ export default function Settings() {
           <p className="lg:pe-10 text-gray-400 text-sm">
             Update your account password
           </p>
-          <EmailUpdate />
+          <PasswordUpdate />
         </div>
       </div>
     </Container>
