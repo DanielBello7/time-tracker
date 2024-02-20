@@ -34,7 +34,7 @@ export default function SharedTaskOptions({ id }: SharedTaskOptionsProps) {
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem>
+            <DropdownMenuItem disabled={true}>
               Export
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
