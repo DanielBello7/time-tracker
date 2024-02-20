@@ -8,8 +8,8 @@ import SecurityConfirmation from "./security-confirmation";
 import EnterOTP from "./enter-otp";
 import ensureError from "@/lib/ensure-error";
 import passwordAuth from "@/apis/password-auth";
-import sendEmail from "@/lib/send-email";
 import updateEmail from "@/apis/update-email";
+import sendOtp from "@/apis/send-otp";
 
 const initialFormData = {
   newEmail: "",
@@ -22,6 +22,8 @@ const initialFormData = {
 export default function EmailUpdate() {
   const { email, _id } = useAppSelector((state) => state.user.user);
   const [formData, setFormData] = React.useState(initialFormData);
+  const dispatch = useAppDispatch();
+
   const { step, Next, currentStepIndex, GoTo } = useMultistep([
     <SecurityConfirmation
       currentEmail={formData.currentEmail}
@@ -29,10 +31,15 @@ export default function EmailUpdate() {
       onPasswordChange={(e) => setFormData({ ...formData, passowrd: e })}
       password={formData.passowrd}
     />,
-    <EnterNewEmail />,
-    <EnterOTP />
-  ])
-  const dispatch = useAppDispatch();
+    <EnterNewEmail
+      onchange={(e) => setFormData({ ...formData, newEmail: e })}
+      value={formData.newEmail}
+    />,
+    <EnterOTP
+      onchange={(e) => setFormData({ ...formData, confirmOTP: e })}
+      value={formData.newEmail}
+    />
+  ]);
 
   const onsubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -48,11 +55,7 @@ export default function EmailUpdate() {
       } else if (currentStepIndex === 1) {
         const otp = Math.floor(Math.random() * 999999).toString();
         setFormData({ ...formData, otp: otp });
-        await sendEmail({
-          subject: "New Email Confirmation",
-          to: [{ email: formData.newEmail }],
-          textContent: `This is your otp, don't share it ${otp}`
-        });
+        await sendOtp(otp, formData.newEmail);
         return Next();
       } else if (currentStepIndex === 2) {
         if (formData.confirmOTP !== formData.otp) {
