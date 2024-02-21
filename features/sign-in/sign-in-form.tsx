@@ -47,10 +47,10 @@ export default function SignInForm() {
     } catch (error) {
       const err = ensureError(error);
       toast("Error occured", { description: err.message });
-    } finally {
-      setIsLoading(false);
+      return setIsLoading(false);
     }
   }
+
   return (
     <AuthForm type="sign-in">
       <Card>

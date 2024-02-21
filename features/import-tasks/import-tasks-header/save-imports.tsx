@@ -12,6 +12,7 @@ export default function SaveImports() {
   const onclick = async () => {
     if (imported.length < 1) return
     if (selected.length < 1) {
+      toast("Saving Imports");
       uploadImports(_id, imported)
         .then(() => {
           toast("Imports Saved");

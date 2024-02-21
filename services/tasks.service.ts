@@ -262,6 +262,18 @@ async function deleteAllTaskSharedToUser(userId: string): Promise<void> {
   await SharedTasksModel.deleteMany({ sharedTo: userId });
 }
 
+async function saveUploadedImports(
+  userId: string, uploads: TASK[]
+): Promise<void> {
+  // const confirmations = await Promise.all(value.tasks.map(async (item: any) => {
+  //   try {
+  //     const 
+  //   } catch (error) {
+
+  //   }
+  // }));
+}
+
 export default {
   getTasks,
   createNewSharedTasks,
@@ -277,6 +289,7 @@ export default {
   updateTask,
   searchUserTasksUsingTitle,
   findSharedTaskUsingId,
-  searchUserSharedTasksUsingName
+  searchUserSharedTasksUsingName,
+  saveUploadedImports
 }
 

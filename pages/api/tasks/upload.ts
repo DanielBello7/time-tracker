@@ -16,18 +16,7 @@ router.post("/api/tasks/upload", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
-
-  const confirmations = await Promise.all(value.tasks.map(async (item: any) => {
-    try {
-      const response = await TasksService.findTaskUsingId(item._id);
-      return { data: item, exists: response }
-    } catch (error) {
-      return { data: item, exists: null }
-    }
-  }));
-
-  console.log(confirmations);
-
+  await TasksService.saveUploadedImports(value.userId, value.tasks);
   return res.json({
     status: "OK",
     msg: "success"

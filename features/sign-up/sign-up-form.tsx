@@ -7,17 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import * as React from "react";
-import AuthForm from "@/components/authentication/auth-form";
-import FormInput from "@/components/authentication/auth-input";
-import FormSelect from "@/components/form/form-select";
-import sanitize from "@/lib/sanitize";
-import { toast } from "sonner";
 import { role_options } from "./role-options";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import * as React from "react";
+import sanitize from "@/lib/sanitize";
 import Spinner from "@/components/spinner";
 import axios from "axios";
 import ensureError from "@/lib/ensure-error";
-import { useRouter } from "next/navigation";
+import FormInput from "@/components/authentication/auth-input";
+import FormSelect from "@/components/form/form-select";
+import AuthForm from "@/components/authentication/auth-form";
 
 export default function SignUpForm() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -26,10 +26,10 @@ export default function SignUpForm() {
   const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = {
+      password: event.currentTarget.password.value,
       name: event.currentTarget.fullname.value,
       email: event.currentTarget.email.value,
-      password: event.currentTarget.password.value,
-      role: event.currentTarget.userRole.value,
+      position: event.currentTarget.userRole.value,
     }
     if (!sanitize(formData)) {
       return toast("Incomplete data", {
@@ -40,15 +40,14 @@ export default function SignUpForm() {
     try {
       await axios.post("/api/users", {
         ...formData,
-        phone: "unknown",
-        country: "nigeria"
+        phone: "undefined",
+        country: "undefined"
       });
       toast("Registration Complete", { description: "Proceed to Login" });
       router.replace("/sign-in");
     } catch (error) {
       const err = ensureError(error);
       toast("Error occured", { description: err.message });
-    } finally {
       return setIsLoading(false);
     }
   }

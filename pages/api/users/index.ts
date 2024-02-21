@@ -50,7 +50,7 @@ router.post("/api/users", async (req, res, _) => {
     name: value.name,
     password: value.password,
     phone: value.phone,
-    position: value.role
+    position: value.position
   }
   const response = await UsersService.createNewUser(required);
   res.json({
