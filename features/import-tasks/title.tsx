@@ -1,30 +1,57 @@
+import type { TASK } from "@/types/task.types";
 import { Button } from "@/components/ui/button";
-import { FaPlus } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
+import { FaPlus } from "react-icons/fa";
+import { toast } from "sonner";
+import { taskSchema } from "./task-validator";
+import { useImportTask } from "./context";
 import Text from "@/components/text";
+import readJsonFile from "@/lib/read-json-file";
 
 export default function ImportTaskTitle() {
+  const { setImported, imported } = useImportTask();
   const click = () => {
     const element = document.getElementById("select-task-input")!;
     element.click();
   }
 
+  const onchange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const files = event.currentTarget.files as FileList;
+    const docs = Array.from(files);
+    const response = docs.filter((item) => item.type === "application/json");
+    const validated = await Promise.all(response.map(async (item) => {
+      const data = await readJsonFile(item);
+      const { value, error } = taskSchema.validate(data);
+      if (error) return false;
+      return value;
+    }));
+    const filtered = validated.filter((item) => item !== false);
+    setImported(Array.from(new Set([...imported, ...filtered])));
+    if (validated.length !== filtered.length) {
+      toast("Some uploaded items aren't valid");
+    }
+  }
+
   return (
-    <div className="w-full md:w-1/3 mt-10">
+    <div className="w-full md:w-7/12 lg:w-5/12 mt-10">
       <div className="flex items-center justify-between">
         <Text>Select Tasks</Text>
         <Button variant={"secondary"} type="button" onClick={click} size={"sm"}
           className="rounded-full transition-all hover:scale-[1.05]">
-          <FaPlus />
+          <FaPlus size={10} />
         </Button>
       </div>
-      <Text type="sub" className="mt-2">
+      <Text type="sub" className="mt-2 pe-10">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Incidunt dolores magnam itaque qui corporis dolore.
       </Text>
       <Input
-        type="file"
         className="hidden"
+        type="file"
+        onChange={onchange}
+        accept="application/json"
+        multiple
         id="select-task-input"
       />
     </div>
