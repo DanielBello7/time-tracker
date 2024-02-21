@@ -10,57 +10,61 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DeleteTaskModal from "./delete-task-dialog";
 import ExportAction from "./export-action";
 import { FaEllipsisV } from "react-icons/fa";
-import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-
+import { useAppDispatch } from "@/store/hooks";
+import { openDeleteTaskDialog, openShareTaskDialog } from "@/store/actions-slice"
 
 type TaskOptionsProps = {
   _id: string
 }
 
 export default function TaskOptions({ _id }: TaskOptionsProps) {
+  const dispatch = useAppDispatch();
+
+  const handleShareClick = () => {
+    dispatch(openShareTaskDialog([_id]));
+  }
+
+  const handleDeleteClick = () => {
+    dispatch(openDeleteTaskDialog([_id]));
+  }
+
   return (
-    <AlertDialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="p-0 m-0">
-            <FaEllipsisV />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-44" align="end">
-          <DropdownMenuGroup>
-            <Link href={`/dashboard/tasks/${_id}`}>
-              <DropdownMenuItem>
-                View Details
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </Link>
-            <Link href={`/dashboard/tasks/edit/${_id}`}>
-              <DropdownMenuItem>
-                Edit
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </Link>
-            <ExportAction _id={_id} />
-            <DropdownMenuSeparator />
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="p-0 m-0">
+          <FaEllipsisV />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-44" align="end">
+        <DropdownMenuGroup>
+          <Link href={`/dashboard/tasks/${_id}`}>
             <DropdownMenuItem>
-              Share
-              <DropdownMenuShortcut><FaAngleRight /></DropdownMenuShortcut>
+              View Details
+              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
-          </DropdownMenuGroup>
+          </Link>
+          <Link href={`/dashboard/tasks/edit/${_id}`}>
+            <DropdownMenuItem>
+              Edit
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </Link>
+          <ExportAction _id={_id} />
           <DropdownMenuSeparator />
-          <AlertDialogTrigger asChild>
-            <DropdownMenuItem className="text-red-600">
-              Delete
-              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </AlertDialogTrigger>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <DeleteTaskModal id={_id} />
-    </AlertDialog>
+          <DropdownMenuItem onClick={handleShareClick}>
+            Share
+            <DropdownMenuShortcut><FaAngleRight /></DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-red-600" onClick={handleDeleteClick}>
+          Delete
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 
