@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "sonner";
-import { taskSchema } from "./task-validator";
+import { importTaskSchema } from "../../lib/import-task-validator";
 import { useImportTask } from "./context";
 import Text from "@/components/text";
 import readJsonFile from "@/lib/read-json-file";
@@ -22,12 +22,14 @@ export default function ImportTaskTitle() {
     const response = docs.filter((item) => item.type === "application/json");
     const validated = await Promise.all(response.map(async (item) => {
       const data = await readJsonFile(item);
-      const { value, error } = taskSchema.validate(data);
+      const { value, error } = importTaskSchema.validate(data);
       if (error) return false;
       return value;
     }));
-    const filtered = validated.filter((item) => item !== false);
-    setImported(Array.from(new Set([...imported, ...filtered])));
+    const filtered: TASK[] = validated.filter((item) => item !== false);
+    const check = imported.map((item) => item._id);
+    const newItemsToAdd = filtered.filter((item) => !check.includes(item._id));
+    setImported([...imported, ...newItemsToAdd]);
     if (validated.length !== filtered.length) {
       toast("Some uploaded items aren't valid");
     }

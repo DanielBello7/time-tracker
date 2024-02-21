@@ -6,11 +6,12 @@ type ImportTaskContextProviderProps = {
 }
 
 type ImportTasksContext = {
-  selected: string[]
-  addSelected: (value: string[]) => void
-  removeSelected: (value: string[]) => void
-  imported: TASK[]
   setImported: React.Dispatch<React.SetStateAction<TASK[]>>
+  selected: string[]
+  removeSelected: (value: string[]) => void
+  addSelected: (value: string[]) => void
+  imported: TASK[]
+  resetSelected: () => void
 }
 
 const ImportTaskContext = React.createContext({} as ImportTasksContext);
@@ -24,7 +25,9 @@ export function ImportTasksContextProvider(props: ImportTaskContextProviderProps
   const [selected, setSelected] = React.useState<string[]>([]);
 
   const addSelected = (value: string[]) => {
-    const updated = Array.from(new Set([...selected, ...value]));
+    const updated = Array.from(new Set([
+      ...selected, ...value
+    ]));
     return setSelected(updated);
   }
 
@@ -33,11 +36,16 @@ export function ImportTasksContextProvider(props: ImportTaskContextProviderProps
     return setSelected(response);
   }
 
+  const resetSelected = () => {
+    return setSelected([]);
+  }
+
   return (
     <ImportTaskContext.Provider value={{
       selected,
       addSelected,
       imported,
+      resetSelected,
       setImported,
       removeSelected
     }}>

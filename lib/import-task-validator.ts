@@ -1,6 +1,6 @@
 import joi from "joi";
 
-export const taskSchema = joi.object({
+export const importTaskSchema = joi.object({
   _id: joi.string().required(),
   type: joi.string().valid("story", "bug").required(),
   title: joi.string().required(),
