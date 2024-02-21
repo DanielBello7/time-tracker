@@ -15,7 +15,12 @@ export default function TaskUserDetails({ task }: TaskUserDetailsProps) {
         Information about the author of this task.
         Relevant information for the task itself.
       </p>
-      <UserInfo size="md" />
+      <UserInfo
+        email={task.createdBy.email}
+        name={task.createdBy.name}
+        size="md"
+        img={task.createdBy.avatar}
+      />
       <div className="my-5 space-y-3">
         <SubInfo msg={getDate(task.dateFinished)} title="task finished at" />
         <SubInfo msg={getDate(task.dateStarted)} title="task started at" />

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { FaAngleRight } from "react-icons/fa";
 import Link from "next/link";
 import {
   DropdownMenuSeparator,
@@ -10,11 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DeleteTaskModal from "./delete-task-dialog";
-import { FaEllipsisV, FaAngleRight } from "react-icons/fa";
+import ExportAction from "./export-action";
+import { FaEllipsisV } from "react-icons/fa";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { useAppSelector } from "@/store/hooks";
-import { toast } from "sonner";
-import exportTask from "@/lib/export-task";
 
 
 type TaskOptionsProps = {
@@ -22,14 +21,6 @@ type TaskOptionsProps = {
 }
 
 export default function TaskOptions({ _id }: TaskOptionsProps) {
-  const { tasks } = useAppSelector((state) => state.tasks);
-
-  const handleExport = () => {
-    const item = tasks.find((item) => item._id === _id);
-    if (!item) return toast("Error occured", { description: "Unable to find item" });
-    exportTask([item]);
-    toast("Task Exported");
-  }
   return (
     <AlertDialog>
       <DropdownMenu>
@@ -52,17 +43,13 @@ export default function TaskOptions({ _id }: TaskOptionsProps) {
                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
               </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem onClick={handleExport}>
-              Export
-              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-            </DropdownMenuItem>
+            <ExportAction _id={_id} />
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               Share
               <DropdownMenuShortcut><FaAngleRight /></DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-
           <DropdownMenuSeparator />
           <AlertDialogTrigger asChild>
             <DropdownMenuItem className="text-red-600">

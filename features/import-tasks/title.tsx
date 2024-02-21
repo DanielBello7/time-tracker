@@ -45,8 +45,9 @@ export default function ImportTaskTitle() {
         </Button>
       </div>
       <Text type="sub" className="mt-2 pe-10">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Incidunt dolores magnam itaque qui corporis dolore.
+        Select task items you'd like to add to your account,
+        you can also import task items exported by other
+        users, which would become shared tasks.
       </Text>
       <Input
         className="hidden"

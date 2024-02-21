@@ -21,6 +21,7 @@ async function searchUserTasksUsingTitle(
 ): Promise<PaginateResult<TASK_DOC>> {
   const options: PaginateOptions = {
     limit: 1000,
+    sort: { createdAt: "descending" },
     populate: [{ path: "createdBy", select: "-password" }],
   }
   const response = await TasksModel.paginate({
@@ -36,6 +37,7 @@ async function searchUserSharedTasksUsingName(
   userId: string, title: string
 ): Promise<PaginateResult<SHARED_TASK_DOC>> {
   const options: PaginateOptions = {
+    sort: { createdAt: "descending" },
     limit: 1000,
     populate: [
       {
@@ -97,6 +99,7 @@ async function findSharedTaskUsingId(
 async function getTasks(filter: GET_TASKS_FILTER): Promise<PaginateResult<TASK>> {
   const options: PaginateOptions = {
     limit: 1000,
+    sort: { createdAt: "descending" },
     populate: [{ path: "createdBy", select: "-password" }],
   }
   const sanitized = objectSanitize(filter);
@@ -106,6 +109,7 @@ async function getTasks(filter: GET_TASKS_FILTER): Promise<PaginateResult<TASK>>
 async function getSharedTasks(): Promise<PaginateResult<SHARED_TASK>> {
   const options: PaginateOptions = {
     limit: 1000,
+    sort: { createdAt: "descending" },
     populate: [
       {
         path: "sharedTo",
@@ -128,6 +132,7 @@ async function getUserTasks(userId: string): Promise<PaginateResult<TASK>> {
   validateId(userId);
   const options: PaginateOptions = {
     limit: 1000,
+    sort: { createdAt: "descending" },
     populate: [{ path: "createdBy", select: "-password" }]
   }
   return await TasksModel.paginate({ createdBy: userId }, options);
@@ -139,6 +144,7 @@ async function getUserSharedTasks(
   validateId(userId);
   const options: PaginateOptions = {
     limit: 1000,
+    sort: { createdAt: "descending" },
     populate: [
       {
         path: "sharedTo",
@@ -258,20 +264,52 @@ async function deleteAllUserTasks(userId: string): Promise<void> {
   await SharedTasksModel.deleteMany({ sharedBy: userId });
 }
 
-async function deleteAllTaskSharedToUser(userId: string): Promise<void> {
+async function deleteAllTaskSharedToUser(
+  userId: string
+): Promise<void> {
   await SharedTasksModel.deleteMany({ sharedTo: userId });
+}
+
+async function handleUploadedTask(item: TASK, uploaderId: string): Promise<void> {
+  const check = await TasksModel.findOne({ _id: item._id });
+  if (!check) {
+    await new TasksModel({
+      _id: item._id,
+      type: item.type,
+      title: item.title,
+      timeSpent: item.timeSpent,
+      timeInterval: item.timeInterval,
+      body: item.body,
+      tags: item.tags,
+      shortCode: item.shortCode,
+      dateStarted: item.dateStarted,
+      createdBy: uploaderId,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      dateFinished: item.dateFinished
+    }).save();
+    return
+  }
+  const checkUserId: any = check.createdBy;
+  if (checkUserId === uploaderId) return
+  const findShared = await SharedTasksModel.findOne({
+    taskId: check._id, sharedTo: uploaderId
+  });
+  if (findShared) return
+  await new SharedTasksModel({
+    taskId: check._id,
+    sharedBy: check.createdBy,
+    sharedTo: uploaderId
+  }).save();
+  return
 }
 
 async function saveUploadedImports(
   userId: string, uploads: TASK[]
 ): Promise<void> {
-  // const confirmations = await Promise.all(value.tasks.map(async (item: any) => {
-  //   try {
-  //     const 
-  //   } catch (error) {
-
-  //   }
-  // }));
+  await Promise.all(uploads.map(async (item) => {
+    return await handleUploadedTask(item, userId);
+  }));
 }
 
 export default {
