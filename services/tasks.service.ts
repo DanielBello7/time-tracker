@@ -312,11 +312,16 @@ async function saveUploadedImports(
   }));
 }
 
+async function updateSharedTaskStatus(id: string): Promise<void> {
+  await SharedTasksModel.updateOne({ _id: id }, { $set: { isRead: true } });
+}
+
 export default {
   getTasks,
   createNewSharedTasks,
   deleteAllUserTasks,
   deleteAllTaskSharedToUser,
+  updateSharedTaskStatus,
   deleteTasks,
   getSharedTasks,
   deleteSharedTasks,

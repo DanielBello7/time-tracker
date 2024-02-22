@@ -24,7 +24,10 @@ export default function TaskDetails(props: TaskDetailsProps) {
         <Badge variant={task.type === "bug" ? "default" : "destructive"} className="capitalize">
           {task.type}
         </Badge>
-        {task.createdAt === task.updatedAt && <Badge variant={"outline"}>Edited</Badge>}
+        {
+          task.createdAt !== task.updatedAt
+          && <Badge variant={"outline"}>Edited</Badge>
+        }
       </div>
       <div className="lg:pe-10">
         <p className="text-lg text-gray-400">

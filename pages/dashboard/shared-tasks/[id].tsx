@@ -11,6 +11,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = params?.id as string;
   try {
     const response = await TasksService.findSharedTaskUsingId(id);
+    TasksService.updateSharedTaskStatus(id);
     return {
       props: {
         task: JSON.parse(JSON.stringify(response))

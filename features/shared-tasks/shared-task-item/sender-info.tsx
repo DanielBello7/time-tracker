@@ -14,9 +14,12 @@ function SenderInfo({ task }: SenderInfoProps) {
         name={task.sharedBy.name}
         img={task.sharedBy.avatar}
       />
-      <Badge className="bg-[#BEF264] text-black">
-        {!task.isRead && "New"}
-      </Badge>
+      {
+        !task.isRead &&
+        <Badge className="bg-[#BEF264] text-black">
+          New
+        </Badge>
+      }
     </div>
   )
 }
