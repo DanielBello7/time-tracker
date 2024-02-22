@@ -33,8 +33,8 @@ export default function CreateTaskPreview() {
           }
         </p>
         <Text type="sub">{getDate()}</Text>
-        <Badge variant={"destructive"} className="my-4">
-          Story
+        <Badge variant={formData.type === "story" ? "destructive" : "default"} className="my-4 capitalize">
+          {formData.type}
         </Badge>
 
         <p className="text-[#64748B]">

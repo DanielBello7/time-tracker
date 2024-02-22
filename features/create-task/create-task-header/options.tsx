@@ -9,8 +9,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FaEllipsisV } from "react-icons/fa";
+import { useCreateTask } from "../context";
 
 export default function CreateTaskHeaderOptions() {
+  const { resetFields } = useCreateTask();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,7 +28,7 @@ export default function CreateTaskHeaderOptions() {
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Button>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => resetFields()}>
             Reset Fields
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>

@@ -4,6 +4,7 @@ import * as React from "react";
 type CreateTaskContextType = {
   formData: NEW_TASK
   setFormData: React.Dispatch<React.SetStateAction<NEW_TASK>>
+  resetFields: () => void
 }
 
 type CreateTaskContextProviderProps = {
@@ -31,10 +32,16 @@ const initialData: NEW_TASK = {
 export function CreateTaskContextProvider(props: CreateTaskContextProviderProps) {
   const { defaultValue } = props;
   const [formData, setFormData] = React.useState<NEW_TASK>(defaultValue ?? initialData);
+
+  const resetFields = () => {
+    setFormData(initialData);
+  }
+
   return (
     <CreateTaskContext.Provider value={{
       formData,
-      setFormData
+      setFormData,
+      resetFields
     }}>
       {props.children}
     </CreateTaskContext.Provider>

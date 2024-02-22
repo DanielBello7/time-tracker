@@ -11,11 +11,19 @@ import FormInput from "@/components/form/form-input";
 import * as React from "react";
 import FormDatePicker from "@/components/form/form-date-picker";
 import FormSelect from "@/components/form/form-select";
+import { createTaskValidator } from "./validator";
+import { toast } from "sonner";
+import ensureError from "@/lib/ensure-error";
+import createTask from "@/apis/create-task";
+import { useAppSelector } from "@/store/hooks";
+import { useRouter } from "next/router";
 
 export default function CreateInputFields() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [addTag, setAddTag] = React.useState("");
-  const { formData, setFormData } = useCreateTask();
+  const { formData, setFormData, resetFields } = useCreateTask();
+  const { _id } = useAppSelector((state) => state.user.user);
+  const router = useRouter();
 
   const handleAddTag = () => {
     if (!addTag.trim()) return
@@ -33,9 +41,26 @@ export default function CreateInputFields() {
     });
   }
 
-  const onsubmit = (event: React.FormEvent) => {
+  const onsubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(formData);
+    const { error, value } = createTaskValidator.validate(formData);
+    if (error) {
+      return toast("Error occured", {
+        description: error.details[0].message
+      });
+    }
+    setIsLoading(true);
+    try {
+      await createTask(_id, [value]);
+      resetFields();
+      router.push("/dashboard/tasks");
+      toast("New task created");
+    } catch (error) {
+      const err = ensureError(error);
+      toast("Error occured", { description: err.message });
+    } finally {
+      return setIsLoading(false);
+    }
   }
 
   return (
@@ -142,9 +167,9 @@ export default function CreateInputFields() {
 
       <div>
         <Label>Total Time Spent</Label>
-        <div className="flex items-center space-x-1 relative mb-1">
+        <div className="flex items-center space-x-1 relative mb-1 grid grid-cols-3">
           <Input
-            className="w-[60%]"
+            className="w-full col-span-2"
             type="text"
             placeholder="0"
             value={formData.timeSpent.toString()}
@@ -159,7 +184,7 @@ export default function CreateInputFields() {
             disabled={isLoading && true}
             required
           />
-          <FormSelect containerClass="w-[40%]"
+          <FormSelect containerClass="w-full"
             label="Interval"
             isLoading={isLoading}
             onchange={(e) => setFormData({
