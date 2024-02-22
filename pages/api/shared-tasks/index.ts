@@ -74,7 +74,7 @@ router.post("/api/shared-tasks", async (req, res) => {
       total.registered = [...(total.registered || []), rest]
     }
     return total
-  }, {});
+  }, { registered: [], notRegistered: [] });
 
   const registered = await Promise.all(results.registered.map(async (item: SHARED) => {
     try {

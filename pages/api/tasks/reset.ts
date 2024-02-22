@@ -1,20 +1,20 @@
-import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
-import BaseError from "@/lib/base-error";
-import joi from "joi";
 import TasksService from "@/services/tasks.service";
+import router from "@/lib/router";
+import joi from "joi";
+import BaseError from "@/lib/base-error";
 
 const querySchema = joi.object({
   userId: joi.string().required()
 });
 
-// delete all tasks shared to user
-// http://localhost:3000/api/shared-tasks/all/:userId [delete]
-router.delete("/api/shared-tasks/all/:userId", async (req, res) => {
+// delete all created tasks
+// http://localhost:3000/api/tasks/reset/:userId [delete]
+router.delete("/api/tasks/reset/:userId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
-  await TasksService.deleteAllTaskSharedToUser(value.userId);
+  await TasksService.deleteAllUserTasks(value.userId);
   return res.json({
     msg: "success",
     status: "OK"

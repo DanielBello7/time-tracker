@@ -2,7 +2,7 @@ import { getSharedTasks } from "@/apis/get-shared-tasks"
 import { useAppDispatch } from "@/store/hooks";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { addSharedTasks } from "@/store/tasks-slice";
+import { addSharedTasks, resetSharedTasks } from "@/store/tasks-slice";
 
 export default function useGetSharedTasks(userId: string) {
   const router = useRouter();
@@ -14,6 +14,7 @@ export default function useGetSharedTasks(userId: string) {
     () => getSharedTasks(userId, searchValue),
     {
       onSuccess(data) {
+        dispatch(resetSharedTasks());
         dispatch(addSharedTasks(data.docs));
       },
     }

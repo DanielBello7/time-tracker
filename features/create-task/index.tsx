@@ -4,9 +4,10 @@ import CreateTaskHeader from "./create-task-header";
 import CreateInputFields from "./create-input-fields";
 import CreateTaskPreview from "./create-task-preview";
 import * as React from "react";
+import { NEW_TASK } from "@/types/task.types";
 
 type CreateTaskProps = {
-  defautValues?: any
+  defautValues?: NEW_TASK
   header?: (() => React.ReactElement)
 }
 

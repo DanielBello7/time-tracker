@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { getTasks } from "@/apis/get-tasks";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/store/hooks";
-import { addTasks } from "@/store/tasks-slice";
+import { addTasks, resetTasks } from "@/store/tasks-slice";
 
 export default function useTasks(id: string) {
   const router = useRouter();
@@ -17,6 +17,7 @@ export default function useTasks(id: string) {
     () => getTasks(id, searchValue, typeValue),
     {
       onSuccess(data) {
+        dispatch(resetTasks());
         dispatch(addTasks(data.docs));
       },
     }

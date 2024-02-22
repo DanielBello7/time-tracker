@@ -14,7 +14,7 @@ const patchBodySchema = joi.object({
   dateStarted: joi.string(),
   tags: joi.array().items(joi.string()),
   timeInterval: joi.string().valid("seconds", "minutes", "hours"),
-  timeSpent: joi.string(),
+  timeSpent: joi.number(),
   title: joi.string(),
   type: joi.string().valid("bug", "story")
 });

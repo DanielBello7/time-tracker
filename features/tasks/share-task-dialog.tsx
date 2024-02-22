@@ -13,36 +13,62 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { toggleShareTaskDialog } from "@/store/actions-slice"
+import { Label } from "@/components/ui/label";
+import Text from "@/components/text";
+import shareTasks from "@/apis/share-tasks";
+import * as React from "react";
 
 export default function ShareTaskDialog() {
-  const dispatch = useAppDispatch();
+  const [text, setText] = React.useState("");
+  const { _id } = useAppSelector((state) => state.user.user);
   const { shareTaskList, showShareTaskDialog } = useAppSelector((state) => state.actions);
+  const dispatch = useAppDispatch();
 
-  const handleShare = async () => { }
+  const handleShare = async () => {
+    if (!text.trim()) return
+    const data = shareTaskList.map((item) => ({ taskId: item, sharedTo: text }))
+    shareTasks(_id, data)
+      .then(() => {
+        toast("Task shared");
+      })
+      .catch((error) => {
+        const err = ensureError(error);
+        toast("Error occured", { description: err.message });
+      })
+  }
 
   return (
     <AlertDialog onOpenChange={(e) => dispatch(toggleShareTaskDialog(e))} open={showShareTaskDialog}>
       <AlertDialogContent className="w-full md:w-[320px] p-0">
-        <AlertDialogHeader className="p-5">
+        <AlertDialogHeader className="px-5 pt-3">
           <AlertDialogTitle className="text-center">
             Share Task
           </AlertDialogTitle>
         </AlertDialogHeader>
-        <form className="px-5">
+        <div className="px-5">
+          <Label>Email</Label>
           <Input
             type="email"
             placeholder="email@example.com"
             required
+            value={text}
+            onChange={(e) => setText(e.currentTarget.value)}
           />
-        </form>
+          <Text type="sub" sm className="mt-2">
+            Type in the name of the person you want to share tasks with.
+          </Text>
+          <Text type="sub" sm className="mt-2 text-red-600">
+            Note: If the person isn't registered, an email with the link of the shared tasks would be sent to them instead
+          </Text>
+        </div>
         <AlertDialogFooter className="mt-2 border-t space-x-0">
           <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
             Cancel
           </AlertDialogCancel>
           <Separator orientation="vertical" />
-          <AlertDialogAction className="w-1/2 text-red-600 bg-white border-0 hover:underline hover:bg-white"
+          <AlertDialogAction className="w-1/2 text-blue-600 bg-white border-0 hover:underline hover:bg-white"
             onClick={handleShare}>
-            Delete
+            Continue
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
