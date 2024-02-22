@@ -3,13 +3,13 @@ import HeaderSearchBar from "@/components/header-search-bar";
 import { useRouter } from "next/router";
 
 export default function TaskHeaderSearchBar() {
-  const [text, setText] = React.useState("");
   const router = useRouter();
   const { search } = router.query;
+  const searchValue = search && typeof search === "string" && search ? search : null;
+  const [text, setText] = React.useState(searchValue ?? "");
 
   return (
     <HeaderSearchBar
-      initial={search && typeof search === "string" && search ? search : ""}
       onchange={(e) => setText(e)}
       value={text}
       submit={(value) => {
