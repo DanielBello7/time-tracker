@@ -1,10 +1,7 @@
-import deleteSharedTasks from "@/apis/delete-shared-tasks";
-import ensureError from "@/lib/ensure-error";
-import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { Button } from "@/components/ui/button";
 import { changeIsSharedSelectable, resetSharedSelected } from "@/store/interface-slice";
-import { toast } from "sonner";
-import { removeSharedTasks } from "@/store/tasks-slice";
+import { openDeleteSharedTaskDialog } from "@/store/actions-slice"
 
 export default function SelectOptions() {
   const dispatch = useAppDispatch();
@@ -15,17 +12,8 @@ export default function SelectOptions() {
     dispatch(resetSharedSelected());
   }
 
-  const handleDelete = () => {
-    deleteSharedTasks(sharedSelected)
-      .then(() => {
-        dispatch(removeSharedTasks(sharedSelected));
-        toast("Selected Shared Tasks Deleted");
-        cancel();
-      })
-      .catch((error) => {
-        const err = ensureError(error);
-        toast("Error occured", { description: err.message });
-      });
+  const handleDeleteClicked = () => {
+    dispatch(openDeleteSharedTaskDialog(sharedSelected));
   }
 
   return (
@@ -36,7 +24,7 @@ export default function SelectOptions() {
       </Button>
 
       <Button variant={"ghost"} size={"sm"} disabled={sharedSelected.length < 1}
-        onClick={handleDelete}>
+        onClick={handleDeleteClicked}>
         Delete Selected
       </Button>
 

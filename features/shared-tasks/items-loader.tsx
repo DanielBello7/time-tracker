@@ -1,5 +1,5 @@
 import * as React from "react";
-import SharedTaskLoading from "./shared-task-loading";
+import SharedTaskLoading from "./loading-component";
 
 export default function SharedTasksLoader() {
   return (

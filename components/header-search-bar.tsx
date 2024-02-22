@@ -59,7 +59,7 @@ function HeaderSearchBar(props: HeaderSearchBarProps) {
         className="border-0"
         onChange={handlechange}
         value={value}
-        defaultValue={initial}
+        defaultValue={value ? undefined : initial}
         type="text"
         disabled={isLoading && true}
       />

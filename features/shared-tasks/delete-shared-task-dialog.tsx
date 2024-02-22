@@ -1,50 +1,49 @@
+import deleteSharedTasks from "@/apis/delete-shared-tasks";
 import {
+  AlertDialogDescription,
+  AlertDialogAction,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
   AlertDialogCancel,
+  AlertDialogTitle,
   AlertDialogContent,
-  AlertDialogAction,
   AlertDialog
 } from "@/components/ui/alert-dialog";
-import deleteTask from "@/apis/delete-task";
 import ensureError from "@/lib/ensure-error";
-import { removeTasks } from "@/store/tasks-slice"
-import { toast } from "sonner";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { toast } from "sonner";
+import { removeSharedTasks } from "@/store/tasks-slice";
 import { Separator } from "@/components/ui/separator";
-import { toggleDeleteTaskDialog } from "@/store/actions-slice"
+import { toggleDeleteSharedTaskDialog } from "@/store/actions-slice";
 
-export default function DeleteTaskDialog() {
-  const { showDeleteTaskDialog, deleteTaskList } = useAppSelector((state) => state.actions);
+export default function DeleteSharedTaskDialog() {
+  const { deleteSharedTaskList, showDeleteSharedTaskDialog } = useAppSelector((state) => state.actions);
   const dispatch = useAppDispatch();
 
-  const handleDelete = async () => {
-    deleteTask(deleteTaskList)
+  const handleDelete = () => {
+    deleteSharedTasks(deleteSharedTaskList)
       .then(() => {
-        dispatch(removeTasks(deleteTaskList));
-        toast("Task Deleted");
+        dispatch(removeSharedTasks(deleteSharedTaskList));
+        toast("Shared Task Deleted");
       })
       .catch((error) => {
         const err = ensureError(error);
-        toast("Error occured", { description: err.message });
+        toast("Error Occured", { description: err.message });
       });
   }
+
   return (
-    <AlertDialog onOpenChange={(e) => dispatch(toggleDeleteTaskDialog(e))} open={showDeleteTaskDialog}>
+    <AlertDialog onOpenChange={(e) => dispatch(toggleDeleteSharedTaskDialog(e))}
+      open={showDeleteSharedTaskDialog}>
       <AlertDialogContent className="w-full md:w-[320px] p-0">
         <AlertDialogHeader className="p-5">
-          <AlertDialogTitle className="text-center">
-            Are you absolutely sure?
-          </AlertDialogTitle>
+          <AlertDialogTitle className="text-center">Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className="text-center">
-            This action cannot be undone. This will
-            permanently delete the tasks from your
-            account and remove the data from our servers.
+            This action cannot be undone. This will permanently delete the tasks from your
+            account and remove your data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="mt-2 border-t space-x-0">
+        <AlertDialogFooter className="border-t space-x-0">
           <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
             Cancel
           </AlertDialogCancel>
