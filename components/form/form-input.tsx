@@ -1,11 +1,11 @@
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Text from "@/components/text";
 import * as React from "react";
 import classNames from "classnames";
-import { Textarea } from "@/components/ui/textarea";
 
-type CreateInputProps = {
+type CreateInputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   label?: string
   sub?: string
   isLoading?: boolean
@@ -13,7 +13,8 @@ type CreateInputProps = {
   value?: string
   containerClass?: string
   inputClass?: string
-  type?: "input" | "textarea"
+  inputType?: "input" | "textarea"
+  required?: boolean
 }
 
 export default function FormInput(props: CreateInputProps) {
@@ -25,7 +26,9 @@ export default function FormInput(props: CreateInputProps) {
     value,
     containerClass,
     inputClass,
-    type = "input"
+    inputType = "input",
+    required = false,
+    ...rest
   } = props;
 
   const containerClassnames = classNames("space-y-2 my-5", containerClass);
@@ -36,9 +39,12 @@ export default function FormInput(props: CreateInputProps) {
     <div className={containerClassnames}>
       <Label>{label}</Label>
       {
-        type === "input"
+        inputType === "input"
           ?
           <Input
+            {...rest}
+            required={required}
+            ref={undefined}
             className={inputClass}
             onChange={(e) => onchange(e.currentTarget.value)}
             disabled={isLoading && true}
@@ -47,13 +53,15 @@ export default function FormInput(props: CreateInputProps) {
           />
           :
           <Textarea
+            required={required}
             className={inputClass}
             onChange={(e) => onchange(e.currentTarget.value)}
             disabled={isLoading && true}
             value={value}
+            placeholder="Type something..."
           />
       }
-      {sub && <Text type="sub">{sub}</Text>}
+      {sub && <Text type="sub" sm>{sub}</Text>}
     </div>
   )
 }

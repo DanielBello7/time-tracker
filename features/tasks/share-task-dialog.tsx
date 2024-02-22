@@ -28,13 +28,13 @@ export default function ShareTaskDialog() {
             Share Task
           </AlertDialogTitle>
         </AlertDialogHeader>
-        <div className="">
+        <form className="px-5">
           <Input
             type="email"
             placeholder="email@example.com"
             required
           />
-        </div>
+        </form>
         <AlertDialogFooter className="mt-2 border-t space-x-0">
           <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
             Cancel

@@ -10,18 +10,22 @@ type CreateDatePickerProps = {
   isLoading?: boolean
   className?: string
   change?: (e: string) => void
+  value?: string
+  required?: boolean
 }
 
 export default function FormDatePicker(props: CreateDatePickerProps) {
   const {
     sub,
+    value,
     title,
     isLoading = false,
     className,
-    change
+    change,
+    required = false
   } = props;
-  const [date, setDate] = React.useState<Date>();
-  const cn = classNames("space-y-2 my-5", className);
+  const [date, setDate] = React.useState<Date | undefined>(new Date(value ?? ""));
+  const cn = classNames("space-y-2 mb-8", className);
 
   const onchange = (e: React.SetStateAction<Date | undefined>) => {
     setDate(e);
@@ -31,8 +35,18 @@ export default function FormDatePicker(props: CreateDatePickerProps) {
   return (
     <div className={cn}>
       <Label>{title}</Label>
-      <DatePicker date={date} setDate={(e) => onchange} isLoading={isLoading} />
-      {sub && <Text type="sub">{sub}</Text>}
+      <DatePicker
+        required={required}
+        setDate={onchange}
+        isLoading={isLoading}
+        date={date}
+      />
+      {
+        sub &&
+        <Text type="sub" sm>
+          {sub}
+        </Text>
+      }
     </div>
   )
 }

@@ -12,9 +12,16 @@ type DatePickerProps = {
   date: Date | undefined
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>
   isLoading?: boolean
+  required?: boolean
 }
 
-export default function DatePicker({ date, setDate, isLoading = false }: DatePickerProps) {
+export default function DatePicker(props: DatePickerProps) {
+  const {
+    date,
+    setDate,
+    isLoading = false,
+    required = false
+  } = props
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -35,6 +42,8 @@ export default function DatePicker({ date, setDate, isLoading = false }: DatePic
           disabled={isLoading && true}
           selected={date}
           onSelect={setDate}
+          toDate={new Date()}
+          required={required && true}
           initialFocus
         />
       </PopoverContent>

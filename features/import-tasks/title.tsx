@@ -20,19 +20,24 @@ export default function ImportTaskTitle() {
     const files = event.currentTarget.files as FileList;
     const docs = Array.from(files);
     const response = docs.filter((item) => item.type === "application/json");
-    const validated = await Promise.all(response.map(async (item) => {
+    const validated: TASK[] = []
+
+    await Promise.all(response.map(async (item) => {
       const data = await readJsonFile(item);
+      if (Array.isArray(data)) {
+        data.forEach((val) => {
+          const { error, value } = importTaskSchema.validate(val)
+          if (!error) validated.push(value);
+        });
+      }
       const { value, error } = importTaskSchema.validate(data);
-      if (error) return false;
-      return value;
+      if (!error) return validated.push(value);
     }));
-    const filtered: TASK[] = validated.filter((item) => item !== false);
+
     const check = imported.map((item) => item._id);
-    const newItemsToAdd = filtered.filter((item) => !check.includes(item._id));
+    const newItemsToAdd = validated.filter((item) => !check.includes(item._id));
     setImported([...imported, ...newItemsToAdd]);
-    if (validated.length !== filtered.length) {
-      toast("Some uploaded items aren't valid");
-    }
+    if (validated.length > 0) toast("Selected Items uploaded");
   }
 
   return (

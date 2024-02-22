@@ -18,8 +18,8 @@ export default function Container({
     "grow": true,
     "grid grid-cols-1 md:grid-cols-2": grid ? true : false,
     "lg:grid-cols-3": grid ? true : false,
-    "xl:grid-cols-4 gap-1": grid ? true : false,
-    "md:gap-2 lg:gap-3 content-start": grid ? true : false
+    "xl:grid-cols-4 gap-3": grid ? true : false,
+    "md:gap-3 lg:gap-3 content-start": grid ? true : false
   }, className);
 
   return (
