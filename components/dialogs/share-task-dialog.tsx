@@ -55,10 +55,7 @@ export default function ShareTaskDialog() {
             onChange={(e) => setText(e.currentTarget.value)}
           />
           <Text type="sub" sm className="mt-2">
-            Type in the name of the person you want to share tasks with.
-          </Text>
-          <Text type="sub" sm className="mt-2 text-red-600">
-            Note: If the person isn't registered, an email with the link of the shared tasks would be sent to them instead
+            If the email isn't registered, the user would get it as a link instead
           </Text>
         </div>
         <AlertDialogFooter className="mt-2 border-t space-x-0">

@@ -7,8 +7,7 @@ import useTasks from "./use-tasks";
 import TasksLoader from "./tasks-loader";
 import EmptyTasks from "./empty-tasks";
 import { useAppSelector } from "@/store/hooks";
-import DeleteTaskDialog from "./delete-task-dialog";
-import ShareTaskDialog from "./share-task-dialog";
+
 
 export default function Tasks() {
   const { _id } = useAppSelector((state) => state.user.user);
@@ -26,8 +25,6 @@ export default function Tasks() {
           }
         </Renderer>
       </Container>
-      <DeleteTaskDialog />
-      <ShareTaskDialog />
     </React.Fragment>
   )
 }

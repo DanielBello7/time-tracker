@@ -5,6 +5,9 @@ import * as React from "react";
 import classNames from "classnames";
 import LoadingScreen from "../loading-screen";
 import useResources from "./use-resources";
+import DeleteSharedTaskDialog from "@/components/dialogs/delete-shared-task-dialog";
+import DeleteTaskDialog from "@/components/dialogs/delete-task-dialog";
+import ShareTaskDialog from "@/components/dialogs/share-task-dialog";
 
 type DashboardLayoutProps = {
     children: React.ReactNode[] | React.ReactNode
@@ -19,21 +22,26 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     if (isLoading) return <LoadingScreen />
     return (
-        <div className={main}>
-            <div className={"hidden md:block md:w-3/12 xl:w-2/12 h-full"}>
-                <Sidebar />
-            </div>
-            <Separator className="hidden md:block border" />
-            <div className={"w-full h-full flex flex-col overflow-hidden md:w-9/12 xl:w-10/12"}>
-                <div className="w-full">
-                    <DashboardHeader />
+        <React.Fragment>
+            <div className={main}>
+                <div className={"hidden md:block md:w-3/12 xl:w-2/12 h-full"}>
+                    <Sidebar />
                 </div>
-                <Separator className="border" />
-                <div className="flex flex-col grow overflow-hidden">
-                    {children}
+                <Separator className="hidden md:block border" />
+                <div className={"w-full h-full flex flex-col overflow-hidden md:w-9/12 xl:w-10/12"}>
+                    <div className="w-full">
+                        <DashboardHeader />
+                    </div>
+                    <Separator className="border" />
+                    <div className="flex flex-col grow overflow-hidden">
+                        {children}
+                    </div>
                 </div>
             </div>
-        </div>
+            <DeleteSharedTaskDialog />
+            <DeleteTaskDialog />
+            <ShareTaskDialog />
+        </React.Fragment>
     )
 }
 

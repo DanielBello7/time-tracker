@@ -23,6 +23,7 @@ const actionsSlice = createSlice({
   initialState,
   reducers: {
     openDeleteTaskDialog: (state, action: PayloadAction<string[]>) => {
+      if (action.payload.length < 1) return state
       return {
         ...state,
         deleteTaskList: action.payload,
@@ -36,6 +37,7 @@ const actionsSlice = createSlice({
       }
     },
     openShareTaskDialog: (state, action: PayloadAction<string[]>) => {
+      if (action.payload.length < 1) return state
       return {
         ...state,
         shareTaskList: action.payload,
@@ -61,6 +63,7 @@ const actionsSlice = createSlice({
       }
     },
     openDeleteSharedTaskDialog: (state, action: PayloadAction<string[]>) => {
+      if (action.payload.length < 1) return state
       return {
         ...state,
         deleteSharedTaskList: action.payload,
