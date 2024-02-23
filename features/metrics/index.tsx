@@ -5,11 +5,11 @@ import MetricsHeader from "./metrics-header";
 import Graph from "./graph";
 
 export default function Metrics() {
-  return (
-    <Container header={MetricsHeader}>
-      <Stats />
-      <Graph />
-    </Container>
-  )
+    return (
+        <Container header={MetricsHeader}>
+            <Stats />
+            <Graph />
+        </Container>
+    )
 }
 

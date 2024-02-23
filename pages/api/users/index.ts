@@ -23,7 +23,7 @@ const querySchema = joi.object({
 // http://localhost:3000/api/users?email={email} [get]
 router.get("/api/users", async (req, res) => {
   const { value } = querySchema.validate(req.query);
-  if (value) {
+  if (value.email) {
     const response = await UsersService.findUserUsingEmail(value.email);
     return res.json({
       status: "OK",
