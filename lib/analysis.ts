@@ -55,3 +55,18 @@ export function getWeekLimitDates(
 
   return [specifiedWeekSundayDate, specifiedWeekSaturdayDate];
 };
+
+
+/**
+ * Get's the percentage difference between two numbers
+ * @param currentAmount number
+ * @param previousAmount number
+ * @returns 
+ */
+export function getPercentageChangeDifference(
+  currentAmount: number, previousAmount: number
+): number {
+  if (previousAmount < 1) return 0
+  const differenceInPercent = ((currentAmount - previousAmount) / previousAmount) * 100
+  return Math.floor(differenceInPercent);
+}

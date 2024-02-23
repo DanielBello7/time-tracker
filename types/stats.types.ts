@@ -5,3 +5,14 @@ export type STATS = {
   sub: string;
   description: string;
 };
+
+export type TASK_METRICS = {
+  perChangeDiffInBugs: number;
+  perChangeDiggInStories: number;
+  perChangeDiffInTotal: number;
+  totalCompleted: number;
+  offset: number;
+  bugsCompleted: number;
+  storiesCompleted: number;
+}
+
