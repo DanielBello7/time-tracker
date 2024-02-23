@@ -1,5 +1,9 @@
 import type { STATS } from "@/types/stats.types";
-import { FaDocker } from "react-icons/fa6";
+import * as React from "react";
+import { ImStatsDots } from "react-icons/im";
+import { IoStatsChartSharp, IoStatsChart } from "react-icons/io5";
+import { ImStatsBars2 } from "react-icons/im";
+import { BiStats } from "react-icons/bi";
 
 export default function StatsItem(props: STATS) {
   const {
@@ -8,13 +12,25 @@ export default function StatsItem(props: STATS) {
     sub,
     title
   } = props;
+  const assets = [
+    <ImStatsDots />,
+    <IoStatsChartSharp />,
+    <IoStatsChart />,
+    <ImStatsBars2 />,
+    <BiStats />
+  ];
+
+  const stats = React.useMemo(() => {
+    return assets[Math.floor(Math.random() * 4)]
+  }, []);
+
   return (
     <div className="w-full border rounded p-5">
       <div className="flex items-center justify-between mb-2">
         <p className="text-xs capitalize">
           {title}
         </p>
-        <FaDocker />
+        {stats}
       </div>
       <div className="space-y-1">
         <h1 className="text-3xl font-bold">

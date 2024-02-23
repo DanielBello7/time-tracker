@@ -2,7 +2,7 @@ import Container from "@/components/container";
 import * as React from "react";
 import Stats from "./stats";
 import MetricsHeader from "./metrics-header";
-import Graph from "./graph";
+import Graph from "@/features/graph";
 
 export default function Metrics() {
     return (

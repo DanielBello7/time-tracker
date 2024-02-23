@@ -14,5 +14,18 @@ export type TASK_METRICS = {
   offset: number;
   bugsCompleted: number;
   storiesCompleted: number;
-}
+};
+
+export type THREE_DIMENSIONS_CHART_DATA = {
+  name: string
+  uv: number
+  pv: number
+  xv: number
+};
+
+export type TWO_DIMENSIONS_CHART_DATA = {
+  name: string
+  uv: number
+  pv: number
+};
 

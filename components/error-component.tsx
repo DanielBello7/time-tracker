@@ -25,7 +25,7 @@ export default function ErrorComponent({ error, refresh }: ErrorComponentProps) 
   }, [error]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="col-span-6 w-full h-full flex items-center justify-center">
       <div className="flex items-center space-x-4">
         <Image src={assets.img_c} className="w-4/12" alt="error-occured" />
         <div className="text-center">
