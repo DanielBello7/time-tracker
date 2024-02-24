@@ -7,8 +7,12 @@ import PositionSelect from "./position-select";
 import Finish from "./finish";
 import { onboardingContent } from "./content"
 import { toast } from "sonner";
-import ActionButtons from "./action-buttons";
 import { USER } from "@/types/user.types";
+import { useRouter } from "next/router";
+import ActionButtons from "./action-buttons";
+import ensureError from "@/lib/ensure-error";
+import updateAccount from "@/apis/update-account";
+import LogoutButton from "./logout-button";
 
 
 type OnboardingProps = {
@@ -19,6 +23,7 @@ export default function Onboarding({ user }: OnboardingProps) {
   const [selected, setSelected] = React.useState("");
   const [position, setPosition] = React.useState("");
   const [text, setText] = React.useState("");
+  const router = useRouter();
 
   const { step, Next, currentStepIndex, Back, isLastStep, isFirstStep } = useMultistep([
     <AvatarSelect
@@ -34,23 +39,25 @@ export default function Onboarding({ user }: OnboardingProps) {
     <Finish />
   ]);
 
-  const onsubmit = (event: React.FormEvent) => {
+  const onsubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (currentStepIndex === 0) {
-      if (!selected.trim()) return toast("Please select an image");
-      else {
-        Next();
-      }
-    }
-    if (currentStepIndex === 1) {
-      if (!position.trim()) return toast("Please select a position");
-      if (position === "other" && !text.trim()) return toast("Please type in your role");
-      else {
-        Next();
-      }
-    }
-    if (currentStepIndex === 2) {
-      return Next();
+    try {
+      if (currentStepIndex === 0) {
+        if (!selected.trim()) return toast("Please select an image");
+        await updateAccount(user._id, { avatar: selected });
+        return Next();
+      } else if (currentStepIndex === 1) {
+        if (!position.trim()) return toast("Please select a position");
+        if (position === "other" && !text.trim()) return toast("Please type in your role");
+        await updateAccount(user._id, { position: position });
+        return Next();
+      } else if (currentStepIndex === 2) {
+        await updateAccount(user._id, { isOnboarded: true });
+        return router.replace("/dashboard");
+      } else return
+    } catch (error) {
+      const err = ensureError(error);
+      toast("Error occured", { description: err.message });
     }
   }
 
@@ -64,6 +71,7 @@ export default function Onboarding({ user }: OnboardingProps) {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
+      <LogoutButton />
       <div className="w-full md:w-8/12 lg:w-5/12 md:flex space-y-5 md:space-y-0 md:space-x-5 px-5">
         <div className="w-full md:w-1/2">
           <Logo />
