@@ -8,7 +8,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!email || (email && typeof email !== "string")) {
     return {
       redirect: {
-        destination: "/sign-in",
+        destination: "/register",
         permanent: false
       }
     }

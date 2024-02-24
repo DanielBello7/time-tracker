@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { updateUser } from "@/store/user-slice";
 import * as React from "react";
 import ensureError from "@/lib/ensure-error";
-import updateAccount from "@/apis/update-account";
+import updateStatus from "@/apis/update-status";
 
 export default function NotificationStatus() {
   const { user } = useAppSelector((state) => state.user);
@@ -13,7 +13,7 @@ export default function NotificationStatus() {
   const dispatch = useAppDispatch();
 
   const handleChange = (value: boolean) => {
-    updateAccount(user._id, { allowNotifications: value })
+    updateStatus(user._id, { allowNotifications: value })
       .then(() => {
         dispatch(updateUser({ allowNotifications: value }));
         setStatus(value);

@@ -48,5 +48,6 @@ export type UPDATE_USER = {
   isOnboarded?: boolean
   avatar?: string
   country?: string
+  isEmailVerified?: boolean
   allowNotifications?: boolean
 }

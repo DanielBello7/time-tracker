@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { role_options } from "@/constants";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import countryList from "react-select-country-list";
 import * as React from "react";
 import sanitize from "@/lib/sanitize";
 import Spinner from "@/components/spinner";
@@ -21,6 +21,13 @@ import AuthForm from "@/components/authentication/auth-form";
 
 export default function SignUpForm() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const options = React.useMemo(() => {
+    const response = countryList().getData().map((item: any) => ({
+      id: item.label.toLowerCase(),
+      title: item.label
+    }));
+    return response;
+  }, []);
   const router = useRouter();
 
   const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -29,7 +36,7 @@ export default function SignUpForm() {
       password: event.currentTarget.password.value,
       name: event.currentTarget.fullname.value,
       email: event.currentTarget.email.value,
-      position: event.currentTarget.userRole.value,
+      country: event.currentTarget.country.value,
     }
     if (!sanitize(formData)) {
       return toast("Incomplete data", {
@@ -41,7 +48,7 @@ export default function SignUpForm() {
       await axios.post("/api/users", {
         ...formData,
         phone: "undefined",
-        country: "undefined"
+        position: "other"
       });
       toast("Registration Complete", { description: "Proceed to Login" });
       router.replace(`/register/email-verify?email=${formData.email}`);
@@ -87,12 +94,12 @@ export default function SignUpForm() {
               isLoading={isLoading}
             />
             <FormSelect
-              label="Role"
+              label="Country"
               isLoading={isLoading}
               required
-              name="userRole"
-              options={role_options}
-              title="Role"
+              name="country"
+              options={options}
+              title="Country"
             />
           </form>
         </CardContent>

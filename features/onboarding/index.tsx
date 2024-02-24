@@ -13,6 +13,7 @@ import ActionButtons from "./action-buttons";
 import ensureError from "@/lib/ensure-error";
 import updateAccount from "@/apis/update-account";
 import LogoutButton from "./logout-button";
+import updateStatus from "@/apis/update-status";
 
 
 type OnboardingProps = {
@@ -52,7 +53,7 @@ export default function Onboarding({ user }: OnboardingProps) {
         await updateAccount(user._id, { position: position });
         return Next();
       } else if (currentStepIndex === 2) {
-        await updateAccount(user._id, { isOnboarded: true });
+        await updateStatus(user._id, { isOnboarded: true });
         return router.replace("/dashboard");
       } else return
     } catch (error) {
