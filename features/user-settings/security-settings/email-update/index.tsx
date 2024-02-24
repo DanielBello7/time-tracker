@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
 import { updateUser } from "@/store/user-slice"
 import * as React from "react";
-import useMultistep from "./use-multi-form";
+import useMultistep from "@/hooks/use-multi-form";
 import EnterNewEmail from "./enter-new-email";
 import SecurityConfirmation from "./security-confirmation";
 import EnterOTP from "./enter-otp";

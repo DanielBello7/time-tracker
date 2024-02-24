@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { role_options } from "./role-options";
+import { role_options } from "@/constants";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import * as React from "react";

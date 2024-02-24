@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "@/styles/globals.css";
 import store from "@/store";
-import Layout from "@/components/layout";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode
@@ -36,9 +35,8 @@ export default function App(props: AppPropsWithLayout) {
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={client}>
         <Provider store={store}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Component {...pageProps} />
+          <Toaster />
         </Provider>
       </QueryClientProvider>
     </SessionProvider>

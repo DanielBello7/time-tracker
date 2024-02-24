@@ -28,8 +28,8 @@ export default function UserMenu() {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>
-            <Text type="md" className="capitalize">{name}</Text>
-            <Text type="sub" className="font-normal">{email}</Text>
+            <Text type="md" className="capitalize truncate">{name}</Text>
+            <Text type="sub" className="font-normal truncate">{email}</Text>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>

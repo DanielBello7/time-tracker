@@ -1,20 +1,21 @@
-import UserImg from "@/components/user-img";
-import classNames from "classnames";
-import Text from "@/components/text";
-import * as React from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { avatar_data } from "@/constants";
 import { updateUser } from "@/store/user-slice";
 import { toast } from "sonner";
 import updateAccount from "@/apis/update-account";
+import classNames from "classnames";
+import Text from "@/components/text";
+import * as React from "react";
 import ensureError from "@/lib/ensure-error";
 import UserAvatar from "@/components/user-avatar";
-import Image from "next/image";
 
 export default function AvatarUpdate() {
   const { avatar, _id } = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
-  const cn = (id: string) => classNames({ "ring-8 rounded-full": id === avatar });
+
+  const cn = (id: string) => classNames({
+    "ring-8 rounded-full": id === avatar
+  });
 
   const handleClick = (id: string) => {
     toast("Avatar Updating...");

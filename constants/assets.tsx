@@ -14,6 +14,7 @@ import img_09 from "@/assets/Sample-9.svg";
 import img_a from "@/assets/Sample-A.svg";
 import img_b from "@/assets/Sample-B.svg";
 import img_c from "@/assets/Sample-C.svg";
+import img_d from "@/assets/Sample-D.svg";
 
 export {
     logo,
@@ -32,5 +33,6 @@ export {
     img_a,
     img_b,
     img_c,
+    img_d,
 }
 

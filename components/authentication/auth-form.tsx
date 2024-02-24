@@ -10,7 +10,7 @@ type AuthFormProps = {
 export default function AuthForm({ children, type }: AuthFormProps) {
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="flex justify-center">
+      <div className="flex justify-center -ms-10">
         <Logo />
       </div>
 

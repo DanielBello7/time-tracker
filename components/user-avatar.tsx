@@ -5,19 +5,20 @@ import classNames from "classnames";
 
 type UserAvatarProps = {
   avatar?: string | null
-  size?: "sm" | "md" | "lg"
+  size?: "sm" | "md" | "lg" | "full"
 }
 
 export default function UserAvatar({ avatar, size }: UserAvatarProps) {
   const selected = avatar_data.find((item) => item.id === avatar);
 
-  const cn = classNames("rounded-full p-0 m-0", {
+  const cn = classNames("rounded-full", {
     "size-10": size === "md",
     "size-8": size === "sm",
-    "size-20": size === "lg"
+    "size-20": size === "lg",
+    "w-full": size === "full"
   });
 
-  if (!selected) return <UserImg size={size} />
+  if (!selected) return <UserImg size={size as any} />
   return (
     <Image
       className={cn}
