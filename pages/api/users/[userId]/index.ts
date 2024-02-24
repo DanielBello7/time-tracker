@@ -9,6 +9,7 @@ const patchBodySchema = joi.object({
   name: joi.string(),
   position: joi.string(),
   phone: joi.string(),
+  avatar: joi.string()
 });
 
 const querySchema = joi.object({
@@ -63,7 +64,8 @@ router.patch("/api/users/:userId", async (req, res) => {
     country: bodyValue.country,
     name: bodyValue.name,
     phone: bodyValue.phone,
-    position: bodyValue.position
+    position: bodyValue.position,
+    avatar: bodyValue.avatar
   });
 
   return res.json({

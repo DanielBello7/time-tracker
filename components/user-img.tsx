@@ -15,7 +15,13 @@ type UserImgProps = {
   size?: "sm" | "md" | "lg"
 }
 
-export default React.memo(function UserImg({ img, fallbackText, size = "sm" }: UserImgProps) {
+export default React.memo(function UserImg(props: UserImgProps) {
+  const {
+    img,
+    fallbackText,
+    size = "sm"
+  } = props;
+
   const [isLoading, setIsLoading] = React.useState(true);
   const [rand, setRand] = React.useState(0);
   const [downloaded, setDownloaded] = React.useState<string | null>(null);
@@ -43,7 +49,7 @@ export default React.memo(function UserImg({ img, fallbackText, size = "sm" }: U
     "uppercase": true,
     "w-8 h-8": size === "sm",
     "w-10 h-10": size === "md",
-    "w-20 h-20": size === "lg",
+    "w-20 h-20": size === "lg"
   });
 
   const getUserImg = React.useCallback(

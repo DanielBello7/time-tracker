@@ -43,6 +43,7 @@ export type UPDATE_USER = {
   phone?: string
   position?: string
   name?: string
+  avatar?: string
   country?: string
   allowNotifications?: boolean
 }

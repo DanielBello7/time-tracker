@@ -10,20 +10,20 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import UserImg from "@/components/user-img";
 import LogoutDialog from "./logout-dialog";
 import Link from "next/link";
 import Text from "@/components/text";
 import { useAppSelector } from "@/store/hooks";
+import UserAvatar from "@/components/user-avatar";
 
 export default function UserMenu() {
-  const { email, name } = useAppSelector((state) => state.user.user);
+  const { email, name, avatar } = useAppSelector((state) => state.user.user);
   return (
     <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative w-8 h-8 rounded-full">
-            <UserImg size="sm" />
+          <Button variant="ghost" className="relative p-0 m-0 size-8 border rounded-full">
+            <UserAvatar size="sm" avatar={avatar} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">

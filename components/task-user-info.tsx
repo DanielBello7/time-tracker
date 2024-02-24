@@ -1,5 +1,6 @@
 import UserImg from "./user-img";
 import Text from "./text";
+import UserAvatar from "./user-avatar";
 
 type UserInfoProps = {
   size?: any
@@ -11,7 +12,7 @@ type UserInfoProps = {
 function UserInfo({ email, img, name, size }: UserInfoProps) {
   return (
     <div className="flex items-center space-x-2">
-      <UserImg size={size} img={img} />
+      <UserAvatar size={size ?? "sm"} avatar={img} />
       <div className="w-full -space-y-1">
         <p className="text-lg">{name ?? "James Doe"}</p>
         <Text sm type="sub">{email ?? "james@example.com"}</Text>
