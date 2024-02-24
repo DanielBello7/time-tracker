@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import sendOtp from "@/apis/send-otp";
 import ensureError from "@/lib/ensure-error";
 import updateStatus from "@/apis/update-status";
+import Footer from "./footer";
 
 type EmailVerifyProps = {
   user: USER
@@ -85,14 +86,7 @@ export default function EmailVerify({ user }: EmailVerifyProps) {
           <Text type="sub">
             {content[currentStepIndex].body}
           </Text>
-          <Button type="submit" form="submit-email-form" variant={"secondary"}
-            className="mt-5" disabled={isLoading && true}>
-            {
-              isLoading
-                ? <Spinner />
-                : isLastStep ? "Finish" : "Continue"
-            }
-          </Button>
+          <Footer isLastStep={isLastStep} isLoading={isLoading} />
         </div>
         <form className="w-full md:w-1/2" onSubmit={submit} id="submit-email-form">
           {step}
