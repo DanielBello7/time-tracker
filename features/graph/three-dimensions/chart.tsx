@@ -40,9 +40,9 @@ export default function ThreeDimensionChart({ data }: ThreeDimensionChartProps) 
             axisLine={false}
           />
           <CartesianGrid strokeDasharray="3 3" />
-          <Bar dataKey="uv" fill="#8884d8" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="pv" fill="#4891FF" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="xv" fill="#f27c8b" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="bd" fill="#8884d8" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="sd" fill="#4891FF" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="td" fill="#f27c8b" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

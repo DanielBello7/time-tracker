@@ -4,18 +4,18 @@ import type { TWO_DIMENSIONS_CHART_DATA } from "@/types/stats.types";
 const data: TWO_DIMENSIONS_CHART_DATA[] = [
   {
     name: 'Previous Week',
-    uv: 4000,
-    pv: 2400,
+    bd: 4000,
+    sd: 2400,
   },
   {
     name: 'Last Week',
-    uv: 3000,
-    pv: 1398,
+    bd: 3000,
+    sd: 1398,
   },
   {
     name: 'Current Week',
-    uv: 2000,
-    pv: 9800,
+    bd: 2000,
+    sd: 9800,
   }
 ]
 
@@ -29,7 +29,7 @@ export default async function getTwoDimensions(
       resolve(data);
     }, 2500);
   })
-  // const response = await axios.get('/api/tasks/${}/two-dimensions');
+  // const response = await axios.get('/api/tasks/${userId}/two-dimensions');
   // return response.data.payload;
 }
 

@@ -4,21 +4,21 @@ import type { THREE_DIMENSIONS_CHART_DATA } from "@/types/stats.types";
 const data: THREE_DIMENSIONS_CHART_DATA[] = [
   {
     name: 'Previous Week',
-    uv: 4000,
-    pv: 2400,
-    xv: 5400,
+    bd: 4000,
+    sd: 2400,
+    td: 5400,
   },
   {
     name: 'Last Week',
-    uv: 3000,
-    pv: 1398,
-    xv: 2400,
+    bd: 3000,
+    sd: 1398,
+    td: 2400,
   },
   {
     name: 'Current Week',
-    uv: 2000,
-    pv: 9800,
-    xv: 7400,
+    bd: 2000,
+    sd: 9800,
+    td: 7400,
   }
 ]
 
@@ -32,7 +32,7 @@ export default async function getThreeDimensions(
       resolve(data);
     }, 4000);
   })
-  // const response = await axios.get('/api/tasks/${}/three-dimensions');
+  // const response = await axios.get('/api/tasks/${userId}/three-dimensions');
   // return response.data.payload;
 }
 
