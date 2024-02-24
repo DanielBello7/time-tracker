@@ -1,5 +1,4 @@
-import { assets } from "@/constants";
-import Image from "next/image";
+import { FcTreeStructure } from "react-icons/fc";
 import classnames from "classnames";
 
 type LogoProps = {
@@ -14,12 +13,17 @@ export default function Logo({ size = "sm" }: LogoProps) {
   });
 
   return (
-    <Image
-      src={assets.logo}
-      alt="logo"
-      className={cn}
-      priority
-    />
+    <div className="flex items-center space-x-1">
+      <FcTreeStructure size={25} />
+      <div className="">
+        <p className="font-bold text-2xl p-0 m-0 tracking-tighter">
+          CoreTask
+        </p>
+        <p className="text-gray-400 text-xs p-0 m-0 tracking-tight -mt-1">
+          Task Manager
+        </p>
+      </div>
+    </div>
   )
 }
 

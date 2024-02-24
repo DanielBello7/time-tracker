@@ -6,7 +6,7 @@ import SidebarNav from "./sidebar-nav";
 export default function Sidebar() {
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="py-[17px] px-6"><Logo /></div>
+      <div className="py-[17px] px-6 bg-slate-50"><Logo /></div>
       <Separator className="border" />
       <div className="flex flex-col w-full grow p-4">
         <SidebarNav items={nav_links} />
