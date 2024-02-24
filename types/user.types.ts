@@ -8,6 +8,7 @@ export type USER = {
   position: string
   email: string
   isEmailVerified: boolean
+  isOnboarded: boolean
   country: string
   phone: string
   allowNotifications: boolean
@@ -23,6 +24,7 @@ export interface USER_DOC extends Document {
   position: string
   email: string
   isEmailVerified: boolean
+  isOnboarded: boolean
   country: string
   phone: string
   allowNotifications: boolean
@@ -43,6 +45,7 @@ export type UPDATE_USER = {
   phone?: string
   position?: string
   name?: string
+  isOnboarded?: boolean
   avatar?: string
   country?: string
   allowNotifications?: boolean

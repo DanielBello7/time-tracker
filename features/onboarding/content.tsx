@@ -1,36 +1,26 @@
-export const content = [
+export const onboardingContent = [
   {
     id: 0,
-    title: "Select Avatar",
+    title: "Select an Avatar",
     body:
-      `Lorem ipsum dolor, sit amet consectetur 
-      adipisicing elit. Doloribus recusandae et 
-      provident aspernatur culpa? Molestias 
-      repellendus unde inventore, nobis, quidem 
-      accusantium totam tempora labore similique 
-      ratione harum hic molestiae recusandae.`,
+      `Choose an avatar that represents you best. 
+      You can select from a variety of options to 
+      personalize your profile.`,
   },
   {
     id: 1,
     title: "Current Position",
     body:
-      `Lorem ipsum dolor, sit amet consectetur 
-      adipisicing elit. Doloribus recusandae et 
-      provident aspernatur culpa? Molestias 
-      repellendus unde inventore, nobis, quidem 
-      accusantium totam tempora labore similique 
-      ratione harum hic molestiae recusandae.`,
+      `Let us know about your current position or 
+      role in your organization. This helps us tailor 
+      your experience and provide relevant content.`,
   },
   {
     id: 2,
-    title: "Welcome",
+    title: "Welcome!",
     body:
-      `Lorem ipsum dolor, sit amet consectetur 
-      adipisicing elit. Doloribus recusandae et 
-      provident aspernatur culpa? Molestias 
-      repellendus unde inventore, nobis, quidem 
-      accusantium totam tempora labore similique 
-      ratione harum hic molestiae recusandae.`,
+      `Welcome aboard! We're excited to have you join 
+      us. Get ready for an amazing journey ahead.`,
   },
 ]
 

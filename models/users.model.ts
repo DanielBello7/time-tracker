@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema<USER_DOC>({
     type: Boolean,
     default: false
   },
+  isOnboarded: {
+    type: Boolean,
+    default: false
+  },
   allowNotifications: {
     type: Boolean,
     default: true

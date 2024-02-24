@@ -5,10 +5,9 @@ import Logo from "@/components/logo";
 import AvatarSelect from "./avatar-select";
 import PositionSelect from "./position-select";
 import Finish from "./finish";
-import { content } from "./content"
+import { onboardingContent } from "./content"
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import PrevButton from "./prev-button";
+import ActionButtons from "./action-buttons";
 
 export default function Onboarding() {
   const [selected, setSelected] = React.useState("");
@@ -63,25 +62,17 @@ export default function Onboarding() {
         <div className="w-full md:w-1/2">
           <Logo />
           <Text type="h1" className="my-5">
-            {content[currentStepIndex].title}
+            {onboardingContent[currentStepIndex].title}
           </Text>
           <Text type="sub">
-            {content[currentStepIndex].body}
+            {onboardingContent[currentStepIndex].body}
           </Text>
-
-          <div className="w-full py-6 space-x-2">
-            <Button variant={"link"} onClick={handleskip} type="button">
-              Skip
-            </Button>
-            <PrevButton
-              isFirstStep={isFirstStep}
-              click={handleprev}
-              isLastStep={isLastStep}
-            />
-            <Button type="submit" variant={"secondary"} form="onboarding-form">
-              Next
-            </Button>
-          </div>
+          <ActionButtons
+            handleprev={handleprev}
+            handleskip={handleskip}
+            isFirstStep={isFirstStep}
+            isLastStep={isLastStep}
+          />
         </div>
         <form className="w-full md:w-1/2" onSubmit={onsubmit} id="onboarding-form">
           {step}
