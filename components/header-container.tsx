@@ -3,7 +3,7 @@ import * as React from "react";
 type HeaderLayoutProps = {
   title?: string
   left?: React.ReactNode | (() => React.ReactElement)
-  right: React.ReactNode | (() => React.ReactElement)
+  right?: React.ReactNode | (() => React.ReactElement)
 }
 
 export default function HeaderContainer(props: HeaderLayoutProps) {

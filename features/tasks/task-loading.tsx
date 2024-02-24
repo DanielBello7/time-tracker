@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TaskLoading() {
   return (
-    <div className="w-full flex flex-col border h-[360px] rounded py-7 px-3 space-y-6 bg-slate-200">
+    <div className="w-full flex flex-col border-2 h-[360px] rounded py-7 px-3 space-y-6">
       <Skeleton className="h-4 w-[40%]" />
 
       <div className="flex items-center space-x-4">
