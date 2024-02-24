@@ -1,6 +1,36 @@
 import * as React from "react";
 import DashboardLayout from "@/components/dashboard-layout";
 import Metrics from "@/features/metrics";
+import { GetServerSidePropsContext } from "next";
+import { getSession } from "next-auth/react";
+import usersService from "@/services/users.service";
+
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+	const session = await getSession(context);
+	if (session && session.user && session.user.email) {
+		const response = await usersService.findUserUsingEmail(session.user.email);
+		if (response.isOnboarded) {
+			return {
+				redirect: {
+					destination: "/register/onboarding",
+					permanent: false
+				}
+			}
+		} else {
+			return {
+				props: {}
+			}
+		}
+	} else {
+		return {
+			redirect: {
+				destination: "/sign-in",
+				permanent: false
+			}
+		}
+	}
+}
 
 export default function DashboardPage() {
 	return <Metrics />

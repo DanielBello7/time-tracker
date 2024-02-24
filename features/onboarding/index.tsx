@@ -8,8 +8,14 @@ import Finish from "./finish";
 import { onboardingContent } from "./content"
 import { toast } from "sonner";
 import ActionButtons from "./action-buttons";
+import { USER } from "@/types/user.types";
 
-export default function Onboarding() {
+
+type OnboardingProps = {
+  user: USER
+}
+
+export default function Onboarding({ user }: OnboardingProps) {
   const [selected, setSelected] = React.useState("");
   const [position, setPosition] = React.useState("");
   const [text, setText] = React.useState("");

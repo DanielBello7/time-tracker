@@ -44,7 +44,7 @@ export default function SignUpForm() {
         country: "undefined"
       });
       toast("Registration Complete", { description: "Proceed to Login" });
-      router.replace("/sign-in");
+      router.replace(`/register/email-verify?email=${formData.email}`);
     } catch (error) {
       const err = ensureError(error);
       toast("Error occured", { description: err.message });
