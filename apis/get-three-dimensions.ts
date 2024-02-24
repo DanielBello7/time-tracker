@@ -1,5 +1,5 @@
 import type { THREE_DIMENSIONS_CHART_DATA } from "@/types/stats.types";
-// import axios from "axios";
+import axios from "axios";
 
 const data: THREE_DIMENSIONS_CHART_DATA[] = [
   {
@@ -26,14 +26,14 @@ export default async function getThreeDimensions(
   userId: string
 ): Promise<THREE_DIMENSIONS_CHART_DATA[]> {
 
-  return await new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(userId);
-      resolve(data);
-    }, 4000);
-  })
-  // const response = await axios.get('/api/tasks/${userId}/three-dimensions');
-  // return response.data.payload;
+  // return await new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     console.log(userId);
+  //     resolve(data);
+  //   }, 4000);
+  // })
+  const response = await axios.get(`/api/users/${userId}/three-dimensions`);
+  return response.data.payload;
 }
 
 

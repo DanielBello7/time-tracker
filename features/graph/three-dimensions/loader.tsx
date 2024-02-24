@@ -35,12 +35,8 @@ export default function ThreeDimensionChartLoader() {
 
   return (
     <div className='w-full h-[510px] p-3 py-6'>
-      <Text className="mb-1 font-bold tracking-tighter" sm>
-        <Skeleton className="w-2/12 h-4" />
-      </Text>
-      <Text className="mb-5 tracking-tighter" sm type="sub">
-        <Skeleton className="w-7/12 h-4" />
-      </Text>
+      <Skeleton className="mb-1 w-2/12 h-4" />
+      <Skeleton className="mb-5 w-7/12 h-4" />
       <ResponsiveContainer width="100%" height="90%">
         <BarChart data={tempData}>
           <XAxis

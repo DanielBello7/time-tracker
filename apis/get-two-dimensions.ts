@@ -1,5 +1,5 @@
 import type { TWO_DIMENSIONS_CHART_DATA } from "@/types/stats.types";
-// import axios from "axios";
+import axios from "axios";
 
 const data: TWO_DIMENSIONS_CHART_DATA[] = [
   {
@@ -23,14 +23,14 @@ export default async function getTwoDimensions(
   userId: string
 ): Promise<TWO_DIMENSIONS_CHART_DATA[]> {
 
-  return await new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(userId);
-      resolve(data);
-    }, 2500);
-  })
-  // const response = await axios.get('/api/tasks/${userId}/two-dimensions');
-  // return response.data.payload;
+  // return await new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     console.log(userId);
+  //     resolve(data);
+  //   }, 2500);
+  // })
+  const response = await axios.get(`/api/users/${userId}/two-dimensions`);
+  return response.data.payload;
 }
 
 
