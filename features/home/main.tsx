@@ -1,6 +1,8 @@
 export default function Main() {
   return (
-    <div>MainBody</div>
+    <div className="w-full py-20">
+      <p>Main</p>
+    </div>
   )
 }
 

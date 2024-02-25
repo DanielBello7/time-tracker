@@ -1,5 +1,9 @@
 export default function Footer() {
   return (
-    <div>Footer</div>
+    <footer className="w-full bg-white">
+      <div className="container mx-auto">
+
+      </div>
+    </footer>
   )
 }

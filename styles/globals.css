@@ -83,6 +83,17 @@ body {
   overscroll-behavior: none;
 }
 
+.bg-grid {
+  background-image: linear-gradient(rgba(215, 215, 215, 0.395) .05em, transparent .1em), linear-gradient(90deg, rgba(215, 215, 215, 0.395) .05em, transparent .1em);
+  background-size: 1.8em 1.8em;
+}
+
+.bg-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
 body::-webkit-scrollbar {
   display: none;
 }
