@@ -36,9 +36,9 @@ export default function Footer({ isLastStep, isLoading }: FooterProps) {
             : isLastStep ? "Finish" : "Continue"
         }
       </Button>
-      <div className="w-full mt-10 flex space-x-4">
+      <div className="w-full mt-2 md:mt-10 flex space-x-4">
         {button_data.map((item) => (
-          <Link href={`${item.href}`}>
+          <Link href={`${item.href}`} key={item.id}>
             <Button type="button" variant={"link"} className="px-0 text-xs text-gray-400">
               {item.title}
             </Button>

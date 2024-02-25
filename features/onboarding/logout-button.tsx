@@ -22,10 +22,8 @@ export default function LogoutButton() {
   return (
     <div className="absolute top-0 right-0 p-3">
       <AlertDialog>
-        <AlertDialogTrigger>
-          <Button size={"icon"} variant={"ghost"} className="text-red-600">
-            <FiLogOut size={25} />
-          </Button>
+        <AlertDialogTrigger className="text-red-600">
+          <FiLogOut size={25} />
         </AlertDialogTrigger>
         <AlertDialogContent className="w-full w-[300px] p-0">
           <AlertDialogHeader className="p-5">

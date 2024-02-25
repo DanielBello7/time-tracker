@@ -76,8 +76,8 @@ export default function EmailVerify({ user }: EmailVerifyProps) {
   }
 
   return (
-    <div className="w-full h-screen border flex items-center justify-center">
-      <div className="w-6/12 flex space-x-4">
+    <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full md:w-8/12 lg:w-6/12 md:flex md:space-x-4 px-6 space-y-4 md:space-y-0">
         <div className="w-full md:w-1/2">
           <Logo />
           <Text className="text-3xl pt-5 pb-3 tracking-tighter font-bold">
