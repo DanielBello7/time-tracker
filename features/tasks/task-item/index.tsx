@@ -55,17 +55,15 @@ export default function TaskItem(props: TASK) {
           }
         </div>
         <div className="space-y-2">
-          <h1 className="text-2xl font-bold capitalize">
-            {title.slice(0, 16).trim()}
-            {title.length > 16 && "..."}
+          <h1 className="text-2xl font-bold capitalize truncate">
+            {title}
           </h1>
           <p className="text-xs text-gray-400">{date}</p>
           <Badge className="capitalize" variant={type === "bug" ? "default" : "destructive"}>
             {type}
           </Badge>
-          <p className="text-gray-400 md:tracking-tight">
-            {upperFirst(body).slice(0, 156).trim()}
-            {body.length > 156 && "..."}
+          <p className="text-gray-400 md:tracking-tight line-clamp-4">
+            {upperFirst(body)}
           </p>
         </div>
       </div>

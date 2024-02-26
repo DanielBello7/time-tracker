@@ -5,7 +5,7 @@ import * as React from "react";
 
 function Home() {
   return (
-    <div className="w-full border bg-grid h-screen">
+    <div className="w-full bg-grid">
       <Header />
       <Main />
       <Footer />
