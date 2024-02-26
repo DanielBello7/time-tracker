@@ -1,5 +1,6 @@
 import * as React from "react";
 import { featureItems } from "./feature-items";
+import { HoverEffect } from "@/components/ui/card-hover-effect";
 
 export default function Features() {
   return (
@@ -15,13 +16,8 @@ export default function Features() {
             eligendi ea, ullam a, minima debitis?
           </p>
         </div>
-        <div className="w-8/12 mx-auto grid grid-cols-3 gap-6">
-          {featureItems.map((item) => (
-            <div key={item.id} className="bg-black rounded-2xl p-10">
-              <p className="text-white mb-5">{item.title}</p>
-              <p className="text-gray-500 text-sm">{item.body}</p>
-            </div>
-          ))}
+        <div className="w-8/12 mx-auto">
+          <HoverEffect items={featureItems} />
         </div>
       </div>
     </div>

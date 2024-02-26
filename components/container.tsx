@@ -3,7 +3,7 @@ import classNames from "classnames";
 import * as React from "react";
 
 type DashboardBodyLayoutProps = {
-  header?: React.ReactElement | (() => React.ReactElement)
+  header?: React.ReactElement | (() => React.ReactElement) | null
   children?: React.ReactElement[] | React.ReactElement
   grid?: boolean
   className?: string
@@ -25,11 +25,15 @@ export default function Container({
   return (
     <React.Fragment>
       {
-        typeof Header === "function"
+        Header &&
+          typeof Header === "function"
           ? <Header />
           : Header
       }
-      <Separator className="border-b" />
+      {
+        Header &&
+        <Separator className="border-b" />
+      }
       <div className={gridclass}>
         {children}
       </div>

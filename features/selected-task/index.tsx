@@ -7,15 +7,17 @@ import * as React from "react";
 import type { TASK } from "@/types/task.types";
 
 type SelectedTaskProps = {
+  showHeader?: boolean
   task: TASK | null
   error: Error | null
 }
 
-export default function SelectedTask({ task, error }: SelectedTaskProps) {
+export default function SelectedTask(props: SelectedTaskProps) {
+  const { task, error, showHeader = true } = props;
   if (!task) return <ErrorComponent error={error} />
   return (
     <React.Fragment>
-      <Container header={SelectedTaskHeader} className="block lg:flex">
+      <Container header={showHeader ? SelectedTaskHeader : null} className="block lg:flex">
         <div className="w-full lg:w-2/3 py-10 px-3">
           <TaskDetails task={task} />
         </div>

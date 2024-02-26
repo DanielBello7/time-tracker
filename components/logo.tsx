@@ -1,5 +1,4 @@
 import { FcTreeStructure } from "react-icons/fc";
-import classnames from "classnames";
 import Link from "next/link";
 
 type LogoProps = {
@@ -10,15 +9,9 @@ type LogoProps = {
 
 export default function Logo(props: LogoProps) {
   const {
-    size = "sm",
     showLogo = true,
     showFooter = true
   } = props;
-  const cn = classnames("p-0", {
-    "w-[90px]": size === "lg",
-    "w-[80px]": size === "md",
-    "w-[70px]": size === "sm",
-  });
 
   return (
     <Link href={"/"}>

@@ -2,48 +2,54 @@ export const featureItems = [
   {
     id: 1,
     title: "Stripe",
-    body:
+    description:
       `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
       Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicabo sint totam cumque`
+      explicabo sint totam cumque`,
+    link: ""
   },
   {
     id: 2,
     title: "Stripe",
-    body:
+    description:
       `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt accusamus reprehenderit ipsa.`
+      Impedit molestias nesciunt accusamus reprehenderit ipsa.`,
+    link: ""
   },
   {
     id: 3,
     title: "Stripe",
-    body:
+    description:
       `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
       Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicab.`
+      explicab.`,
+    link: ""
   },
   {
     id: 4,
     title: "Stripe",
-    body:
+    description:
       `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
       Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicabo sint totam cumque. Et repellat nemo.`
+      explicabo sint totam cumque. Et repellat nemo.`,
+    link: ""
   },
   {
     id: 5,
     title: "Stripe",
-    body:
+    description:
       `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
       Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicabo sint totam cumque. Et repellat nemo sint.`
+      explicabo sint totam cumque. Et repellat nemo sint.`,
+    link: ""
   },
   {
     id: 6,
     title: "Stripe",
-    body:
+    description:
       `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt.`
+      Impedit molestias nesciunt.`,
+    link: ""
   }
 ]
 
