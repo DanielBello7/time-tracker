@@ -9,7 +9,7 @@ import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
 import database_connection from "@/lib/database-connection";
 import ExternalSharedTasksModel from "@/models/external-shared";
-import { EXTERNAL_SHARED_TASK, NEW_EXTERNAL_SHARED_TASK } from "@/types/external-shared.types";
+import { EXTERNAL_SHARED_TASK, EXTERNAL_SHARED_TASK_DOC, NEW_EXTERNAL_SHARED_TASK } from "@/types/external-shared.types";
 
 database_connection();
 
@@ -325,18 +325,21 @@ async function updateSharedTaskStatus(
 
 async function updateExternalSharedTaskStatus(
   taskId: string, data: Partial<{ isActive: boolean; isRead: boolean }>, all: boolean
-): Promise<void> {
+): Promise<EXTERNAL_SHARED_TASK_DOC> {
   const sanitize = objectSanitize(data);
   if (all) {
-    await ExternalSharedTasksModel.updateOne(
+    const response = await ExternalSharedTasksModel.findOneAndUpdate(
       { taskId },
-      { $set: sanitize }
+      { $set: sanitize },
+      { new: true }
     );
+    return response as any
   } else {
     await ExternalSharedTasksModel.updateMany(
       { taskId },
       { $set: sanitize }
     );
+    return await ExternalSharedTasksModel.findOne({ taskId }) as any;
   }
 }
 
