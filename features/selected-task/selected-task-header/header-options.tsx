@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import ExportTaskAction from "./export-task-action";
 import ShareAction from "./share-action";
 import DeleteAction from "./delete-action";
+import VisibilityStatus from "./visibility-status";
 
 export default function SelectedTaskHeaderOptions() {
   const router = useRouter();
@@ -33,6 +34,10 @@ export default function SelectedTaskHeaderOptions() {
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
+          {
+            id && typeof id === "string"
+            && <VisibilityStatus taskId={id} />
+          }
           <ExportTaskAction />
           <DropdownMenuSeparator />
           <ShareAction />

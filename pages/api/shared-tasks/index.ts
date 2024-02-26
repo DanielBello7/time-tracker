@@ -82,14 +82,23 @@ router.post("/api/shared-tasks", async (req, res) => {
     } catch (error) { return false }
   }));
 
-  results.notRegistered.forEach((item: { taskId: string; sharedTo: string }) => {
-    sendEmail({
-      subject: "New Shared Task",
-      to: [{ email: item.sharedTo }],
-      textContent: `You've been shared an activity 
-      task by ${userSharingTasks.name}, ${userSharingTasks.email}. Please 
-      click the link below - ${item.taskId}`
-    });
+  results.notRegistered.forEach(async (item: { taskId: any; sharedTo: string }) => {
+    try {
+      const external = await TasksService.createNewExternalSharedTask({
+        taskId: item.taskId,
+        sharedTo: item.sharedTo,
+        sharedBy: value.sharedBy
+      });
+      sendEmail({
+        subject: "New Shared Task",
+        to: [{ email: item.sharedTo }],
+        textContent: `You've been shared an activity 
+        task by ${userSharingTasks.name}, ${userSharingTasks.email}. Please 
+        click the link below - ${external._id}`
+      });
+    } catch (error) {
+      return
+    }
   });
 
   return res.json({

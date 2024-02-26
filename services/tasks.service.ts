@@ -8,6 +8,8 @@ import SharedTasksModel from "@/models/shared-tasks.model";
 import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
 import database_connection from "@/lib/database-connection";
+import ExternalSharedTasksModel from "@/models/external-shared";
+import { EXTERNAL_SHARED_TASK, NEW_EXTERNAL_SHARED_TASK } from "@/types/external-shared.types";
 
 database_connection();
 
@@ -312,12 +314,85 @@ async function saveUploadedImports(
   }));
 }
 
-async function updateSharedTaskStatus(id: string): Promise<void> {
-  await SharedTasksModel.updateOne({ _id: id }, { $set: { isRead: true } });
+async function updateSharedTaskStatus(
+  id: string, data: Partial<{ isActive: boolean; isRead: boolean }>
+): Promise<void> {
+  const sanitize = objectSanitize(data);
+  await SharedTasksModel.updateOne(
+    { _id: id }, { $set: sanitize }
+  );
+}
+
+async function updateExternalSharedTaskStatus(
+  taskId: string, data: Partial<{ isActive: boolean; isRead: boolean }>, all: boolean
+): Promise<void> {
+  const sanitize = objectSanitize(data);
+  if (all) {
+    await ExternalSharedTasksModel.updateOne(
+      { taskId },
+      { $set: sanitize }
+    );
+  } else {
+    await ExternalSharedTasksModel.updateMany(
+      { taskId },
+      { $set: sanitize }
+    );
+  }
+}
+
+async function createNewExternalSharedTask(
+  data: NEW_EXTERNAL_SHARED_TASK
+): Promise<EXTERNAL_SHARED_TASK> {
+  const response = await new ExternalSharedTasksModel({
+    sharedBy: data.sharedBy,
+    taskId: data.taskId,
+    sharedTo: data.sharedTo,
+  }).save();
+  return response as any
+}
+
+async function findExternalSharedTaskUsingId(
+  sharedId: string
+): Promise<EXTERNAL_SHARED_TASK> {
+  const response = await ExternalSharedTasksModel
+    .findOne({ _id: sharedId })
+    .populate([
+      {
+        path: "sharedBy"
+      },
+      {
+        path: "taskId",
+        populate: ["createdBy"]
+      }
+    ]);
+  if (response) return response as any
+  throw new BaseError(404, "unable to find task");
+}
+
+async function findExternalSharedTaskUsingTaskId(
+  taskId: string
+): Promise<EXTERNAL_SHARED_TASK> {
+  const response = await ExternalSharedTasksModel
+    .findOne({ taskId })
+    .populate([
+      {
+        path: "sharedBy"
+      },
+      {
+        path: "taskId",
+        populate: ["createdBy"]
+      }
+    ]);
+  if (response) return response as any
+  throw new BaseError(404, "unable to find task");
 }
 
 export default {
+  createNewExternalSharedTask,
   getTasks,
+  findExternalSharedTaskUsingId,
+  findExternalSharedTaskUsingTaskId,
+  updateExternalSharedTaskStatus,
   createNewSharedTasks,
   deleteAllUserTasks,
   deleteAllTaskSharedToUser,

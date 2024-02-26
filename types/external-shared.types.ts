@@ -2,31 +2,31 @@ import type { TASK } from "./task.types";
 import type { USER } from "./user.types";
 import mongoose from "mongoose";
 
-export type SHARED_TASK = {
+export type EXTERNAL_SHARED_TASK = {
   _id: string
+  sharedTo: string
   sharedBy: USER
-  sharedTo: USER
   taskId: TASK
-  createdAt: string
-  isRead: boolean
   isActive: boolean
+  isRead: boolean
+  createdAt: string
   updatedAt: string
 }
 
-export interface SHARED_TASK_DOC {
+export interface EXTERNAL_SHARED_TASK_DOC {
   _id: string
+  sharedTo: string
   sharedBy: typeof mongoose.Types.ObjectId
-  sharedTo: typeof mongoose.Types.ObjectId
   taskId: typeof mongoose.Types.ObjectId
-  createdAt: string
-  isRead: boolean
   isActive: boolean
+  isRead: boolean
+  createdAt: string
   updatedAt: string
 }
 
-export type NEW_SHARED_TASK = {
+export type NEW_EXTERNAL_SHARED_TASK = {
+  sharedTo: string
   sharedBy: typeof mongoose.Types.ObjectId
-  sharedTo: typeof mongoose.Types.ObjectId
   taskId: typeof mongoose.Types.ObjectId
 }
 

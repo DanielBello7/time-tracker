@@ -1,6 +1,5 @@
-import Header from "@/components/header";
 import SelectedTask from "@/features/selected-task";
-import ensureError from "@/lib/ensure-error";
+import Header from "@/components/header";
 import TasksService from "@/services/tasks.service";
 import type { TASK } from "@/types/task.types";
 import type { GetServerSidePropsContext } from "next";
@@ -10,15 +9,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = params?.taskId as string
   if (id && typeof id === "string") {
     try {
-      const findTask = await TasksService.findTaskUsingId(id);
+      const findShared = await TasksService.findExternalSharedTaskUsingId(id);
+      if (!findShared.isActive) throw new Error("Task unavailable");
+      await TasksService.updateExternalSharedTaskStatus(findShared.taskId._id, {
+        isRead: true
+      }, false);
       return {
         props: {
           error: null,
-          task: JSON.parse(JSON.stringify(findTask))
+          task: JSON.parse(JSON.stringify(findShared.taskId))
         }
       }
-    } catch (error) {
-      const err = ensureError(error);
+    } catch {
       return {
         redirect: {
           destination: "/404",

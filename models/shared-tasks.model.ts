@@ -13,6 +13,10 @@ const SharedTaskSchema = new mongoose.Schema<SHARED_TASK_DOC>({
     ref: "users",
     required: true
   },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   taskId: {
     type: mongoose.Types.ObjectId,
     ref: "tasks",

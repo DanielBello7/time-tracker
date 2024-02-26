@@ -7,9 +7,9 @@ export default function Body() {
         <div className="w-8/12 mx-auto grid grid-cols-3 gap-10">
           <div className="col-span-2">
             <h1 className="text-4xl font-bold tracking-tighter">
-              This Privacy Policy will help you better
-              understand how we collect. use and share vour
-              personal information.
+              This information below will help you better
+              understand how we collect, use and handle our data
+              amongst other vital need to knows.
             </h1>
 
             {content.map((item, idx) => (
