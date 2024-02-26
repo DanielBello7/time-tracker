@@ -5,12 +5,12 @@ const auth_links = [
   {
     title: "Terms and Conditions",
     id: "terms",
-    href: "/terms",
+    href: "/legal#terms",
   },
   {
-    id: "conditions",
-    href: "/conditions",
-    title: "Conditions"
+    id: "about",
+    href: "/legal#about",
+    title: "About Us"
   },
   {
     id: "forgot-password",
@@ -19,13 +19,13 @@ const auth_links = [
   },
   {
     id: "support",
-    href: "/support",
+    href: "/legal#support",
     title: "Support"
   },
   {
-    title: "Privacy Report and Conditions",
+    title: "Privacy Policy and Conditions",
     id: "privacy",
-    href: "/privacy",
+    href: "/legal#privacy",
   },
 ]
 

@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import Text from "@/components/text";
 import Link from "next/link";
-import { headerOptions } from "@/features/home/header-options";
+import { headerOptions } from "@/components/header/header-options";
 import { Button } from "@/components/ui/button";
 import classNames from "classnames";
 

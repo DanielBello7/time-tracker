@@ -1,55 +1,59 @@
 export const featureItems = [
   {
     id: 1,
-    title: "Stripe",
+    title: "Creativity Control",
     description:
-      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicabo sint totam cumque`,
+      `Unleash your creativity without limits. Our task manager 
+      empowers you to customize and organize your 
+      tasks in any way you desire.`,
     link: ""
   },
   {
     id: 2,
-    title: "Stripe",
+    title: "Modifiability",
     description:
-      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt accusamus reprehenderit ipsa.`,
+      `Adaptability is key to staying productive.
+      Our app allows you to modify tasks effortlessly, 
+      ensuring that your to-do list evolves with your 
+      priorities. Whether it's updating due dates or more, we got you.`,
     link: ""
   },
   {
     id: 3,
-    title: "Stripe",
+    title: "Share to Everyone",
     description:
-      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicab.`,
+      `Collaboration made simple. Share your tasks 
+      with colleagues, friends, or family members 
+      with just a few clicks, fostering teamwork and efficiency.`,
     link: ""
   },
   {
     id: 4,
-    title: "Stripe",
+    title: "Real Time Analytics",
     description:
-      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicabo sint totam cumque. Et repellat nemo.`,
+      `Stay informed and make data-driven 
+      decisions. Our app provides real-time 
+      analytics that offer valuable insights into 
+      your productivity trends.`,
     link: ""
   },
   {
     id: 5,
-    title: "Stripe",
+    title: "Progress Report",
     description:
-      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt accusamus reprehenderit ipsa 
-      explicabo sint totam cumque. Et repellat nemo sint.`,
+      `Keep track of your achievements effortlessly. 
+      Our progress reporting feature gives you a 
+      comprehensive overview of your task completion 
+      status.`,
     link: ""
   },
   {
     id: 6,
-    title: "Stripe",
+    title: "Security Control",
     description:
-      `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-      Impedit molestias nesciunt.`,
+      `Your data, your control. We understand the 
+      importance of data security, which is why our 
+      app offers robust security controls.`,
     link: ""
   }
 ]
-

@@ -12,13 +12,13 @@ export default function Hero() {
             <h1>Plan Better</h1>
             <h1>Analyse <span className="text-[#4891FF]">Faster.</span></h1>
           </div>
-          <div className="text-gray mt-1 text-xl pe-10">
+          <div className="text-gray mt-5 text-xl pe-10">
             <p>
-              Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Rerum voluptatibus ea
-              animi possimus molestias asperiores, iure
-              tenetur vitae atque quae iste aut
-              omnis ipsum ducimus blanditiis, cumque unde molestiae fugiat.
+              Welcome to our revolutionary task
+              manager app, where productivity meets simplicity.
+              Seamlessly manage your tasks with our
+              intuitive interface, designed to empower
+              you to achieve your goals effortlessly
             </p>
           </div>
           <div className="mt-5 flex gap-5">
@@ -27,7 +27,7 @@ export default function Hero() {
                 Sign In
               </Button>
             </Link>
-            <Link href={"/sign-in"}>
+            <Link href={"/register"}>
               <Button variant={"default"} className="bg-black">
                 Sign Up Now
               </Button>

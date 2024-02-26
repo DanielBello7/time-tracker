@@ -3,7 +3,7 @@ import Footer from "@/components/footer";
 import Title from "./title";
 import Body from "./body";
 
-export default function Documentation() {
+export default function Legal() {
   return (
     <div className="w-full">
       <Header />

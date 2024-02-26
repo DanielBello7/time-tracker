@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { headerOptions } from "@/features/home/header-options";
+import { headerOptions } from "@/components/header/header-options";
 import * as React from "react";
 
 export default function Header() {
@@ -35,7 +35,7 @@ export default function Header() {
         <div className="flex items-center space-x-2">
           {headerOptions.map((item) => (
             <Link href={item.href} key={item.id}>
-              <Button variant={item.variant as any}>
+              <Button variant={item.variant as any} className={item.classNames}>
                 {item.title}
               </Button>
             </Link>

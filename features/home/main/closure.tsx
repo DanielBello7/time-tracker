@@ -14,12 +14,11 @@ export default function Closure() {
           <div className="col-span-2">
             <h1 className="text-3xl font-bold">Ready to get started?</h1>
             <p className="mt-4">
-              Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Doloribus voluptate
-              placeat aliquam a commodi et vitae, quae
-              soluta quas consectetur dicta aut eligendi enim
-              neque maxime expedita qui.
-              Excepturi, itaque.
+              Dive into a world of seamless organization
+              and enhanced productivity with our
+              intuitive task manager. Say goodbye to
+              the chaos and hello to efficiency as you
+              tackle your tasks with ease.
             </p>
             <div className="mt-5 space-x-4">
               <Link href={"/register"}>
@@ -39,8 +38,8 @@ export default function Closure() {
             <FaCreditCard size={30} />
             <h1 className="my-3 text-lg font-bold">Completely Free</h1>
             <p>
-              Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Consectetur culpa ea.
+              Experience the full power of our task
+              manager without spending a dime
             </p>
             <Link href={"/docs"} className="cursor-pointer">
               <Button variant={"link"} className="m-0 p-0 text-blue-400">
@@ -53,8 +52,8 @@ export default function Closure() {
             <FaShieldAlt size={30} />
             <h1 className="my-3 text-lg font-bold">Secure Access</h1>
             <p>
-              Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Consectetur culpa ea.
+              Your peace of mind is our priority,
+              control how your data is accessed.
             </p>
             <Link href={"/docs"} className="cursor-pointer">
               <Button variant={"link"} className="m-0 p-0 text-blue-400">

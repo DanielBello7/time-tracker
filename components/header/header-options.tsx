@@ -2,16 +2,18 @@ export const headerOptions = [
   {
     id: 1,
     title: "About",
-    href: "/docs",
+    href: "/legal#about",
     footerTitle: "About",
     variant: "link",
+    classNames: "",
   },
   {
     id: 2,
-    title: "Docs",
-    footerTitle: "Docs",
+    title: "Legal",
+    footerTitle: "Legal",
     variant: "link",
-    href: "/docs",
+    href: "/legal",
+    classNames: "",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const headerOptions = [
     footerTitle: "Sign-in",
     variant: "outline",
     href: "/sign-in",
+    classNames: "",
   },
   {
     id: 4,
@@ -26,5 +29,6 @@ export const headerOptions = [
     footerTitle: "Create Account",
     href: "/register",
     variant: "secondary",
+    classNames: "bg-blue-400 text-white hover:bg-blue-600",
   },
 ]
