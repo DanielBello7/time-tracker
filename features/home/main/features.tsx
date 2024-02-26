@@ -4,8 +4,8 @@ import { HoverEffect } from "@/components/ui/card-hover-effect";
 
 export default function Features() {
   return (
-    <div className="w-full py-20">
-      <div className="border container mx-auto">
+    <div className="w-full py-20 pt-44">
+      <div className="container mx-auto">
         <div className="w-7/12 mb-20 mx-auto text-center">
           <h1 className="text-5xl tracking-tighter font-bold">Features</h1>
           <p className="text-xl">

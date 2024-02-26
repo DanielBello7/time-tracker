@@ -8,10 +8,10 @@ import Link from "next/link";
 
 export default function Closure() {
   return (
-    <div className="w-full border py-20">
+    <div className="w-full py-20">
       <div className="container mx-auto">
         <div className="w-10/12 mx-auto grid grid-cols-4 gap-4">
-          <div className="col-span-2 border">
+          <div className="col-span-2">
             <h1 className="text-3xl font-bold">Ready to get started?</h1>
             <p className="mt-4">
               Lorem ipsum dolor sit amet consectetur
@@ -35,7 +35,7 @@ export default function Closure() {
               </Link>
             </div>
           </div>
-          <div className="w-full border-s border-black ps-5">
+          <div className="w-full">
             <FaCreditCard size={30} />
             <h1 className="my-3 text-lg font-bold">Completely Free</h1>
             <p>
@@ -49,7 +49,7 @@ export default function Closure() {
               </Button>
             </Link>
           </div>
-          <div className="w-full border-s border-black ps-5">
+          <div className="w-full">
             <FaShieldAlt size={30} />
             <h1 className="my-3 text-lg font-bold">Secure Access</h1>
             <p>

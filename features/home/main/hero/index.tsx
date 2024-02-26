@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="w-full border py-16">
+    <div className="w-full py-16">
       <div className="container mx-auto flex items-center px-20">
         <div className="w-7/12">
           <p className="font-bold text-[#4891FF]">#SPOTLIGHT</p>
@@ -12,7 +12,7 @@ export default function Hero() {
             <h1>Plan Better</h1>
             <h1>Analyse <span className="text-[#4891FF]">Faster.</span></h1>
           </div>
-          <div className="text-gray mt-1 text-xl">
+          <div className="text-gray mt-1 text-xl pe-10">
             <p>
               Lorem, ipsum dolor sit amet consectetur
               adipisicing elit. Rerum voluptatibus ea
@@ -35,7 +35,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="w-5/12 grid grid-cols-3 gap-2">
+        <div className="w-5/12 grid grid-cols-3 gap-6">
           <HeroCard />
           <div className="col-span-2">
             <HeroCard />

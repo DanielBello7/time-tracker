@@ -3,10 +3,20 @@ import Text from "@/components/text";
 import Link from "next/link";
 import { headerOptions } from "@/features/home/header-options";
 import { Button } from "@/components/ui/button";
+import classNames from "classnames";
 
-export default function Footer() {
+type FooterProps = {
+  showBorder?: boolean
+}
+
+export default function Footer(props: FooterProps) {
+  const { showBorder = true } = props;
+  const cn = classNames({
+    "w-full bg-white": true,
+    "border-t": showBorder
+  });
   return (
-    <footer className="w-full bg-white border-t">
+    <footer className={cn}>
       <div className="container mx-auto flex items-center justify-between py-10">
         <div>
           <Logo />

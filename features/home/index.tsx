@@ -8,7 +8,7 @@ function Home() {
     <div className="w-full bg-grid">
       <Header />
       <Main />
-      <Footer />
+      <Footer showBorder={false} />
     </div>
   )
 }
