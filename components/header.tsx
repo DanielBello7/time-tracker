@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { headerOptions } from "./header-options";
+import { headerOptions } from "../features/home/header-options";
 
 export default function Header() {
   return (

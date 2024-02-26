@@ -10,7 +10,7 @@ export default function Hero() {
           <p className="font-bold text-[#4891FF]">#SPOTLIGHT</p>
           <div className="text-8xl font-bold tracking-tighter bg-clip-text">
             <h1>Plan Better</h1>
-            <h1>Analyse Faster.</h1>
+            <h1>Analyse <span className="text-[#4891FF]">Faster.</span></h1>
           </div>
           <div className="text-gray mt-1 text-xl">
             <p>
@@ -35,7 +35,14 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="w-5/12 relative px-2">
+        <div className="w-5/12 grid grid-cols-3 gap-2">
+          <HeroCard />
+          <div className="col-span-2">
+            <HeroCard />
+          </div>
+          <div className="col-span-2">
+            <HeroCard />
+          </div>
           <HeroCard />
         </div>
       </div>

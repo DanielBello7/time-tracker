@@ -1,5 +1,5 @@
-import Footer from "@/features/home/footer";
-import Header from "@/features/home/header";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import Main from "./main";
 import * as React from "react";
 
