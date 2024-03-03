@@ -1,8 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 import { Variants, motion } from "framer-motion";
-import classNames from "classnames";
-import * as React from "react";
 import { container } from "./animation";
+import * as React from "react";
+import classNames from "classnames";
 
 type DashboardBodyLayoutProps = {
   header?: React.ReactElement | (() => React.ReactElement) | null
@@ -13,9 +13,16 @@ type DashboardBodyLayoutProps = {
   animationVariants?: Variants
 }
 
-export default function Container({
-  header: Header, children, grid = false, className, useAnimationContainer = false, animationVariants
-}: DashboardBodyLayoutProps) {
+export default function Container(props: DashboardBodyLayoutProps) {
+  const {
+    header: Header,
+    children,
+    grid = false,
+    className,
+    useAnimationContainer = false,
+    animationVariants
+  } = props;
+
   const gridclass = classNames({
     "overflow-y-scroll overflow-x-hidden": true,
     "w-full p-3": true,
@@ -41,7 +48,8 @@ export default function Container({
       {
         useAnimationContainer
           ?
-          <motion.div className={gridclass} variants={animationVariants ?? container} initial="hidden" animate="show" exit="hidden" viewport={{ once: true }}>
+          <motion.div className={gridclass} variants={animationVariants ?? container}
+            initial="hidden" animate="show" exit="hidden">
             {children}
           </motion.div>
           :

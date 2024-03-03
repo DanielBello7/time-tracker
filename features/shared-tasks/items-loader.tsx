@@ -6,7 +6,7 @@ import { item as val } from "./animation"
 export default function SharedTasksLoader() {
   return (
     <React.Fragment>
-      {[1, 2, 3, 4, 5].map((item) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
         <motion.div variants={val} key={item}>
           <SharedTaskLoading />
         </motion.div>

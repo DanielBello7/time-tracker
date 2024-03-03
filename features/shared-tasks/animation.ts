@@ -7,8 +7,8 @@ export const container: Variants = {
   show: {
     opacity: 1,
     transition: {
-      delayChildren: 0.9,
-      staggerChildren: 0.6,
+      delayChildren: 0.5,
+      staggerChildren: 0.2,
     }
   }
 }
@@ -22,7 +22,7 @@ export const item: Variants = {
     y: "0%",
     opacity: 1,
     transition: {
-      duration: 0.7
+      duration: 0.5
     }
   }
 }

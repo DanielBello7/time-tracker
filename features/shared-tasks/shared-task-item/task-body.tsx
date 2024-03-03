@@ -45,17 +45,15 @@ export default function TaskBody({ task }: TaskBodyProps) {
         }
       </div>
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold capitalize">
-          {taskId.title.slice(0, 16).trim()}
-          {taskId.title.length > 16 && "..."}
+        <h1 className="text-2xl font-bold capitalize truncate">
+          {taskId.title}
         </h1>
         <p className="text-xs text-gray-400">{date}</p>
         <Badge className="capitalize" variant={taskId.type === "bug" ? "default" : "destructive"}>
           {taskId.type}
         </Badge>
-        <p className="text-gray-400 md:tracking-tight">
-          {upperFirst(taskId.body).slice(0, 156).trim()}
-          {taskId.body.length > 156 && "..."}
+        <p className="text-gray-400 md:tracking-tight line-clamp-4">
+          {upperFirst(taskId.body)}
         </p>
       </div>
     </div>
