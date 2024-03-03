@@ -29,6 +29,11 @@ export default function Footer(props: FooterProps) {
               <span>See more </span>
               <span className="text-gray-600">@inScript.dev</span>
             </Text>
+
+            <Text type="sub" className="mt-1">
+              <span className="me-1">Analytics icons by</span>
+              <a target="_blank" href="https://icons8.com" className="text-black">Icons8</a>
+            </Text>
           </div>
         </div>
 
