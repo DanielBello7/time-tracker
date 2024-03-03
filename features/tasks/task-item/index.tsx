@@ -27,7 +27,7 @@ export default function TaskItem(props: TASK) {
     dateStyle: "full"
   });
 
-  const containerCn = classNames("w-full border flex flex-col justify-between p-2 px-3 rounded h-[330px] md:h-[330px] lg:h-[370px] xl:h-[360px]", {
+  const containerCn = classNames("w-full border flex flex-col justify-between p-2 px-3 rounded h-[330px] md:h-[330px] lg:h-[370px] xl:h-[350px]", {
     "border-2 border-[#0036C1] bg-[#E1E9FF]": isSelectable && selected.includes(_id),
   });
 

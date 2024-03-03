@@ -6,7 +6,7 @@ import SettingsHeader from "./settings-header";
 
 export default function Settings() {
   return (
-    <Container header={SettingsHeader} className="w-full md:w-8/12 lg:w-1/2 py-10 p-4">
+    <Container header={SettingsHeader} className="w-full md:w-8/12 lg:w-1/2 py-10 p-4" useAnimationContainer={true}>
       <ProfileSettings />
       <NotificationsSettings />
       <SecuritySettings />

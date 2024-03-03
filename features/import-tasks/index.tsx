@@ -8,7 +8,7 @@ import ImportRenderer from "./import-renderer";
 export default function ImportTasks() {
   return (
     <ImportTasksContextProvider>
-      <Container header={ImportTasksHeader}>
+      <Container header={ImportTasksHeader} useAnimationContainer={true}>
         <ImportTaskTitle />
         <ImportRenderer />
       </Container>

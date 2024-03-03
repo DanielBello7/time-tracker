@@ -7,6 +7,7 @@ import useTasks from "./use-tasks";
 import TasksLoader from "./tasks-loader";
 import EmptyTasks from "./empty-tasks";
 import { useAppSelector } from "@/store/hooks";
+import { container } from "./animation"
 
 
 export default function Tasks() {
@@ -16,7 +17,7 @@ export default function Tasks() {
 
   return (
     <React.Fragment>
-      <Container header={TasksHeader} grid>
+      <Container header={TasksHeader} grid={true} useAnimationContainer={true} animationVariants={container}>
         <Renderer error={error} isLoading={isLoading} loader={<TasksLoader />}>
           {
             tasks.length > 0
