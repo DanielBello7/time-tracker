@@ -8,8 +8,12 @@ type FloaterItemProps = {
 
 export default function FloaterItem(props: FloaterItemProps) {
   const { classNames: classes, img } = props;
-  const cn = classNames("absolute size-10", classes);
+  const cn = classNames("size-10", classes);
   return (
-    <Image src={img} className={cn} alt="core-task" />
+    <Image
+      className={cn}
+      src={img}
+      alt="core-task"
+    />
   )
 }

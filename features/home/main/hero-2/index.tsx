@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { container } from "./animate";
 import Link from "next/link";
 import Floaters from "./floaters";
 
@@ -6,22 +8,58 @@ export default function Hero2() {
   return (
     <div className="w-full py-16">
       <div className="container mx-auto flex items-center px-20">
-        <div className="w-9/12 mx-auto text-center relative">
-          <p className="font-bold text-[#4891FF]">#01 SPOTLIGHT</p>
+        <motion.div className="w-9/12 mx-auto text-center relative" variants={container} initial="hidden" animate="show">
+          <motion.p
+            className="font-bold text-[#4891FF]"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            #01 SPOTLIGHT
+          </motion.p>
           <div className="text-9xl font-bold tracking-tighter bg-clip-text">
-            <h1>Plan Better</h1>
-            <h1>Analyse <span className="text-[#4891FF]">Faster.</span></h1>
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: "easeInOut", delay: 0.5 }}
+            >
+              Plan Better
+            </motion.h1>
+            <h1>
+              <motion.span className="me-7"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, ease: "easeInOut", delay: 0.7 }}
+              >
+                Analyse
+              </motion.span>
+              <motion.span className="text-[#4891FF]"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.5, ease: "easeInOut", delay: 1.5 }}
+              >
+                Faster.
+              </motion.span>
+            </h1>
           </div>
           <div className="text-gray mt-5 text-xl">
-            <p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, ease: "easeInOut", delay: 0.8 }}
+            >
               Welcome to our revolutionary task
               manager app, where productivity meets simplicity.
               Seamlessly manage your tasks with our
               intuitive interface, designed to empower
               you to achieve your goals effortlessly
-            </p>
+            </motion.p>
           </div>
-          <div className="mt-5 flex justify-center gap-5">
+          <motion.div className="mt-5 flex justify-center gap-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, ease: "easeInOut", delay: 0.8 }}
+          >
             <Link href={"/sign-in"}>
               <Button variant={"secondary"}>
                 Sign In
@@ -32,9 +70,9 @@ export default function Hero2() {
                 Sign Up Now
               </Button>
             </Link>
-          </div>
+          </motion.div>
           <Floaters />
-        </div>
+        </motion.div>
       </div>
     </div>
   )

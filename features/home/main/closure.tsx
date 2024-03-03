@@ -4,6 +4,7 @@ import {
   FaShieldAlt,
   FaCreditCard
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Closure() {
@@ -11,7 +12,12 @@ export default function Closure() {
     <div className="w-full py-20">
       <div className="container mx-auto">
         <div className="w-10/12 mx-auto grid grid-cols-4 gap-4">
-          <div className="col-span-2">
+          <motion.div className="col-span-2"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4 }}
+          >
             <h1 className="text-3xl font-bold">Ready to get started?</h1>
             <p className="mt-4">
               Dive into a world of seamless organization
@@ -33,8 +39,14 @@ export default function Closure() {
                 </Button>
               </Link>
             </div>
-          </div>
-          <div className="w-full">
+          </motion.div>
+
+          <motion.div className="w-full"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4, delay: 0.4 }}
+          >
             <FaCreditCard size={30} />
             <h1 className="my-3 text-lg font-bold">Completely Free</h1>
             <p>
@@ -47,8 +59,14 @@ export default function Closure() {
                 <FaAngleRight />
               </Button>
             </Link>
-          </div>
-          <div className="w-full">
+          </motion.div>
+
+          <motion.div className="w-full"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4, delay: 0.6 }}
+          >
             <FaShieldAlt size={30} />
             <h1 className="my-3 text-lg font-bold">Secure Access</h1>
             <p>
@@ -61,7 +79,7 @@ export default function Closure() {
                 <FaAngleRight />
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
