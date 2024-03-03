@@ -15,7 +15,7 @@ export default function CreateTask(props: CreateTaskProps) {
   const { defautValues, header } = props;
   return (
     <CreateTaskContextProvider defaultValue={defautValues}>
-      <Container header={header ?? CreateTaskHeader} className="flex">
+      <Container header={header ?? CreateTaskHeader} className="flex lg:px-8" useAnimationContainer={true}>
         <div className="w-full md:w-11/12 lg:w-7/12">
           <CreateInputFields />
         </div>

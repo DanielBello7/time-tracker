@@ -11,7 +11,7 @@ export default function TaskDetails({ task }: TaskDetailsProps) {
     dateStyle: "full"
   });
   return (
-    <div className="w-full">
+    <div className="w-full pb-20">
       <p className="text-[#4891FF]">#TASK {task.shortCode}</p>
       <h1 className="text-3xl mt-2 capitalize">
         {task.title}
@@ -30,7 +30,9 @@ export default function TaskDetails({ task }: TaskDetailsProps) {
       </div>
       <div className="lg:pe-10">
         <p className="text-lg text-gray-400">
-          {upperFirst(task.body)}
+          {upperFirst(task.body).split("\n").map((item, idx) => (
+            <p key={idx} className="mb-5">{item}</p>
+          ))}
         </p>
       </div>
       <div className="mt-5 lg:pe-10">

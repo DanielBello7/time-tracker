@@ -108,6 +108,7 @@ export default function CreateInputFields() {
         inputType="textarea"
         placeholder="Body"
         label="Task Body"
+        inputClass="h-44"
         sub="Add a description to the task you are creating"
         value={formData.body}
         change={(e) => setFormData({

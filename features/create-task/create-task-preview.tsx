@@ -47,7 +47,9 @@ export default function CreateTaskPreview() {
               nisi eius quas laborum corrupti, placeat 
               nobis officiis sint, omnis ipsum!`
               :
-              formData.body
+              (formData.body).split("\n").map((item, idx) => (
+                <p key={idx} className="mb-5">{item}</p>
+              ))
           }
         </p>
 

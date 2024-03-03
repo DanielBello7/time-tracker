@@ -32,9 +32,11 @@ export default function FormInput(props: CreateInputProps) {
   } = props;
 
   const containerClassnames = classNames("space-y-2 my-5", containerClass);
+
   const onchange = (e: string) => {
     change && change(e);
   }
+
   return (
     <div className={containerClassnames}>
       <Label>{label}</Label>
