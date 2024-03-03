@@ -1,7 +1,7 @@
 import DashboardLayout from "@/components/dashboard-layout";
 import SelectedTask from "@/features/selected-task";
 import ensureError from "@/lib/ensure-error";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 import * as React from "react";
 import type { TASK } from "@/types/task.types";
 import type { GetServerSidePropsContext } from "next";

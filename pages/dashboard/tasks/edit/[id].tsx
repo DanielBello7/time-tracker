@@ -4,7 +4,7 @@ import EditTask from "@/features/edit-task";
 import ensureError from "@/lib/ensure-error";
 import { TASK } from "@/types/task.types";
 import { GetServerSidePropsContext } from "next";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { params } = context

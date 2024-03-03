@@ -1,7 +1,7 @@
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
 import joi from "joi";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 import BaseError from "@/lib/base-error";
 
 const querySchema = joi.object({
@@ -18,7 +18,7 @@ router.get("/api/tasks/users/:userId", async (req, res) => {
     throw new BaseError(400, error.details[0].message);
 
   if (value.search) {
-    const response = await TasksService.searchUserTasksUsingTitle(value.userId, value.search);
+    const response = await TasksService.searchTasksUsingTaskTitle(value.userId, value.search);
     return res.json({
       msg: "success",
       status: "OK",

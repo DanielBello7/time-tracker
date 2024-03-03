@@ -1,4 +1,4 @@
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 import router from "@/lib/router";
 import joi from "joi";
 import handleError from "@/lib/handle-error";

@@ -2,7 +2,7 @@ import joi from "joi";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import BaseError from "@/lib/base-error";
-import UsersService from "@/services/users.service";
+import UsersService from "@/services/user.service";
 
 const postBodySchema = joi.object({
   userId: joi.string().required(),

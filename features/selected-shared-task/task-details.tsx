@@ -12,7 +12,7 @@ export default function TaskDetails(props: TaskDetailsProps) {
     dateStyle: "full"
   });
   return (
-    <div className="w-full pb-20">
+    <div className="w-full lg:pb-20">
       <p className="text-[#4891FF]">#TASK {task.shortCode}</p>
       <h1 className="text-3xl mt-2 capitalize">
         {task.title}

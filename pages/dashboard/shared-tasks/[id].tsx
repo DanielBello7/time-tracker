@@ -1,7 +1,7 @@
 import DashboardLayout from "@/components/dashboard-layout";
 import SelectedSharedTask from "@/features/selected-shared-task";
 import ensureError from "@/lib/ensure-error";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 import * as React from "react";
 import type { SHARED_TASK } from "@/types/shared-task.types";
 import type { GetServerSidePropsContext } from "next";

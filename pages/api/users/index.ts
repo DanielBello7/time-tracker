@@ -1,5 +1,5 @@
 import { NEW_USER } from "@/types/user.types";
-import UsersService from "@/services/users.service";
+import UsersService from "@/services/user.service";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import joi from "joi";

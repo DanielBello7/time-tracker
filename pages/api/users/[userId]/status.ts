@@ -1,7 +1,7 @@
 import BaseError from "@/lib/base-error";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
-import UsersService from "@/services/users.service";
+import UsersService from "@/services/user.service";
 import joi from "joi";
 
 const patchBodySchema = joi.object({

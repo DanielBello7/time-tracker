@@ -1,5 +1,5 @@
 import Onboarding from "@/features/onboarding";
-import usersService from "@/services/users.service";
+import usersService from "@/services/user.service";
 import { USER } from "@/types/user.types";
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";

@@ -1,4 +1,4 @@
-import UsersService from "@/services/users.service";
+import UsersService from "@/services/user.service";
 import EmailVerify from "@/features/email-verify";
 import type { USER } from "@/types/user.types";
 import type { GetServerSidePropsContext } from "next";

@@ -2,7 +2,7 @@ import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import BaseError from "@/lib/base-error";
 import joi from "joi";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 
 const querySchema = joi.object({
   userId: joi.string().required()

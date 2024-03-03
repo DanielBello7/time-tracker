@@ -2,7 +2,7 @@ import BaseError from "@/lib/base-error";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
 import joi from "joi";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 
 const postBodySchema = joi.object({
   tasks: joi.array().items(joi.object({

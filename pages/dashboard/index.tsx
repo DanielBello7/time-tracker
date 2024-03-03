@@ -1,7 +1,7 @@
 import * as React from "react";
 import DashboardLayout from "@/components/dashboard-layout";
 import Metrics from "@/features/metrics";
-import UsersService from "@/services/users.service";
+import UsersService from "@/services/user.service";
 import { getSession } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 

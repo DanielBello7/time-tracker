@@ -1,9 +1,9 @@
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 import BaseError from "@/lib/base-error";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import joi from "joi";
-import UsersService from "@/services/users.service";
+import UsersService from "@/services/user.service";
 import sendEmail from "@/lib/send-email";
 
 const querySchema = joi.object({

@@ -3,7 +3,7 @@ import handleError from "@/lib/handle-error";
 import joi from "joi";
 import { importTaskSchema } from '@/lib/import-task-validator';
 import BaseError from "@/lib/base-error";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 
 const postBodySchema = joi.object({
   tasks: joi.array().items(importTaskSchema).required(),

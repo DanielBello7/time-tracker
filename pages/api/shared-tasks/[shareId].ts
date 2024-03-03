@@ -1,4 +1,4 @@
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 import BaseError from "@/lib/base-error";
 import joi from "joi";
 import handleError from "@/lib/handle-error";

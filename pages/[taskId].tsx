@@ -1,6 +1,6 @@
 import SelectedTask from "@/features/selected-task";
 import Header from "@/components/header";
-import TasksService from "@/services/tasks.service";
+import TasksService from "@/services/task.service";
 import type { TASK } from "@/types/task.types";
 import type { GetServerSidePropsContext } from "next";
 

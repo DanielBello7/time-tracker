@@ -1,13 +1,16 @@
 import { getWeekLimitDates, getPercentageChangeDifference } from "@/lib/analysis";
 import type { TASK } from "@/types/task.types";
 import type { TASK_METRICS } from "@/types/stats.types";
-import UsersService from "./users.service";
+import UsersService from "./user.service";
 import TasksModel from "@/models/tasks.model";
 import objectSanitize from "@/lib/object-sanitize";
 import type {
   TWO_DIMENSIONS_CHART_DATA,
   THREE_DIMENSIONS_CHART_DATA
-} from "@/types/stats.types"
+} from "@/types/stats.types";
+import databaseConnection from "@/lib/database-connection";
+
+databaseConnection();
 
 type WEEK_TASK_METRICS = TASK_METRICS & {
   title: string
