@@ -1,21 +1,22 @@
-import SharedTaskRenderer from "./renderer";
+import SharedTaskRenderer from "./shared-tasks-renderer";
 import SharedTasksHeader from "./header";
 import * as React from "react";
 import Container from "@/components/container";
-import useGetSharedTasks from "./use-shared-tasks";
+import useFetchSharedTasks from "./use-fetch-shared-tasks";
 import Renderer from "@/components/renderer";
 import SharedTasksLoader from "./items-loader";
 import EmptySharedTasks from "./empty-tasks";
 import { useAppSelector } from "@/store/hooks";
+import { container } from "./animation"
 
 export default function SharedTasks() {
   const { _id } = useAppSelector((state) => state.user.user);
-  const { error, isFetching, refetch } = useGetSharedTasks(_id);
+  const { error, isFetching, refetch } = useFetchSharedTasks(_id);
   const { sharedTasks } = useAppSelector((state) => state.tasks);
 
   return (
     <React.Fragment>
-      <Container header={SharedTasksHeader} grid>
+      <Container header={SharedTasksHeader} grid useAnimationContainer={true} animationVariants={container}>
         <Renderer error={error} isLoading={isFetching} refresh={refetch}
           loader={<SharedTasksLoader />}>
           {

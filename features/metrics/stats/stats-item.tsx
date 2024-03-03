@@ -1,9 +1,9 @@
 import type { STATS } from "@/types/stats.types";
-import * as React from "react";
 import { ImStatsDots } from "react-icons/im";
 import { IoStatsChartSharp, IoStatsChart } from "react-icons/io5";
 import { ImStatsBars2 } from "react-icons/im";
 import { BiStats } from "react-icons/bi";
+import * as React from "react";
 
 export default function StatsItem(props: STATS) {
   const {

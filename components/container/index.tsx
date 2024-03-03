@@ -1,16 +1,20 @@
 import { Separator } from "@/components/ui/separator";
+import { Variants, motion } from "framer-motion";
 import classNames from "classnames";
 import * as React from "react";
+import { container } from "./animation";
 
 type DashboardBodyLayoutProps = {
   header?: React.ReactElement | (() => React.ReactElement) | null
   children?: React.ReactElement[] | React.ReactElement
   grid?: boolean
   className?: string
+  useAnimationContainer?: boolean
+  animationVariants?: Variants
 }
 
 export default function Container({
-  header: Header, children, grid = false, className
+  header: Header, children, grid = false, className, useAnimationContainer = false, animationVariants
 }: DashboardBodyLayoutProps) {
   const gridclass = classNames({
     "overflow-y-scroll overflow-x-hidden": true,
@@ -34,9 +38,17 @@ export default function Container({
         Header &&
         <Separator className="border-b" />
       }
-      <div className={gridclass}>
-        {children}
-      </div>
+      {
+        useAnimationContainer
+          ?
+          <motion.div className={gridclass} variants={animationVariants ?? container} initial="hidden" animate="show" exit="hidden" viewport={{ once: true }}>
+            {children}
+          </motion.div>
+          :
+          <div className={gridclass}>
+            {children}
+          </div>
+      }
     </React.Fragment>
   )
 }

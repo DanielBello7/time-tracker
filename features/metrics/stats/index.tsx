@@ -5,13 +5,15 @@ import StatsLoading from "./stats-loading";
 import Renderer from "@/components/renderer";
 import StatsItem from "./stats-item";
 import useStats from "./use-stats";
+import { motion } from "framer-motion";
+import { container, item as val } from "./animate";
 
 export default function Stats() {
   const { _id } = useAppSelector((state) => state.user.user);
   const { data, error, isFetching, refetch } = useStats(_id);
 
   return (
-    <div className="grid w-full gap-3 md:grid-cols-2 lg:grid-cols-3">
+    <motion.div className="grid w-full gap-3 md:grid-cols-2 lg:grid-cols-3" variants={container} initial="hidden" animate="show" exit="hidden">
       <Renderer
         isLoading={isFetching}
         error={error}
@@ -20,9 +22,11 @@ export default function Stats() {
       >
         {data &&
           data.map((item: any, idx: number) => (
-            <StatsItem {...item} key={idx} />
+            <motion.div key={idx} variants={val}>
+              <StatsItem {...item} />
+            </motion.div>
           ))}
       </Renderer>
-    </div>
+    </motion.div>
   );
 }

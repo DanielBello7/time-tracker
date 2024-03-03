@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { addSharedTasks, resetSharedTasks } from "@/store/tasks-slice";
 
-export default function useGetSharedTasks(userId: string) {
+export default function useFetchSharedTasks(userId: string) {
   const router = useRouter();
   const { search } = router.query;
   const dispatch = useAppDispatch();
   const searchValue = search && typeof search == "string" ? search : null;
-  const { data, isFetching, error, refetch } = useQuery(
+  return useQuery(
     ["shared-tasks", userId, searchValue],
     () => getSharedTasks(userId, searchValue),
     {
@@ -19,12 +19,5 @@ export default function useGetSharedTasks(userId: string) {
       },
     }
   );
-
-  return {
-    data,
-    isFetching,
-    error,
-    refetch
-  }
 }
 
