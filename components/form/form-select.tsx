@@ -59,8 +59,7 @@ export default function FormSelect(props: FormSelectProps) {
         <Label>{title ?? "Select"}</Label>
       }
 
-      <Select name={name} required={required} disabled={isLoading && true}
-        onValueChange={(e) => onchange && onchange(e)} value={value}>
+      <Select name={name} required={required} disabled={isLoading && true} onValueChange={(e) => onchange && onchange(e)} value={value}>
         <SelectTrigger className={selectCn}>
           <SelectValue placeholder={placeholder ?? "Select an option"} />
         </SelectTrigger>

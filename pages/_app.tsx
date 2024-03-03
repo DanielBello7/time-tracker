@@ -12,17 +12,17 @@ type AppPropsWithLayout = AppProps & {
 }
 
 export default function App(props: AppPropsWithLayout) {
-  const { Component, pageProps } = props;
+  const { Component, pageProps, router } = props;
   if (Component.getLayout) {
     return (
       <AppProviders session={pageProps.session}>
-        {Component.getLayout(<Component {...pageProps} />)}
+        {Component.getLayout(<Component key={router.pathname} {...pageProps} />)}
       </AppProviders>
     )
   }
   return (
     <AppProviders session={pageProps.session}>
-      <Component {...pageProps} />
+      <Component key={router.pathname} {...pageProps} />
     </AppProviders>
   )
 }

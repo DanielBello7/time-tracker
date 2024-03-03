@@ -2,6 +2,7 @@ import { SessionProvider } from "next-auth/react"
 import { Toaster } from "@/components/ui/sonner";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 import store from "@/store";
 
@@ -21,7 +22,9 @@ export default function AppProviders({ children, session }: AppProvidersProps) {
             <title>CoreTask | Task Manager</title>
             <link rel="icon" href="favicon.png" />
           </Head>
-          {children}
+          <AnimatePresence mode="wait">
+            {children}
+          </AnimatePresence>
           <Toaster />
         </Provider>
       </QueryClientProvider>
