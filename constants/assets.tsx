@@ -1,6 +1,3 @@
-import logo_2 from '@/public/vercel.svg';
-import logo from '@/public/next.svg';
-
 import img_01 from "@/assets/Sample-0.svg";
 import img_02 from "@/assets/Sample-2.svg";
 import img_03 from "@/assets/Sample-3.svg";
@@ -19,9 +16,6 @@ import img_e from "@/assets/Sample-E.svg";
 import img_f from "@/assets/Sample-F.svg";
 
 export {
-    logo,
-    logo_2,
-
     img_01,
     img_02,
     img_03,

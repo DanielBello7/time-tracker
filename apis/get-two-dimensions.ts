@@ -1,7 +1,7 @@
 import type { TWO_DIMENSIONS_CHART_DATA } from "@/types/stats.types";
 import axios from "axios";
 
-const data: TWO_DIMENSIONS_CHART_DATA[] = [
+const _: TWO_DIMENSIONS_CHART_DATA[] = [
   {
     name: 'Previous Week',
     bd: 4000,

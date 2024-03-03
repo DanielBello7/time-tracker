@@ -12,7 +12,7 @@ let cached: CachedType = {
   conn: null
 };
 
-async function database_connection(): Promise<void> {
+async function databaseConnection(): Promise<void> {
   if (cached.conn) return
   try {
     const response = await mongoose.connect(variables.ENV.MONGO_DB_URL)
@@ -22,10 +22,8 @@ async function database_connection(): Promise<void> {
       await TasksModel.createIndexes();
     });
     cached.conn = response;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch { return }
 }
 
-export default database_connection;
+export default databaseConnection;
 

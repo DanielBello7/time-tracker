@@ -70,3 +70,4 @@ export function getPercentageChangeDifference(
   const differenceInPercent = ((currentAmount - previousAmount) / previousAmount) * 100
   return Math.floor(differenceInPercent);
 }
+

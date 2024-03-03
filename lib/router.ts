@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
-import database_connection from "./database-connection";
+import databaseConnection from "./database-connection";
 
-database_connection();
+databaseConnection();
 const router = createRouter<NextApiRequest, NextApiResponse>();
 export default router;

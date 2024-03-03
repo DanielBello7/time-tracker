@@ -6,7 +6,7 @@ import axios from "axios";
 import * as React from "react";
 import ensureError from "@/lib/ensure-error";
 
-export default function useResources() {
+export default function useFetchResources() {
     const [isLoading, setIsLoading] = React.useState(true);
     const dispatch = useAppDispatch();
 

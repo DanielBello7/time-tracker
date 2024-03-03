@@ -7,11 +7,15 @@ import validateId from "@/lib/validate-id";
 import SharedTasksModel from "@/models/shared-tasks.model";
 import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
-import database_connection from "@/lib/database-connection";
+import databaseConnection from "@/lib/database-connection";
 import ExternalSharedTasksModel from "@/models/external-shared";
-import { EXTERNAL_SHARED_TASK, EXTERNAL_SHARED_TASK_DOC, NEW_EXTERNAL_SHARED_TASK } from "@/types/external-shared.types";
+import type {
+  EXTERNAL_SHARED_TASK,
+  EXTERNAL_SHARED_TASK_DOC,
+  NEW_EXTERNAL_SHARED_TASK
+} from "@/types/external-shared.types";
 
-database_connection();
+databaseConnection();
 
 type GET_TASKS_FILTER = {
   createdBy: string

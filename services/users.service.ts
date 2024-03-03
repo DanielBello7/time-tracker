@@ -4,11 +4,11 @@ import { variables } from "@/constants";
 import bcrypt from "bcrypt";
 import UsersModel from "@/models/users.model";
 import BaseError from "@/lib/base-error";
-import database_connection from "@/lib/database-connection";
+import databaseConnection from "@/lib/database-connection";
 import validateId from "@/lib/validate-id";
 import objectSanitize from "@/lib/object-sanitize";
 
-database_connection();
+databaseConnection();
 
 async function confirmIfEmailIsRegistered(email: string): Promise<boolean> {
   const response = await UsersModel.findOne({ email });

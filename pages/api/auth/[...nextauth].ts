@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import { variables } from "@/constants";
-import database_connection from "@/lib/database-connection";
+import databaseConnection from "@/lib/database-connection";
 import Credentials from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
 import bcrypt from "bcrypt";
@@ -16,7 +16,7 @@ export const authenticationOptions: NextAuthOptions = {
       },
       async authorize(credentials): Promise<any> {
         try {
-          await database_connection();
+          await databaseConnection();
           const { email, password }: any = credentials;
           const response = await UserService.findUserUsingEmail(email);
           const confirm = bcrypt.compareSync(password, response.password);

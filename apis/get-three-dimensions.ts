@@ -1,7 +1,7 @@
 import type { THREE_DIMENSIONS_CHART_DATA } from "@/types/stats.types";
 import axios from "axios";
 
-const data: THREE_DIMENSIONS_CHART_DATA[] = [
+const _: THREE_DIMENSIONS_CHART_DATA[] = [
   {
     name: 'Previous Week',
     bd: 4000,

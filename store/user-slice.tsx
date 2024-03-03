@@ -16,10 +16,16 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		setCurrentUser: (state, action: PayloadAction<USER>) => {
-			return { ...state, user: action.payload }
+			return {
+				...state,
+				user: action.payload
+			}
 		},
 		removeCurrentUser: (state) => {
-			return { ...state, user: {} as USER }
+			return {
+				...state,
+				user: {} as USER
+			}
 		},
 		updateUser: (state, action: PayloadAction<DeepPartial<USER>>) => {
 			const updated = updateObject(state.user, action.payload);

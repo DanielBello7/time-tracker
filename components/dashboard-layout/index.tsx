@@ -4,7 +4,7 @@ import DashboardHeader from "./dashboard-header";
 import * as React from "react";
 import classNames from "classnames";
 import LoadingScreen from "../loading-screen";
-import useResources from "./use-resources";
+import useFetchResources from "./use-fetch-resources";
 import DeleteSharedTaskDialog from "@/components/dialogs/delete-shared-task-dialog";
 import DeleteTaskDialog from "@/components/dialogs/delete-task-dialog";
 import ShareTaskDialog from "@/components/dialogs/share-task-dialog";
@@ -14,7 +14,7 @@ type DashboardLayoutProps = {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-    const { isLoading } = useResources();
+    const { isLoading } = useFetchResources();
 
     const main = classNames({
         "w-full 2xl:container 2xl:p-0 md:border h-screen overflow-hidden flex": true
