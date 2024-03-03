@@ -6,6 +6,7 @@ import { addSharedSelected, removeSharedSelected } from "@/store/interface-slice
 import { Checkbox } from "@/components/ui/checkbox";
 import upperFirst from "@/lib/upper-first";
 import classNames from "classnames";
+import { useRouter } from "next/router";
 
 type TaskBodyProps = {
   task: SHARED_TASK
@@ -15,6 +16,7 @@ export default function TaskBody({ task }: TaskBodyProps) {
   const { sharedSelected, isSharedSelectable } = useAppSelector((state) => state.interface);
   const { _id, taskId, } = task;
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const date = new Date(taskId.createdAt).toLocaleDateString("en-us", {
     dateStyle: "full"
@@ -32,8 +34,13 @@ export default function TaskBody({ task }: TaskBodyProps) {
     }
   }
 
+  const handleClick = () => {
+    if (!isSharedSelectable) return router.push(`/dashboard/shared-tasks/${task._id}`);
+    else handleChange();
+  }
+
   return (
-    <div className="w-full">
+    <div className="w-full" onClick={handleClick}>
       <div className={cn}>
         <p className="text-[#4891FF] text-xs">
           #TASK {taskId.shortCode}

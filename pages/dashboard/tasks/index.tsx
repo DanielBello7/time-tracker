@@ -6,6 +6,7 @@ export default function TasksPage() {
   return <Tasks />
 }
 
+
 TasksPage.getLayout = function (page: React.ReactElement) {
   return (
     <DashboardLayout>

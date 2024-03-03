@@ -30,11 +30,11 @@ export default function TaskDetails(props: TaskDetailsProps) {
         }
       </div>
       <div className="lg:pe-10">
-        <p className="text-lg text-gray-400">
-          {upperFirst(task.body).split("\n").map((item, idx) => (
-            <p key={idx} className="mb-5">{item}</p>
-          ))}
-        </p>
+        {upperFirst(task.body).split("\n").map((item, idx) => (
+          <p className="text-lg text-gray-400 mb-5" key={idx}>
+            {item}
+          </p>
+        ))}
       </div>
       <div className="mt-5 lg:pe-10">
         <p className="text-[#4891FF]">TAGS</p>

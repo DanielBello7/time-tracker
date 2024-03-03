@@ -24,7 +24,9 @@ const deleteBodySchema = joi.object({
 
 const querySchema = joi.object({
   createdBy: joi.string(),
-  type: joi.string().valid("bug", "story")
+  type: joi.string().valid("bug", "story"),
+  page: joi.number(),
+  limit: joi.number()
 });
 
 // create task
@@ -49,7 +51,13 @@ router.get("/api/tasks", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
-  const response = await TasksService.getTasks(value);
+  const response = await TasksService.getTasks({
+    createdBy: value.createdBy,
+    type: value.type
+  }, {
+    page: value.page,
+    limit: value.limit
+  });
   return res.json({
     status: "OK",
     msg: "success",

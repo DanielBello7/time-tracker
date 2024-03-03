@@ -22,6 +22,11 @@ type GET_TASKS_FILTER = {
   type: string
 }
 
+type FILTER_OPTIONS = {
+  page: number
+  limit: number
+}
+
 async function searchUserTasksUsingTitle(
   userId: string, title: string
 ): Promise<PaginateResult<TASK_DOC>> {
@@ -102,13 +107,15 @@ async function findSharedTaskUsingId(
   throw new BaseError(404, "task not found");
 }
 
-async function getTasks(filter: GET_TASKS_FILTER): Promise<PaginateResult<TASK>> {
+async function getTasks(filter?: GET_TASKS_FILTER, opt?: FILTER_OPTIONS): Promise<PaginateResult<TASK>> {
+  const sanitized = objectSanitize(filter ?? {});
+  const sanitizedOpts = objectSanitize(opt ?? {});
   const options: PaginateOptions = {
     limit: 1000,
     sort: { createdAt: "descending" },
     populate: [{ path: "createdBy", select: "-password" }],
+    ...sanitizedOpts
   }
-  const sanitized = objectSanitize(filter);
   return await TasksModel.paginate({ ...sanitized }, options);
 }
 
@@ -134,12 +141,14 @@ async function getSharedTasks(): Promise<PaginateResult<SHARED_TASK>> {
   return response as any;
 }
 
-async function getUserTasks(userId: string): Promise<PaginateResult<TASK>> {
+async function getUserTasks(userId: string, filter?: FILTER_OPTIONS): Promise<PaginateResult<TASK>> {
   validateId(userId);
+  const sanitized = objectSanitize(filter ?? {});
   const options: PaginateOptions = {
     limit: 1000,
     sort: { createdAt: "descending" },
-    populate: [{ path: "createdBy", select: "-password" }]
+    populate: [{ path: "createdBy", select: "-password" }],
+    ...sanitized
   }
   return await TasksModel.paginate({ createdBy: userId }, options);
 }
