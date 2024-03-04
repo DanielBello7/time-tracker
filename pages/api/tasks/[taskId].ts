@@ -1,4 +1,4 @@
-import TasksService from "@/services/task.service";
+import TaskService from "@/services/task.service";
 import router from "@/lib/router";
 import joi from "joi";
 import handleError from "@/lib/handle-error";
@@ -19,20 +19,21 @@ const patchBodySchema = joi.object({
   type: joi.string().valid("bug", "story")
 });
 
+
 // get one task
 // http://localhost:3000/api/tasks/:taskId [get]
 router.get("/api/tasks/:taskId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
-
-  const response = await TasksService.findTaskUsingId(value.taskId);
+  const response = await TaskService.findTaskUsingId(value.taskId);
   return res.json({
     status: "OK",
     msg: "success",
     payload: response
   });
 });
+
 
 // update one task
 // http://localhost:3000/api/tasks/:taskId [patch]
@@ -52,7 +53,7 @@ router.patch("/api/tasks/:taskId", async (req, res) => {
   if (error)
     throw new BaseError(400, error.details[0].message);
 
-  const response = await TasksService.updateTask(queryValue.taskId, {
+  const response = await TaskService.updateTask(queryValue.taskId, {
     body: value.body,
     dateFinished: value.dateFinished,
     dateStarted: value.dateStarted,

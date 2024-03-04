@@ -2,7 +2,7 @@ import router from "@/lib/router";
 import joi from "joi";
 import handleError from "@/lib/handle-error";
 import BaseError from "@/lib/base-error";
-import TasksService from "@/services/task.service";
+import ExternalSharedTaskService from "@/services/external-shared-task.service";
 
 const querySchema = joi.object({
   taskId: joi.string().required()
@@ -19,7 +19,8 @@ router.get("/api/shared-tasks/external/:taskId", async (req, res) => {
   if (error)
     throw new BaseError(400, error.details[0].message);
 
-  const response = await TasksService.findExternalSharedTaskUsingTaskId(value.taskId);
+  const response = await ExternalSharedTaskService.findExternalSharedTaskUsingTaskId(value.taskId);
+
   return res.json({
     status: "OK",
     msg: "success",
@@ -36,7 +37,7 @@ router.patch("/api/shared-tasks/external/:taskId", async (req, res) => {
   if (error)
     throw new BaseError(400, error.details[0].message);
 
-  const response = await TasksService.updateExternalSharedTaskStatus(value.taskId, {
+  const response = await ExternalSharedTaskService.updateExternalSharedTaskStatus(value.taskId, {
     isActive: val.isActive
   }, false);
 

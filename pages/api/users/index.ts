@@ -15,29 +15,34 @@ const postBodySchema = joi.object({
 });
 
 const querySchema = joi.object({
-  email: joi.string().email()
+  avatar: joi.string(),
+  name: joi.string(),
+  position: joi.string(),
+  email: joi.string().email(),
+  isEmailVerified: joi.boolean(),
+  isOnboarded: joi.boolean(),
+  country: joi.string(),
+  phone: joi.string(),
+  allowNotifications: joi.boolean(),
+  createdAt: joi.string(),
+  page: joi.number(),
+  limit: joi.number()
 });
 
+
 // get users
-// http://localhost:3000/api/users [get]
-// http://localhost:3000/api/users?email={email} [get]
+// http://localhost:3000/api/users?...rest [get]
 router.get("/api/users", async (req, res) => {
   const { value } = querySchema.validate(req.query);
-  if (value.email) {
-    const response = await UsersService.findUserUsingEmail(value.email);
-    return res.json({
-      status: "OK",
-      msg: "success",
-      payload: response
-    });
-  }
-  const response = await UsersService.getUsers();
+  const { page, limit, ...rest } = value;
+  const response = await UsersService.getUsers(rest, { page, limit });
   return res.json({
     status: "OK",
     msg: "success",
     payload: response
   });
 });
+
 
 // create new user
 // http://localhost:3000/api/users [post]
@@ -59,6 +64,7 @@ router.post("/api/users", async (req, res, _) => {
     payload: response
   });
 });
+
 
 export default router.handler({ onError: handleError });
 

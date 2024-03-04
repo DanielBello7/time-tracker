@@ -25,8 +25,13 @@ export type PAGINATE_OPTIONS_FILTER = {
 }
 
 async function searchSharedTasksUsingTaskTitle(
-  title: string, filter?: SHARED_TASK_FILTER
+  title: string,
+  filter?: Partial<SHARED_TASK_FILTER>,
+  paginateOptions?: Partial<PAGINATE_OPTIONS_FILTER>
 ): Promise<PaginateResult<SHARED_TASK_DOC>> {
+  const sanitizedFilter = objectSanitize(filter ?? {});
+  const sanitizedOptions = objectSanitize(paginateOptions ?? {});
+
   const options: PaginateOptions = {
     sort: { createdAt: "descending" },
     limit: 1000,
@@ -45,13 +50,11 @@ async function searchSharedTasksUsingTaskTitle(
           title: { $regex: title }
         }
       }
-    ]
+    ],
+    ...sanitizedOptions
   }
-  const sanitized = objectSanitize(filter ?? {});
-  const response = await SharedTasksModel.paginate(
-    { ...sanitized },
-    options
-  );
+
+  const response = await SharedTasksModel.paginate({ ...sanitizedFilter }, options);
   const adjusted = response.docs.filter((item) => item.taskId !== null) as any;
   response.docs = adjusted
   return response

@@ -1,5 +1,5 @@
 import type { UPDATE_USER, NEW_USER, USER } from "@/types/user.types";
-import type { PaginateResult } from "mongoose";
+import type { PaginateOptions, PaginateResult } from "mongoose";
 import { variables } from "@/constants";
 import bcrypt from "bcrypt";
 import UsersModel from "@/models/users.model";
@@ -7,8 +7,22 @@ import BaseError from "@/lib/base-error";
 import databaseConnection from "@/lib/database-connection";
 import validateId from "@/lib/validate-id";
 import objectSanitize from "@/lib/object-sanitize";
+import { PAGINATE_OPTIONS_FILTER } from "./shared-task.service";
 
 databaseConnection();
+
+export type USERS_FILTER = {
+  avatar: string | null
+  name: string
+  position: string
+  email: string
+  isEmailVerified: boolean
+  isOnboarded: boolean
+  country: string
+  phone: string
+  allowNotifications: boolean
+  createdAt: string
+}
 
 async function confirmIfEmailIsRegistered(email: string): Promise<boolean> {
   const response = await UsersModel.findOne({ email });
@@ -45,11 +59,20 @@ async function findUserUsingEmail(email: string): Promise<USER> {
   throw new BaseError(404, "user not registered");
 }
 
-async function getUsers(): Promise<PaginateResult<USER>> {
-  return await UsersModel.paginate({}, {
+async function getUsers(
+  filter?: USERS_FILTER, paginateOptions?: PAGINATE_OPTIONS_FILTER
+): Promise<PaginateResult<USER>> {
+  const sanitizedFilter = objectSanitize(filter ?? {});
+  const sanitizedOptions = objectSanitize(paginateOptions ?? {});
+
+  const options: PaginateOptions = {
     limit: 1000,
-    select: "-password"
-  });
+    select: "-password",
+    ...sanitizedOptions
+  }
+
+  const response = await UsersModel.paginate({ ...sanitizedFilter }, options);
+  return response as any;
 }
 
 async function updateUserUsingId(

@@ -1,4 +1,4 @@
-import TasksService from "@/services/task.service";
+import SharedTaskService from "@/services/shared-task.service";
 import BaseError from "@/lib/base-error";
 import joi from "joi";
 import handleError from "@/lib/handle-error";
@@ -20,7 +20,7 @@ router.get("/api/shared-tasks/:id", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
-  const response = await TasksService.findSharedTaskUsingId(value.shareId);
+  const response = await SharedTaskService.findSharedTaskUsingId(value.shareId);
   return res.json({
     status: "OK",
     msg: "success",
@@ -35,14 +35,18 @@ router.patch("/api/shared-tasks/status", async (req, res) => {
   const { error, value } = patchSchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
-  await TasksService.updateSharedTaskStatus(value.shareId, {
+
+  const response = await SharedTaskService.updateSharedTaskStatus(value.shareId, {
     isActive: value.isActive,
     isRead: value.isRead
   });
+
   return res.json({
     status: "OK",
-    msg: "success"
+    msg: "success",
+    payload: response
   });
 });
+
 
 export default router.handler({ onError: handleError });
