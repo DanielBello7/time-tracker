@@ -17,7 +17,7 @@ router.post("/api/actions/send-otp", async (req, res) => {
   if (error)
     throw new BaseError(400, error.details[0].message);
   await sendEmail({
-    subject: "Task Manager OTP Verification",
+    subject: "Core Task OTP Verification Code",
     to: [{ email: value.email }],
     htmlContent: otpEmail(value.otp)
   });
