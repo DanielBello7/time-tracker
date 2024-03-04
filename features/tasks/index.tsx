@@ -18,12 +18,9 @@ export default function Tasks() {
   return (
     <React.Fragment>
       <Container header={TasksHeader} grid={true} useAnimationContainer={true} animationVariants={container}>
-        <Renderer error={error} isLoading={isLoading} loader={<TasksLoader />}>
-          {
-            tasks.length > 0
-              ? <TaskRenderer tasks={tasks} />
-              : <EmptyTasks />
-          }
+        <Renderer error={error} isLoading={isLoading} loader={<TasksLoader />} occupyLoading={false}>
+          <TaskRenderer tasks={tasks} />
+          {!isLoading && tasks.length < 1 && <EmptyTasks />}
         </Renderer>
       </Container>
     </React.Fragment>

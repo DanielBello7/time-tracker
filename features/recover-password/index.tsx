@@ -11,7 +11,7 @@ import Footer from "./footer";
 import isEmailRegistered from "@/apis/is-email-registered";
 import sendOtp from "@/apis/send-otp";
 import updatePassword from "@/apis/update-password";
-import findUser from "@/apis/find-user";
+import findUserUsingUseremail from "@/apis/find-user-using-useremail";
 import { toast } from "sonner";
 import { recoverPasswordContent } from "./content";
 import { useRouter } from "next/router";
@@ -70,7 +70,7 @@ function RecoverPassword() {
       } else if (currentStepIndex === 2) {
         if (!password.trim() || !confirm.trim()) return toast("Please fill in required fields");
         if (password !== confirm) return toast("Password's don't match");
-        const user = await findUser(email);
+        const user = await findUserUsingUseremail(email);
         await updatePassword(user._id, password);
         return Next();
       } else if (currentStepIndex === 3) {

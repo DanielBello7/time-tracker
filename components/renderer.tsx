@@ -9,6 +9,7 @@ type RendererProps = {
   children: React.ReactNode
   error: unknown
   loader?: React.ReactNode
+  occupyLoading?: boolean
 }
 
 export default function Renderer(props: RendererProps) {
@@ -18,7 +19,8 @@ export default function Renderer(props: RendererProps) {
     children,
     error,
     isLoading,
-    refresh
+    refresh,
+    occupyLoading = true
   } = props;
 
   const loadingComponent = loader ?? <div className="w-full py-20 flex items-center justify-center"><Spinner /></div>
@@ -33,7 +35,8 @@ export default function Renderer(props: RendererProps) {
   if (error) return <ErrorComponent error={converted} refresh={refresh} />
   return (
     <React.Fragment>
-      {isLoading ? loadingComponent : children}
+      {occupyLoading ? !isLoading && children : children}
+      {isLoading && loadingComponent}
     </React.Fragment>
   )
 }

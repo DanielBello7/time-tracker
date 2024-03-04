@@ -7,27 +7,43 @@ type INITIAL_STATE = {
   sharedTasks: SHARED_TASK[]
   taskType: string
   search: string
+  page: number
+  hasMore: boolean
 }
 
 const initialState: INITIAL_STATE = {
   sharedTasks: [],
   tasks: [],
   taskType: "",
-  search: ""
+  search: "",
+  hasMore: true,
+  page: 1
 }
 
 const taskSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
+    updatePage: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        page: action.payload
+      }
+    },
+    updateHasMore: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        hasMore: action.payload
+      }
+    },
     addTasks: (state, action: PayloadAction<TASK[]>) => {
       const current_state_ids = state.tasks.map((item) => item._id);
       const filtered = action.payload.filter((item) => !current_state_ids.includes(item._id));
       return {
         ...state,
         tasks: [
-          ...filtered,
           ...state.tasks,
+          ...filtered,
         ]
       }
     },
@@ -83,6 +99,8 @@ const taskSlice = createSlice({
 
 export const {
   addSharedTasks,
+  updateHasMore,
+  updatePage,
   addTasks,
   removeSharedTasks,
   removeTasks,

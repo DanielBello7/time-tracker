@@ -1,17 +1,17 @@
 import SelectedTask from "@/features/selected-task";
 import Header from "@/components/header";
-import TasksService from "@/services/task.service";
 import type { TASK } from "@/types/task.types";
 import type { GetServerSidePropsContext } from "next";
+import ExternalSharedTaskService from "@/services/external-shared-task.service";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { params } = context;
   const id = params?.taskId as string
   if (id && typeof id === "string") {
     try {
-      const findShared = await TasksService.findExternalSharedTaskUsingId(id);
+      const findShared = await ExternalSharedTaskService.findExternalSharedTaskUsingId(id);
       if (!findShared.isActive) throw new Error("Task unavailable");
-      await TasksService.updateExternalSharedTaskStatus(findShared.taskId._id, {
+      await ExternalSharedTaskService.updateExternalSharedTaskStatus(findShared.taskId._id, {
         isRead: true
       }, false);
       return {

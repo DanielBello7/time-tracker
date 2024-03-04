@@ -23,10 +23,14 @@ export default async function getTwoDimensions(
   userId: string
 ): Promise<TWO_DIMENSIONS_CHART_DATA[]> {
 
-  return await new Promise((resolve) => {
+  return await new Promise((resolve, reject) => {
     setTimeout(async () => {
-      const response = await axios.get(`/api/users/${userId}/two-dimensions`);
-      resolve(response.data.payload)
+      try {
+        const response = await axios.get(`/api/users/${userId}/two-dimensions`);
+        resolve(response.data.payload)
+      } catch (error) {
+        reject(error)
+      }
     }, 2500);
   });
 }

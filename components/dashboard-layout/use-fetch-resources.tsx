@@ -2,9 +2,9 @@ import { useAppDispatch } from "@/store/hooks";
 import { setCurrentUser } from "@/store/user-slice";
 import { getSession } from "next-auth/react";
 import { toast } from "sonner";
-import axios from "axios";
 import * as React from "react";
 import ensureError from "@/lib/ensure-error";
+import findUserUsingUseremail from "@/apis/find-user-using-useremail";
 
 export default function useFetchResources() {
     const [isLoading, setIsLoading] = React.useState(true);
@@ -14,8 +14,8 @@ export default function useFetchResources() {
         try {
             const session = await getSession();
             if (!session) throw new Error("session unavailable");
-            const response = await axios.get(`/api/users?email=${session.user?.email}`);
-            const userinformation = response.data.payload;
+            const response = await findUserUsingUseremail(session.user?.email!)
+            const userinformation = response;
             dispatch(setCurrentUser(userinformation));
         } catch (error) {
             const err = ensureError(error);

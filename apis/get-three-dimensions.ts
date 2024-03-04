@@ -26,10 +26,14 @@ export default async function getThreeDimensions(
   userId: string
 ): Promise<THREE_DIMENSIONS_CHART_DATA[]> {
 
-  return await new Promise((resolve) => {
+  return await new Promise((resolve, reject) => {
     setTimeout(async () => {
-      const response = await axios.get(`/api/users/${userId}/three-dimensions`);
-      resolve(response.data.payload)
+      try {
+        const response = await axios.get(`/api/users/${userId}/three-dimensions`);
+        resolve(response.data.payload)
+      } catch (error) {
+        reject(error)
+      }
     }, 4000);
   });
 }

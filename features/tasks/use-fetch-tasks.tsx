@@ -1,27 +1,34 @@
-import { useQuery } from "react-query";
-import { getTasks } from "@/apis/get-tasks";
-import { useRouter } from "next/router";
-import { useAppDispatch } from "@/store/hooks";
 import { addTasks, resetTasks } from "@/store/tasks-slice";
-import * as React from "react";
+import { getTasks } from "@/apis/get-tasks";
+import { useQuery } from "react-query";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { updateHasMore } from "@/store/tasks-slice";
 
 export default function useFetchTasks(id: string) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { page } = useAppSelector((state) => state.tasks);
   const { type, search } = router.query;
-  const [page, setPage] = React.useState(1);
 
-  const searchValue = search && typeof search === "string" ? search : null;
-  const typeValue = type && typeof type === "string" ? type : null;
+  const searchValue = search && typeof search === "string" ? search : undefined;
+  const typeValue = type && typeof type === "string" ? type : undefined;
 
   return useQuery(
-    ["tasks", id, searchValue, typeValue],
-    () => getTasks(id, searchValue, typeValue),
+    ["tasks", id, searchValue, typeValue, page],
+    () => getTasks({
+      search: searchValue,
+      type: typeValue,
+      createdBy: id,
+      page,
+      limit: 4
+    }),
     {
       onSuccess(data) {
-        dispatch(resetTasks());
+        dispatch(updateHasMore(data.hasNextPage))
+        if (searchValue) dispatch(resetTasks());
         dispatch(addTasks(data.docs));
-      },
+      }
     }
   );
 }

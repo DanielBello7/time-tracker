@@ -1,7 +1,7 @@
 import DashboardLayout from "@/components/dashboard-layout";
 import SelectedSharedTask from "@/features/selected-shared-task";
 import ensureError from "@/lib/ensure-error";
-import TasksService from "@/services/task.service";
+import SharedTaskService from "@/services/shared-task.service";
 import * as React from "react";
 import type { SHARED_TASK } from "@/types/shared-task.types";
 import type { GetServerSidePropsContext } from "next";
@@ -10,8 +10,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { params } = context
   const id = params?.id as string;
   try {
-    const response = await TasksService.findSharedTaskUsingId(id);
-    TasksService.updateSharedTaskStatus(id, { isRead: true });
+    const response = await SharedTaskService.findSharedTaskUsingId(id);
+    SharedTaskService.updateSharedTaskStatus(id, { isRead: true });
     return {
       props: {
         task: JSON.parse(JSON.stringify(response))
