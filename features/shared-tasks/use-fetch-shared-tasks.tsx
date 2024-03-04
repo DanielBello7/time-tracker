@@ -27,6 +27,7 @@ export default function useFetchSharedTasks(userId: string) {
         if (searchValue) dispatch(resetSharedTasks());
         dispatch(addSharedTasks(data.docs));
       },
+      refetchOnWindowFocus: false
     }
   );
 }

@@ -28,8 +28,6 @@ router.get("/api/tasks/search/:text", async (req, res) => {
 
   const { text, page, limit, ...rest } = value;
 
-  console.log("here", value);
-
   const response = await TaskService.searchTasksUsingTaskTitle(text, rest, { page, limit });
   return res.json({
     msg: "success",

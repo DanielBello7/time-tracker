@@ -16,6 +16,7 @@ import { changeIsSelectable } from "@/store/interface-slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { updatePage, updateHasMore, resetTasks } from "@/store/tasks-slice"
 import DeleteAllTasksDialog from "./delete-all-dialog";
 
 export default function TaskHeaderOptions() {
@@ -29,6 +30,9 @@ export default function TaskHeaderOptions() {
   }
 
   const selectBug = () => {
+    dispatch(updateHasMore(true));
+    dispatch(updatePage(1));
+    dispatch(resetTasks());
     if (type && typeof type === "string" && type === "bug") {
       const redirect = router.pathname.replace("type=bug", "");
       return router.push(redirect);
@@ -37,6 +41,9 @@ export default function TaskHeaderOptions() {
   }
 
   const selectStory = () => {
+    dispatch(updateHasMore(true));
+    dispatch(updatePage(1));
+    dispatch(resetTasks());
     if (type && typeof type === "string" && type === "story") {
       const redirect = router.pathname.replace("type=story", "");
       return router.push(redirect);

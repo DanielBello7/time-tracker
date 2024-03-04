@@ -20,7 +20,7 @@ export default function TaskDetails(props: TaskDetailsProps) {
       <p className="text-gray-400 text-xs">
         {date}
       </p>
-      <div className="space-x-2 my-3">
+      <div className="space-x-2 my-3 mb-10">
         <Badge variant={task.type === "bug" ? "default" : "destructive"} className="capitalize">
           {task.type}
         </Badge>
@@ -31,7 +31,7 @@ export default function TaskDetails(props: TaskDetailsProps) {
       </div>
       <div className="lg:pe-10">
         {upperFirst(task.body).split("\n").map((item, idx) => (
-          <p className="text-lg text-gray-400 mb-5" key={idx}>
+          <p className="text-lg text-gray-400 mb-5 text-justify" key={idx}>
             {item}
           </p>
         ))}

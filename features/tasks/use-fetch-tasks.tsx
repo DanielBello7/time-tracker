@@ -25,10 +25,11 @@ export default function useFetchTasks(id: string) {
     }),
     {
       onSuccess(data) {
+        if (page === 1) dispatch(resetTasks());
         dispatch(updateHasMore(data.hasNextPage))
-        if (searchValue) dispatch(resetTasks());
         dispatch(addTasks(data.docs));
-      }
+      },
+      refetchOnWindowFocus: false
     }
   );
 }

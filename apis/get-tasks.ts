@@ -22,18 +22,39 @@ export async function getTasks(
   filter: Partial<TASK_FETCH_FILTER>
 ): Promise<PaginateResult<TASK>> {
   const sanitized = objectSanitize(filter);
-  if (sanitized.search) {
-    const { search, ...rest } = sanitized;
-    const searchUrl = `/api/tasks/search/${search}`;
-    const responseText = parseIntoUrl(searchUrl, rest);
-    const response = await axios.get(responseText.combined);
-    return response.data.payload;
-  } else {
-    const originalUrl = `/api/tasks`;
-    const responseText = parseIntoUrl(originalUrl, sanitized);
-    const response = await axios.get(responseText.combined);
-    return response.data.payload;
-  }
+  return await new Promise((resolve, reject) => {
+    setTimeout(async () => {
+      try {
+        if (sanitized.search) {
+          const { search, ...rest } = sanitized;
+          const searchUrl = `/api/tasks/search/${search}`;
+          const responseText = parseIntoUrl(searchUrl, rest);
+          const response = await axios.get(responseText.combined);
+          resolve(response.data.payload);
+        } else {
+          const originalUrl = `/api/tasks`;
+          const responseText = parseIntoUrl(originalUrl, sanitized);
+          const response = await axios.get(responseText.combined);
+          resolve(response.data.payload);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    }, 2000);
+  })
+
+  // if (sanitized.search) {
+  //   const { search, ...rest } = sanitized;
+  //   const searchUrl = `/api/tasks/search/${search}`;
+  //   const responseText = parseIntoUrl(searchUrl, rest);
+  //   const response = await axios.get(responseText.combined);
+  //   return response.data.payload;
+  // } else {
+  //   const originalUrl = `/api/tasks`;
+  //   const responseText = parseIntoUrl(originalUrl, sanitized);
+  //   const response = await axios.get(responseText.combined);
+  //   return response.data.payload;
+  // }
 }
 
 
