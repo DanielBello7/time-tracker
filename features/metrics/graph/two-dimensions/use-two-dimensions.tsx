@@ -4,7 +4,8 @@ import { useQuery } from "react-query"
 export default function useTwoDimensions(userId: string) {
   const { data, isFetching, error, refetch } = useQuery(
     ["two-dimensions", userId],
-    () => getTwoDimensions(userId)
+    () => getTwoDimensions(userId),
+    { refetchOnWindowFocus: false }
   );
   return {
     data,

@@ -8,7 +8,7 @@ import classnames from "classnames";
 export default function Floaters() {
   return (
     <React.Fragment>
-      {itemsData.map((item) => {
+      {itemsData.slice(0, 10).map((item) => {
         const cn = classnames("absolute", item.classnames)
         return (
           <motion.div variants={val} key={item.id} className={cn}>

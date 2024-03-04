@@ -70,10 +70,13 @@ function RecoverPassword() {
       } else if (currentStepIndex === 2) {
         if (!password.trim() || !confirm.trim()) return toast("Please fill in required fields");
         if (password !== confirm) return toast("Password's don't match");
+        setIsLoading(true)
         const user = await findUserUsingUseremail(email);
         await updatePassword(user._id, password);
+        setIsLoading(false)
         return Next();
       } else if (currentStepIndex === 3) {
+        setIsLoading(true);
         return router.replace("/sign-in");
       }
     } catch (error) {

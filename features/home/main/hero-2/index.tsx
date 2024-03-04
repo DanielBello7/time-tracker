@@ -70,7 +70,7 @@ export default function Hero2() {
               </Button>
             </Link>
           </motion.div>
-          {/* <Floaters /> */}
+          <Floaters />
         </motion.div>
       </div>
     </div>
