@@ -17,12 +17,9 @@ export default function SharedTasks() {
   return (
     <React.Fragment>
       <Container header={SharedTasksHeader} grid={true} useAnimationContainer={true} animationVariants={container}>
-        <Renderer error={error} isLoading={isFetching} refresh={refetch} loader={<SharedTasksLoader />}>
-          {
-            sharedTasks.length > 0
-              ? <SharedTaskRenderer docs={sharedTasks} />
-              : <EmptySharedTasks />
-          }
+        <Renderer error={error} isLoading={isFetching} refresh={refetch} loader={<SharedTasksLoader />} occupyLoading={false}>
+          <SharedTaskRenderer docs={sharedTasks} />
+          {!isFetching && sharedTasks.length < 1 && <EmptySharedTasks />}
         </Renderer>
       </Container>
     </React.Fragment>

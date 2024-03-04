@@ -1,4 +1,4 @@
-export default function paseIntoUrl(
+export default function parseIntoUrl(
   url: string, filter: Record<string, string | number>
 ) {
   const parsedFilter = Object.keys(filter ?? {})

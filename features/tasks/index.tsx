@@ -9,7 +9,6 @@ import EmptyTasks from "./empty-tasks";
 import { useAppSelector } from "@/store/hooks";
 import { container } from "./animation";
 
-
 export default function Tasks() {
   const { _id } = useAppSelector((state) => state.user.user);
   const { tasks } = useAppSelector((state) => state.tasks);

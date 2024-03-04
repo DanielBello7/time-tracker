@@ -9,6 +9,8 @@ type INITIAL_STATE = {
   search: string
   page: number
   hasMore: boolean
+  sharedTaskPage: number
+  sharedTaskHasMore: boolean
 }
 
 const initialState: INITIAL_STATE = {
@@ -17,7 +19,9 @@ const initialState: INITIAL_STATE = {
   taskType: "",
   search: "",
   hasMore: true,
-  page: 1
+  page: 1,
+  sharedTaskPage: 1,
+  sharedTaskHasMore: true
 }
 
 const taskSlice = createSlice({
@@ -34,6 +38,18 @@ const taskSlice = createSlice({
       return {
         ...state,
         hasMore: action.payload
+      }
+    },
+    updateSharedTaskPage: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        sharedTaskPage: action.payload
+      }
+    },
+    updateSharedTaskHasMore: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        sharedTaskHasMore: action.payload
       }
     },
     addTasks: (state, action: PayloadAction<TASK[]>) => {
@@ -107,7 +123,9 @@ export const {
   resetSharedTasks,
   resetTasks,
   setSearch,
-  setTaskType
+  setTaskType,
+  updateSharedTaskHasMore,
+  updateSharedTaskPage
 } = taskSlice.actions;
 export default taskSlice.reducer;
 
