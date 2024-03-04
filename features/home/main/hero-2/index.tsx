@@ -6,9 +6,9 @@ import Floaters from "./floaters";
 
 export default function Hero2() {
   return (
-    <div className="w-full py-16">
-      <div className="container mx-auto flex items-center px-20">
-        <motion.div className="w-9/12 mx-auto text-center relative" variants={container} initial="hidden" animate="show">
+    <div className="w-full lg:py-16">
+      <div className="container mx-auto flex items-center lg:px-20">
+        <motion.div className="w-full lg:w-9/12 mx-auto text-center relative" variants={container} initial="hidden" animate="show">
           <motion.p
             className="font-bold text-[#4891FF]"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -17,7 +17,7 @@ export default function Hero2() {
           >
             #01 SPOTLIGHT
           </motion.p>
-          <div className="text-9xl font-bold tracking-tighter bg-clip-text">
+          <div className="text-5xl sm:text-8xl xl:text-9xl font-bold tracking-tighter bg-clip-text">
             <motion.h1
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -26,7 +26,7 @@ export default function Hero2() {
               Plan Better
             </motion.h1>
             <h1>
-              <motion.span className="me-7"
+              <motion.span
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, ease: "easeInOut", delay: 0.7 }}
@@ -37,12 +37,11 @@ export default function Hero2() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeInOut", delay: 1.5 }}
-              >
-                Faster.
+              > Faster.
               </motion.span>
             </h1>
           </div>
-          <div className="text-gray mt-5 text-xl">
+          <div className="text-gray mt-5 text-lg sm:text-xl">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -71,7 +70,7 @@ export default function Hero2() {
               </Button>
             </Link>
           </motion.div>
-          <Floaters />
+          {/* <Floaters /> */}
         </motion.div>
       </div>
     </div>

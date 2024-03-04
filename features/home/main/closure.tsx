@@ -11,7 +11,7 @@ export default function Closure() {
   return (
     <div className="w-full py-20">
       <div className="container mx-auto">
-        <div className="w-10/12 mx-auto grid grid-cols-4 gap-4">
+        <div className="sm:w-10/12 mx-auto md:grid grid-cols-4 gap-4 space-y-10 sm:space-y-0">
           <motion.div className="col-span-2"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

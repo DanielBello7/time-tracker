@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 
 export default function Features() {
   return (
-    <div className="w-full py-20 pt-44">
+    <div className="w-full pt-20 sm:pb-20 lg:pt-44">
       <div className="container mx-auto">
-        <div className="w-7/12 mb-10 mx-auto text-center">
+        <div className="w-full sm:w-9/12 lg:w-7/12 mb-10 mx-auto text-center">
           <motion.h1 className="text-5xl tracking-tighter font-bold"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -16,7 +16,7 @@ export default function Features() {
           >
             Features
           </motion.h1>
-          <motion.p className="text-xl mt-5"
+          <motion.p className="text-lg sm:text-xl mt-5"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.7 }}
@@ -29,7 +29,7 @@ export default function Features() {
             tailored to meet your needs.
           </motion.p>
         </div>
-        <div className="w-8/12 mx-auto">
+        <div className="w-full xl:w-8/12 mx-auto">
           <HoverEffect items={featureItems} />
         </div>
       </div>

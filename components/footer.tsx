@@ -17,7 +17,7 @@ export default function Footer(props: FooterProps) {
   });
   return (
     <footer className={cn}>
-      <div className="container mx-auto flex items-center justify-between py-10">
+      <div className="container mx-auto md:flex items-center justify-between py-10 space-y-10 md:space-y-0">
         <div>
           <Logo />
           <div className="space-y-1 mt-3 ms-7">
@@ -37,7 +37,7 @@ export default function Footer(props: FooterProps) {
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col ms-2 md:ms-0">
           {headerOptions.map((item) => (
             <Link href={item.href} key={item.id}>
               <Button variant={"link"}>

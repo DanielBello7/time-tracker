@@ -4,7 +4,10 @@ export default function Body() {
   return (
     <div className="w-full py-20">
       <div className="container mx-auto">
-        <div className="w-8/12 mx-auto grid grid-cols-3 gap-10">
+        <div className="w-full lg:w-8/12 mx-auto lg:grid grid-cols-3 gap-10">
+          <div className="block lg:hidden w-full relative mb-10">
+            <TableOfContents />
+          </div>
           <div className="col-span-2">
             <h1 className="text-4xl font-bold tracking-tighter">
               This information below will help you better
@@ -25,7 +28,7 @@ export default function Body() {
               </div>
             ))}
           </div>
-          <div className="w-full sticky relative">
+          <div className="hidden lg:block w-full sticky">
             <TableOfContents />
           </div>
         </div>

@@ -28,7 +28,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 initial={{ opacity: 0.6, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 1.4, ease: "easeInOut" }}
+                transition={{ duration: 0.9, ease: "easeInOut" }}
             >
                 <div className={"hidden md:block md:w-3/12 xl:w-2/12 h-full"}>
                     <Sidebar />
