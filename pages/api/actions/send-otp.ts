@@ -6,6 +6,7 @@ import joi from "joi";
 import sendEmail from "@/lib/send-email";
 import otpEmail from "@/emails/otp-email";
 import tokenService from "@/services/token.service";
+import authorization from "@/lib/authorization";
 
 const postBodySchema = joi.object({
   email: joi.string().email().required(),
@@ -13,7 +14,7 @@ const postBodySchema = joi.object({
 
 // send otp email
 // http://localhost:3000/api/actions/send-otp/ [post]
-router.post("/api/actions/send-otp", async (req, res) => {
+router.use(authorization).post("/api/actions/send-otp", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

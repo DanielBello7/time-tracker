@@ -3,6 +3,7 @@ import handleError from "@/lib/handle-error";
 import joi from "joi";
 import BaseError from "@/lib/base-error";
 import UsersService from "@/services/user.service";
+import authorization from "@/lib/authorization";
 
 const postBodySchema = joi.object({
   userId: joi.string().required(),
@@ -11,7 +12,7 @@ const postBodySchema = joi.object({
 
 // update user password
 // http://localhost:3000/api/users/password [patch]
-router.patch("/api/users/password", async (req, res) => {
+router.use(authorization).patch("/api/users/password", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

@@ -13,7 +13,7 @@ const postBodySchema = joi.object({
 // secured
 // get auth with password
 // http://localhost:3000/api/users/authenticate [post]
-router.post("/api/users/authenticate", async (req, res) => {
+router.use(authorization).post("/api/users/authenticate", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
