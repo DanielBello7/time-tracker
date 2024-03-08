@@ -4,7 +4,7 @@ import type {
   NEW_EXTERNAL_SHARED_TASK
 } from "@/types/external-shared.types";
 import BaseError from "@/lib/base-error";
-import ExternalSharedTasksModel from "@/models/external-shared";
+import ExternalSharedTasksModel from "@/models/external-shared.model";
 import objectSanitize from "@/lib/object-sanitize";
 import databaseConnection from "@/lib/database-connection";
 

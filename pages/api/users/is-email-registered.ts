@@ -8,6 +8,7 @@ const postBodyQuery = joi.object({
   email: joi.string().email().required()
 });
 
+// secured
 // check if email is registered
 // http://localhost:3000/api/users/is-email-registered [post]
 router.post("/api/users/is-email-registered", async (req, res) => {

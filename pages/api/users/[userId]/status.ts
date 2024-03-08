@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import BaseError from "@/lib/base-error";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
@@ -14,9 +15,11 @@ const querySchema = joi.object({
   userId: joi.string().required()
 });
 
+
+// secured
 // update user
 // http://localhost:3000/api/users/:userId/status [patch]
-router.patch("/api/users/:userId/status", async (req, res) => {
+router.use(authorization).patch("/api/users/:userId/status", async (req, res) => {
   const {
     error: bodyError,
     value: bodyValue

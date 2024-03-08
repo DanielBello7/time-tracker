@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import BaseError from "@/lib/base-error";
@@ -8,9 +9,11 @@ const querySchema = joi.object({
   userId: joi.string().required()
 });
 
+
+// secured
 // delete all tasks shared to user
 // http://localhost:3000/api/shared-tasks/reset/:userId [delete]
-router.delete("/api/shared-tasks/reset/:userId", async (req, res) => {
+router.use(authorization).delete("/api/shared-tasks/reset/:userId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

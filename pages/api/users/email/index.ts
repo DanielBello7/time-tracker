@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import joi from "joi";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
@@ -9,9 +10,10 @@ const postBodySchema = joi.object({
   newEmail: joi.string().required()
 });
 
+// secured
 // update user email
 // http://localhost:3000/api/users/email [patch]
-router.patch("/api/users/email", async (req, res) => {
+router.use(authorization).patch("/api/users/email", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

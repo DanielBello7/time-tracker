@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import router from "@/lib/router";
 import joi from "joi";
 import handleError from "@/lib/handle-error";
@@ -12,9 +13,11 @@ const patchSchema = joi.object({
   isActive: joi.boolean()
 });
 
+
+// secured
 // find external shared-task
 // http://localhost:3000/api/shared-tasks/external/:taskId [get]
-router.get("/api/shared-tasks/external/:taskId", async (req, res) => {
+router.use(authorization).get("/api/shared-tasks/external/:taskId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -29,9 +32,10 @@ router.get("/api/shared-tasks/external/:taskId", async (req, res) => {
 });
 
 
+// secured
 // update external shared task status
 // http://localhost:3000/api/shared-tasks/external/:taskId [patch]
-router.patch("/api/shared-tasks/external/:taskId", async (req, res) => {
+router.use(authorization).patch("/api/shared-tasks/external/:taskId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   const { value: val } = patchSchema.validate(req.body);
   if (error)
@@ -47,6 +51,7 @@ router.patch("/api/shared-tasks/external/:taskId", async (req, res) => {
     payload: response
   });
 });
+
 
 export default router.handler({ onError: handleError });
 

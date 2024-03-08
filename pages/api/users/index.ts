@@ -4,6 +4,7 @@ import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import joi from "joi";
 import BaseError from "@/lib/base-error";
+import authorization from "@/lib/authorization";
 
 const postBodySchema = joi.object({
   country: joi.string().required(),
@@ -30,9 +31,10 @@ const querySchema = joi.object({
 });
 
 
+// secured
 // get users
 // http://localhost:3000/api/users?...rest [get]
-router.get("/api/users", async (req, res) => {
+router.use(authorization).get("/api/users", async (req, res) => {
   const { value } = querySchema.validate(req.query);
   const { page, limit, ...rest } = value;
   const response = await UsersService.getUsers(rest, { page, limit });

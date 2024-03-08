@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import BaseError from "@/lib/base-error";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
@@ -36,9 +37,10 @@ const querySchema = joi.object({
 });
 
 
+// secured
 // create task
 // http://localhost:3000/api/tasks [post]
-router.post("/api/tasks", async (req, res) => {
+router.use(authorization).post("/api/tasks", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -51,9 +53,10 @@ router.post("/api/tasks", async (req, res) => {
 });
 
 
+// secured
 // get tasks
 // http://localhost:3000/api/tasks [get]
-router.get("/api/tasks", async (req, res) => {
+router.use(authorization).get("/api/tasks", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -69,9 +72,10 @@ router.get("/api/tasks", async (req, res) => {
 });
 
 
+// secured
 // delete tasks 
 // http://localhost:3000/api/tasks [delete]
-router.delete("/api/tasks", async (req, res) => {
+router.use(authorization).delete("/api/tasks", async (req, res) => {
   const { error, value } = deleteBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

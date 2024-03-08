@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import TaskService from "@/services/task.service";
 import router from "@/lib/router";
 import joi from "joi";
@@ -20,9 +21,10 @@ const patchBodySchema = joi.object({
 });
 
 
+// secured
 // get one task
 // http://localhost:3000/api/tasks/:taskId [get]
-router.get("/api/tasks/:taskId", async (req, res) => {
+router.use(authorization).get("/api/tasks/:taskId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -35,9 +37,10 @@ router.get("/api/tasks/:taskId", async (req, res) => {
 });
 
 
+// secured
 // update one task
 // http://localhost:3000/api/tasks/:taskId [patch]
-router.patch("/api/tasks/:taskId", async (req, res) => {
+router.use(authorization).patch("/api/tasks/:taskId", async (req, res) => {
   const {
     error: queryError,
     value: queryValue

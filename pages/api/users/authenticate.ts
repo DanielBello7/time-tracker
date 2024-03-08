@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import joi from "joi";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
@@ -9,6 +10,7 @@ const postBodySchema = joi.object({
   password: joi.string().required()
 });
 
+// secured
 // get auth with password
 // http://localhost:3000/api/users/authenticate [post]
 router.post("/api/users/authenticate", async (req, res) => {

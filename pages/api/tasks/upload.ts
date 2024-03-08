@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import joi from "joi";
@@ -10,9 +11,10 @@ const postBodySchema = joi.object({
   userId: joi.string().required()
 });
 
+// secured
 // import tasks
 // http://localhost:3000/api/tasks/upload [post]
-router.post("/api/tasks/upload", async (req, res) => {
+router.use(authorization).post("/api/tasks/upload", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

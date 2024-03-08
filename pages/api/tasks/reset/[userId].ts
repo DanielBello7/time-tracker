@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import handleError from "@/lib/handle-error";
 import TaskService from "@/services/task.service";
 import router from "@/lib/router";
@@ -9,9 +10,10 @@ const querySchema = joi.object({
 });
 
 
+// secured
 // delete all created tasks
 // http://localhost:3000/api/tasks/reset/:userId [delete]
-router.delete("/api/tasks/reset/:userId", async (req, res) => {
+router.use(authorization).delete("/api/tasks/reset/:userId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

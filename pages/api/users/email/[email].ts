@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import UsersService from "@/services/user.service";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
@@ -8,9 +9,10 @@ const querySchema = joi.object({
   email: joi.string().email().required()
 });
 
+// secured
 // get users by email
 // http://localhost:3000/api/users/:email [get]
-router.get("/api/users/email/:email", async (req, res) => {
+router.use(authorization).get("/api/users/email/:email", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

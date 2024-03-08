@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
 import joi from "joi";
@@ -21,7 +22,7 @@ const querySchema = joi.object({
 
 // get tasks
 // http://localhost:3000/api/tasks/search/:text?...rest [get]
-router.get("/api/tasks/search/:text", async (req, res) => {
+router.use(authorization).get("/api/tasks/search/:text", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

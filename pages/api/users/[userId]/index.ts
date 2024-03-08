@@ -1,3 +1,4 @@
+import authorization from "@/lib/authorization";
 import BaseError from "@/lib/base-error";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
@@ -17,9 +18,10 @@ const querySchema = joi.object({
 });
 
 
+// secured
 // find user
 // http://localhost:3000/api/users/:userId [get]
-router.get("/api/users/:userId", async (req, res) => {
+router.use(authorization).get("/api/users/:userId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -31,9 +33,11 @@ router.get("/api/users/:userId", async (req, res) => {
   });
 });
 
+
+// secured
 // delete user
 // http://localhost:3000/api/users/:userId [delete]
-router.delete("/api/users/:userId", async (req, res) => {
+router.use(authorization).delete("/api/users/:userId", async (req, res) => {
   const { value, error } = querySchema.validate(req.query);
   if (error) throw new BaseError(401, error.details[0].message);
   await UsersService.findUserUsingId(value.userId);
@@ -41,9 +45,11 @@ router.delete("/api/users/:userId", async (req, res) => {
   return res.json({ msg: "user account deleted" });
 });
 
+
+// secured
 // update user
 // http://localhost:3000/api/users/:userId [patch]
-router.patch("/api/users/:userId", async (req, res) => {
+router.use(authorization).patch("/api/users/:userId", async (req, res) => {
   const {
     error: bodyError,
     value: bodyValue
