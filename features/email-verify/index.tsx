@@ -1,20 +1,16 @@
 import type { USER } from "@/types/user.types";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 import { content } from "./content";
-import Text from "@/components/text";
-import EnterOTP from "./enter-otp";
-import EnterEmail from "./enter-email";
-import Success from "./success";
-import * as React from "react";
-import Logo from "@/components/logo";
-import useMultistep from "@/hooks/use-multi-form";
-import Spinner from "@/components/spinner";
 import { toast } from "sonner";
-import sendOtp from "@/apis/send-otp";
-import ensureError from "@/lib/ensure-error";
+import Text from "@/components/text";
+import useVerifyEmailPages from "./use-verify-email-pages";
 import updateStatus from "@/apis/update-status";
+import Logo from "@/components/logo";
+import ensureError from "@/lib/ensure-error";
+import sendOtp from "@/apis/send-otp";
 import Footer from "./footer";
+import * as React from "react";
+import validateOtp from "@/apis/validate-otp";
 
 type EmailVerifyProps = {
   user: USER
@@ -24,47 +20,42 @@ export default function EmailVerify({ user }: EmailVerifyProps) {
   const router = useRouter();
   const { email } = router.query;
   const useremail = email && typeof email === "string" ? email : "";
-  const [text, setText] = React.useState(useremail ?? "");
-  const [otp, setOtp] = React.useState("");
-  const [otpValue, setOtpValue] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
 
   const {
-    step, currentStepIndex, Next, isLastStep,
-  } = useMultistep([
-    <EnterEmail
-      isLoading={isLoading}
-      setText={setText}
-      text={text}
-    />,
-    <EnterOTP
-      isLoading={isLoading}
-      otpValue={otpValue}
-      setOtp={setOtp}
-      email={text}
-      setOtpValue={setOtpValue}
-    />,
-    <Success />
-  ]);
+    setIsLoading,
+    currentStepIndex,
+    text,
+    Next,
+    otpValue,
+    isLastStep,
+    isLoading,
+    step
+  } = useVerifyEmailPages(useremail);
+
+  const initialLoad = async () => {
+    setIsLoading(true);
+    if (!text.trim()) return toast("Please enter your email");
+    if (user.email !== text) return toast("Email not validated");
+    await sendOtp(text);
+    toast("OTP sent to email");
+    setIsLoading(false);
+    return Next();
+  }
+
+  const handleAuthenticate = async () => {
+    await validateOtp(otpValue);
+    await updateStatus(user._id, { isEmailVerified: true });
+    toast("Email Authenticated");
+    return Next();
+  }
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       if (currentStepIndex === 0) {
-        setIsLoading(true);
-        if (!text.trim()) return toast("Please enter your email");
-        if (user.email !== text) return toast("Email not validated");
-        const newotp = Math.floor(Math.random() * 999999).toString();
-        setOtp(newotp);
-        await sendOtp(newotp, text);
-        toast("OTP sent to email");
-        setIsLoading(false);
-        return Next();
+        return initialLoad();
       } else if (currentStepIndex === 1) {
-        if (otp !== otpValue) return toast("Invalid OTP");
-        await updateStatus(user._id, { isEmailVerified: true });
-        toast("Email Authenticated");
-        return Next();
+        return await handleAuthenticate();
       } else if (currentStepIndex === 2) {
         return router.replace("/sign-in");
       }

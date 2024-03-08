@@ -9,3 +9,8 @@ export interface TOKEN_DOC extends Document {
   updatedAt: Date | string
 }
 
+export type NEW_TOKEN = {
+  email: string
+  token: string
+}
+

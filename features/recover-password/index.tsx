@@ -1,80 +1,68 @@
-import EnterEmail from "./enter-email";
-import ResetPassword from "./reset-password";
-import EnterOTP from "./enter-otp";
-import useMultistep from "@/hooks/use-multi-form";
+import findUserUsingUseremail from "@/apis/find-user-using-useremail";
+import isEmailRegistered from "@/apis/is-email-registered";
 import ensureError from "@/lib/ensure-error";
 import * as React from "react";
 import Text from "@/components/text";
 import Logo from "@/components/logo";
-import Success from "./success";
 import Footer from "./footer";
-import isEmailRegistered from "@/apis/is-email-registered";
 import sendOtp from "@/apis/send-otp";
 import updatePassword from "@/apis/update-password";
-import findUserUsingUseremail from "@/apis/find-user-using-useremail";
+import useRecoverPages from "./use-recover-pages";
+import validateOtp from "@/apis/validate-otp";
 import { toast } from "sonner";
-import { recoverPasswordContent } from "./content";
 import { useRouter } from "next/router";
+import { recoverPasswordContent } from "./content";
 
 function RecoverPassword() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [confirm, setConfirm] = React.useState("");
-  const [otp, setOtp] = React.useState("");
-  const [otpValue, setOtpValue] = React.useState("");
-
   const router = useRouter();
+  const {
+    currentStepIndex,
+    Next,
+    isLastStep,
+    step,
+    setIsLoading,
+    email,
+    otpValue,
+    password,
+    confirm,
+    isLoading
+  } = useRecoverPages();
 
-  const { Next, currentStepIndex, step, isLastStep } = useMultistep([
-    <EnterEmail
-      isLoading={isLoading}
-      setValue={setEmail}
-      value={email}
-    />,
-    <EnterOTP
-      setValue={setOtpValue}
-      isLoading={isLoading}
-      value={otpValue}
-    />,
-    <ResetPassword
-      setPassword={setPassword}
-      confirm={confirm}
-      isLoading={isLoading}
-      password={password}
-      setConfirm={setConfirm}
-    />,
-    <Success />
-  ]);
+  const handleChangePassword = async () => {
+    if (!password.trim() || !confirm.trim())
+      return toast("Please fill in required fields");
+    if (password !== confirm) return toast("Password's don't match");
+    setIsLoading(true)
+    const user = await findUserUsingUseremail(email);
+    await updatePassword(user._id, password);
+    setIsLoading(false)
+    return Next();
+  }
+
+  const handleInitialStep = async () => {
+    if (!email.trim()) return toast("Type in your email");
+    setIsLoading(true);
+    const response = await isEmailRegistered(email);
+    if (!response) {
+      setIsLoading(false);
+      return toast("Email is not registered");
+    }
+    await sendOtp(email);
+    toast("One-Time-Password sent to your email");
+    setIsLoading(false);
+    return Next();
+  }
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       if (currentStepIndex === 0) {
-        if (!email.trim()) return toast("Type in your email");
-        setIsLoading(true);
-        const response = await isEmailRegistered(email);
-        if (!response) {
-          setIsLoading(false);
-          return toast("Email is not registered");
-        }
-        const token = Math.floor(Math.random() * 999999).toString();
-        setOtp(token);
-        await sendOtp(token, email);
-        toast("OTP Sent to email");
-        setIsLoading(false);
-        return Next();
+        return handleInitialStep();
       } else if (currentStepIndex === 1) {
-        if (otp !== otpValue) return toast("Invalid token");
+        await validateOtp(otpValue);
         return Next();
       } else if (currentStepIndex === 2) {
-        if (!password.trim() || !confirm.trim()) return toast("Please fill in required fields");
-        if (password !== confirm) return toast("Password's don't match");
-        setIsLoading(true)
-        const user = await findUserUsingUseremail(email);
-        await updatePassword(user._id, password);
-        setIsLoading(false)
-        return Next();
+        return handleChangePassword();
       } else if (currentStepIndex === 3) {
         setIsLoading(true);
         return router.replace("/sign-in");
