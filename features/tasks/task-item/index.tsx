@@ -54,7 +54,7 @@ export default function TaskItem(props: TASK) {
   }
 
   return (
-    <div className={containerCn} onClick={handleClick}>
+    <div className={containerCn}>
       <div className="w-full">
         <div className={cn}>
           <p className="text-[#4891FF] text-xs">#TASK {shortCode}</p>

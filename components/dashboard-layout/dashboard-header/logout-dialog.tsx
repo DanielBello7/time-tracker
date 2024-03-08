@@ -26,11 +26,13 @@ export default function LogoutDialog() {
           You are about to logout, are you sure you want to continue?
         </AlertDialogDescription>
       </AlertDialogHeader>
-      <AlertDialogFooter className="border-t space-x-0">
-        <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
+      <AlertDialogFooter className="border-t space-x-0 flex-row items-center">
+        <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white p-0 m-0">
           Cancel
         </AlertDialogCancel>
+
         <Separator orientation="vertical" />
+
         <Button variant="destructive" onClick={click}
           className="w-1/2 text-red-600 bg-white border-0 hover:underline hover:bg-white">
           Logout

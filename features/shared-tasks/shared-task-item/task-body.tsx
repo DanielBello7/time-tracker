@@ -40,7 +40,7 @@ export default function TaskBody({ task }: TaskBodyProps) {
   }
 
   return (
-    <div className="w-full" onClick={handleClick}>
+    <div className="w-full">
       <div className={cn}>
         <p className="text-[#4891FF] text-xs">
           #TASK {taskId.shortCode}

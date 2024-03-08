@@ -39,7 +39,7 @@ export default function ShareTaskDialog() {
 
   return (
     <AlertDialog onOpenChange={(e) => dispatch(toggleShareTaskDialog(e))} open={showShareTaskDialog}>
-      <AlertDialogContent className="w-full md:w-[320px] p-0">
+      <AlertDialogContent className="w-full w-[320px] p-0">
         <AlertDialogHeader className="px-5 pt-3">
           <AlertDialogTitle className="text-center">
             Share Task
@@ -58,8 +58,8 @@ export default function ShareTaskDialog() {
             If the email isn't registered, the user would get it as a link instead
           </Text>
         </div>
-        <AlertDialogFooter className="mt-2 border-t space-x-0">
-          <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
+        <AlertDialogFooter className="mt-2 border-t space-x-0 flex-row items-center">
+          <AlertDialogCancel className="p-0 m-0 w-1/2 border-0 hover:underline hover:bg-white">
             Cancel
           </AlertDialogCancel>
           <Separator orientation="vertical" />

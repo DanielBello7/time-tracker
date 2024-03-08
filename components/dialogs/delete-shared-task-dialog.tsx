@@ -35,7 +35,7 @@ export default function DeleteSharedTaskDialog() {
   return (
     <AlertDialog onOpenChange={(e) => dispatch(toggleDeleteSharedTaskDialog(e))}
       open={showDeleteSharedTaskDialog}>
-      <AlertDialogContent className="w-full md:w-[320px] p-0">
+      <AlertDialogContent className="w-full w-[320px] p-0">
         <AlertDialogHeader className="p-5">
           <AlertDialogTitle className="text-center">Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className="text-center">
@@ -43,8 +43,8 @@ export default function DeleteSharedTaskDialog() {
             account and remove your data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="border-t space-x-0">
-          <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
+        <AlertDialogFooter className="border-t space-x-0 flex-row items-center">
+          <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white p-0 m-0">
             Cancel
           </AlertDialogCancel>
           <Separator orientation="vertical" />

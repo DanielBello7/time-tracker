@@ -17,7 +17,7 @@ export default function Hero2() {
           >
             #01 SPOTLIGHT
           </motion.p>
-          <div className="text-5xl sm:text-8xl xl:text-9xl font-bold tracking-tighter bg-clip-text">
+          <div className="text-7xl sm:text-8xl xl:text-9xl font-bold tracking-tighter bg-clip-text">
             <motion.h1
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}

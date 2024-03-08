@@ -33,7 +33,7 @@ export default function DeleteTaskDialog() {
   }
   return (
     <AlertDialog onOpenChange={(e) => dispatch(toggleDeleteTaskDialog(e))} open={showDeleteTaskDialog}>
-      <AlertDialogContent className="w-full md:w-[320px] p-0">
+      <AlertDialogContent className="w-full w-[320px] p-0">
         <AlertDialogHeader className="p-5">
           <AlertDialogTitle className="text-center">
             Are you absolutely sure?
@@ -44,8 +44,8 @@ export default function DeleteTaskDialog() {
             account and remove the data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="mt-2 border-t space-x-0">
-          <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white">
+        <AlertDialogFooter className="mt-2 border-t space-x-0 flex-row items-center">
+          <AlertDialogCancel className="w-1/2 border-0 hover:underline hover:bg-white m-0 p-0">
             Cancel
           </AlertDialogCancel>
           <Separator orientation="vertical" />
