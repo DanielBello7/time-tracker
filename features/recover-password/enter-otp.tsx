@@ -1,33 +1,27 @@
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import ResendOtpButton from "@/components/resend-otp-button";
 import OtpInput from "@/components/otp-input";
+import { Label } from "@/components/ui/label";
 
 type EnterOTPProps = {
   setValue: (val: string) => void
   value: string
   isLoading: boolean
+  email: string
 }
 
 function EnterOTP(props: EnterOTPProps) {
-  const {
-    isLoading,
-    setValue,
-    value
-  } = props;
+  const { isLoading, setValue, email, value } = props;
 
   return (
     <div className="w-full">
       <Label className="mb-1">OTP</Label>
       <OtpInput
-        onChange={(e) => setValue(e)}
         isLoading={isLoading}
+        onChange={setValue}
         value={value}
         valueLength={6}
       />
-      <Button className="mt-3 text-gary-400 text-xs p-0 m-0" variant={"link"}>
-        <span>Didn't get a code?</span>
-        <span className="ms-1 text-blue-400">Resend</span>
-      </Button>
+      <ResendOtpButton email={email} />
     </div>
   )
 }

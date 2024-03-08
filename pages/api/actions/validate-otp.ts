@@ -5,7 +5,7 @@ import joi from "joi";
 import tokenService from "@/services/token.service";
 
 const postBodySchema = joi.object({
-  otp: joi.string().email().required(),
+  otp: joi.string().required(),
 });
 
 // send otp email

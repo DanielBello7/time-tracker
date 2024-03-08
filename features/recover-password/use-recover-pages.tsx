@@ -22,6 +22,7 @@ export default function useRecoverPages() {
       setValue={setOtpValue}
       isLoading={isLoading}
       value={otpValue}
+      email={email}
     />,
     <ResetPassword
       setPassword={setPassword}

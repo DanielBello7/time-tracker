@@ -57,12 +57,14 @@ function RecoverPassword() {
     event.preventDefault();
     try {
       if (currentStepIndex === 0) {
-        return handleInitialStep();
+        return await handleInitialStep();
       } else if (currentStepIndex === 1) {
+        setIsLoading(true);
         await validateOtp(otpValue);
+        setIsLoading(false);
         return Next();
       } else if (currentStepIndex === 2) {
-        return handleChangePassword();
+        return await handleChangePassword();
       } else if (currentStepIndex === 3) {
         setIsLoading(true);
         return router.replace("/sign-in");

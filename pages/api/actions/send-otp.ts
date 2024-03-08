@@ -25,10 +25,11 @@ router.post("/api/actions/send-otp", async (req, res) => {
     upperCaseAlphabets: false
   });
 
+  await tokenService.deleteEmailTokens(value.email);
   await tokenService.createNewToken({ email: value.email, token });
 
   await sendEmail({
-    subject: "Core Task OTP Verification Code",
+    subject: "CoreTask OTP Verification Code",
     to: [{ email: value.email }],
     htmlContent: otpEmail(token)
   });

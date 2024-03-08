@@ -12,6 +12,7 @@ const TokenSchema = new mongoose.Schema<TOKEN_DOC>({
   }
 }, { timestamps: true });
 
-const TokenModel = mongoose.model("tokens", TokenSchema);
-export default TokenModel;
 
+const initial = mongoose.models["tokens"] as unknown as mongoose.PaginateModel<TOKEN_DOC, {}, {}>
+const TokenModel = initial || mongoose.model<TOKEN_DOC, mongoose.PaginateModel<TOKEN_DOC>>("tokens", TokenSchema);
+export default TokenModel;

@@ -53,7 +53,7 @@ export default function EmailVerify({ user }: EmailVerifyProps) {
     event.preventDefault();
     try {
       if (currentStepIndex === 0) {
-        return initialLoad();
+        return await initialLoad();
       } else if (currentStepIndex === 1) {
         return await handleAuthenticate();
       } else if (currentStepIndex === 2) {
