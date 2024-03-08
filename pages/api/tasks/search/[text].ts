@@ -20,6 +20,7 @@ const querySchema = joi.object({
 });
 
 
+// secured
 // get tasks
 // http://localhost:3000/api/tasks/search/:text?...rest [get]
 router.use(authorization).get("/api/tasks/search/:text", async (req, res) => {

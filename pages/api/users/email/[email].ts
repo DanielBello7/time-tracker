@@ -1,18 +1,18 @@
-import authorization from "@/lib/authorization";
 import UsersService from "@/services/user.service";
 import router from "@/lib/router";
 import handleError from "@/lib/handle-error";
 import joi from "joi";
 import BaseError from "@/lib/base-error";
+import dualAuthorization from "@/lib/dual-authorization";
 
 const querySchema = joi.object({
   email: joi.string().email().required()
 });
 
-// secured
+// dual secured
 // get users by email
 // http://localhost:3000/api/users/:email [get]
-router.use(authorization).get("/api/users/email/:email", async (req, res) => {
+router.use(dualAuthorization).get("/api/users/email/:email", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

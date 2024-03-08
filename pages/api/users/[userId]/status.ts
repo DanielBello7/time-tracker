@@ -1,5 +1,5 @@
-import authorization from "@/lib/authorization";
 import BaseError from "@/lib/base-error";
+import dualAuthorization from "@/lib/dual-authorization";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
 import UsersService from "@/services/user.service";
@@ -16,10 +16,10 @@ const querySchema = joi.object({
 });
 
 
-// secured
+// dual secured
 // update user
 // http://localhost:3000/api/users/:userId/status [patch]
-router.use(authorization).patch("/api/users/:userId/status", async (req, res) => {
+router.use(dualAuthorization).patch("/api/users/:userId/status", async (req, res) => {
   const {
     error: bodyError,
     value: bodyValue

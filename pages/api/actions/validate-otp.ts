@@ -3,15 +3,16 @@ import handleError from "@/lib/handle-error";
 import BaseError from "@/lib/base-error";
 import joi from "joi";
 import tokenService from "@/services/token.service";
-import authorization from "@/lib/authorization";
+import dualAuthorization from "@/lib/dual-authorization";
 
 const postBodySchema = joi.object({
   otp: joi.string().required(),
 });
 
+// dual secured
 // send otp email
 // http://localhost:3000/api/actions/validate-otp/ [post]
-router.use(authorization).post("/api/actions/validate-otp", async (req, res) => {
+router.use(dualAuthorization).post("/api/actions/validate-otp", async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

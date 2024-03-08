@@ -5,6 +5,7 @@ import handleError from "@/lib/handle-error";
 import joi from "joi";
 import BaseError from "@/lib/base-error";
 import authorization from "@/lib/authorization";
+import dualAuthorization from "@/lib/dual-authorization";
 
 const postBodySchema = joi.object({
   country: joi.string().required(),
@@ -46,9 +47,10 @@ router.use(authorization).get("/api/users", async (req, res) => {
 });
 
 
+// dual secured
 // create new user
 // http://localhost:3000/api/users [post]
-router.post("/api/users", async (req, res, _) => {
+router.use(dualAuthorization).post("/api/users", async (req, res, _) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error) throw new BaseError(400, error.details[0].message);
   const required: NEW_USER = {
