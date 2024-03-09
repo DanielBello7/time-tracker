@@ -4,6 +4,7 @@ import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
 import uploadImports from "@/apis/upload-imports";
 import ensureError from "@/lib/ensure-error";
+import { LuSaveAll } from "react-icons/lu";
 
 export default function SaveImports() {
   const { _id } = useAppSelector((state) => state.user.user);
@@ -41,7 +42,9 @@ export default function SaveImports() {
   return (
     <DropdownMenuItem disabled={imported.length < 1 && true} onClick={onclick}>
       Save
-      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+      <DropdownMenuShortcut>
+        <LuSaveAll size={16} />
+      </DropdownMenuShortcut>
     </DropdownMenuItem>
   )
 }

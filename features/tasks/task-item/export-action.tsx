@@ -3,6 +3,7 @@ import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
 import * as React from "react";
 import exportTask from "@/lib/export-task";
+import { LuFileOutput } from "react-icons/lu";
 
 type ExportActionProps = {
   _id: string
@@ -21,7 +22,9 @@ export default function ExportAction({ _id }: ExportActionProps) {
   return (
     <DropdownMenuItem onClick={handleExport}>
       Export
-      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+      <DropdownMenuShortcut>
+        <LuFileOutput size={16} />
+      </DropdownMenuShortcut>
     </DropdownMenuItem>
   )
 }

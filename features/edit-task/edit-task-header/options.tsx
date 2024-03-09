@@ -16,6 +16,8 @@ import { toast } from "sonner";
 import { useAppDispatch } from "@/store/hooks";
 import { updateTask as updateStoreTask } from "@/store/tasks-slice"
 import ensureError from "@/lib/ensure-error";
+import { LuFilePlus } from "react-icons/lu";
+import { ImCancelCircle } from "react-icons/im";
 
 export default function EditTaskHeaderOptions() {
   const { formData } = useCreateTask();
@@ -53,12 +55,16 @@ export default function EditTaskHeaderOptions() {
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={handleSave}>
             Save
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <DropdownMenuShortcut>
+              <LuFilePlus size={17} />
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="text-red-600" onClick={handleCancel}>
             Cancel
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            <DropdownMenuShortcut>
+              <ImCancelCircle size={16} />
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

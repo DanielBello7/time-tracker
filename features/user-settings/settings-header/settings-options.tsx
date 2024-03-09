@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FaEllipsisV } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { LuSaveAll } from "react-icons/lu";
+import { MdOutlineCancel } from "react-icons/md";
 
 export default function SettingsOptions() {
   const router = useRouter();
@@ -28,13 +30,17 @@ export default function SettingsOptions() {
           variant={"ghost"}>
           <DropdownMenuItem className="w-full">
             Save
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            <DropdownMenuShortcut>
+              <LuSaveAll size={16} />
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
         </Button>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-red-600" onClick={click}>
           Cancel
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <DropdownMenuShortcut>
+            <MdOutlineCancel size={17} />
+          </DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

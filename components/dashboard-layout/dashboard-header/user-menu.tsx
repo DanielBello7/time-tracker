@@ -13,8 +13,12 @@ import {
 import LogoutDialog from "./logout-dialog";
 import Link from "next/link";
 import Text from "@/components/text";
-import { useAppSelector } from "@/store/hooks";
 import UserAvatar from "@/components/user-avatar";
+import { useAppSelector } from "@/store/hooks";
+import { IoSettingsOutline } from "react-icons/io5";
+import { TbFileImport } from "react-icons/tb";
+import { BiLogOut } from "react-icons/bi";
+import { FaCreativeCommonsShare } from "react-icons/fa";
 
 export default function UserMenu() {
   const { email, name, avatar } = useAppSelector((state) => state.user.user);
@@ -36,19 +40,25 @@ export default function UserMenu() {
             <Link href={"/dashboard/settings"}>
               <DropdownMenuItem>
                 Settings
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                <DropdownMenuShortcut>
+                  <IoSettingsOutline size={17} />
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </Link>
             <Link href={"/dashboard/shared-tasks"}>
               <DropdownMenuItem>
                 Shared Tasks
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                <DropdownMenuShortcut>
+                  <FaCreativeCommonsShare size={16} />
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </Link>
             <Link href={"/dashboard/import-tasks"}>
               <DropdownMenuItem>
                 Import
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                <DropdownMenuShortcut>
+                  <TbFileImport size={17} />
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </Link>
           </DropdownMenuGroup>
@@ -56,7 +66,9 @@ export default function UserMenu() {
           <AlertDialogTrigger asChild>
             <DropdownMenuItem className="text-red-600">
               Log out
-              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                <BiLogOut size={20} />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </AlertDialogTrigger>
         </DropdownMenuContent>

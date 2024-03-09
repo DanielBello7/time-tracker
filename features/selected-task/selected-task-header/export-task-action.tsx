@@ -5,6 +5,7 @@ import * as React from "react";
 import exportTask from "@/lib/export-task";
 import findTask from "@/apis/find-task";
 import ensureError from "@/lib/ensure-error";
+import { TiExportOutline } from "react-icons/ti";
 
 export default function ExportTaskAction() {
   const router = useRouter();
@@ -27,7 +28,9 @@ export default function ExportTaskAction() {
   return (
     <DropdownMenuItem onClick={handleExport}>
       Export
-      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+      <DropdownMenuShortcut>
+        <TiExportOutline size={17} />
+      </DropdownMenuShortcut>
     </DropdownMenuItem>
   )
 }

@@ -1,5 +1,6 @@
 import { DropdownMenuItem, DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
-import { useImportTask } from "../context"
+import { useImportTask } from "../context";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 export default function DeleteImport() {
   const { selected, setImported, imported, resetSelected } = useImportTask();
@@ -12,7 +13,9 @@ export default function DeleteImport() {
   return (
     <DropdownMenuItem disabled={selected.length < 1} onClick={onclick}>
       Delete
-      <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+      <DropdownMenuShortcut>
+        <RiDeleteBinLine size={17} />
+      </DropdownMenuShortcut>
     </DropdownMenuItem>
   )
 }

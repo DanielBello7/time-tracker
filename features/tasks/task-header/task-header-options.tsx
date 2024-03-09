@@ -18,6 +18,11 @@ import { useRouter } from "next/router";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { updatePage, updateHasMore, resetTasks } from "@/store/tasks-slice"
 import DeleteAllTasksDialog from "./delete-all-dialog";
+import { BiSelectMultiple } from "react-icons/bi"
+import { MdOutlineCancel } from "react-icons/md";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { FiFilePlus } from "react-icons/fi";
+
 
 export default function TaskHeaderOptions() {
   const { isSelectable } = useAppSelector((state) => state.interface)
@@ -66,12 +71,20 @@ export default function TaskHeaderOptions() {
             <Link href={"/dashboard/tasks/create"}>
               <DropdownMenuItem>
                 New Task
-                <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
+                <DropdownMenuShortcut>
+                  <FiFilePlus size={17} />
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </Link>
             <DropdownMenuItem onClick={select}>
               {isSelectable ? "Cancel Select" : "Select"}
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                {
+                  isSelectable
+                    ? <MdOutlineCancel size={16} />
+                    : <BiSelectMultiple size={16} />
+                }
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
@@ -95,7 +108,9 @@ export default function TaskHeaderOptions() {
           <AlertDialogTrigger asChild>
             <DropdownMenuItem className="text-red-600">
               Delete All
-              <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                <RiDeleteBinLine size={16} />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </AlertDialogTrigger>
         </DropdownMenuContent>

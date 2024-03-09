@@ -2,6 +2,7 @@ import { DropdownMenuItem, DropdownMenuShortcut } from "@/components/ui/dropdown
 import { useAppDispatch } from "@/store/hooks";
 import { openDeleteTaskDialog } from "@/store/actions-slice"
 import { useRouter } from "next/router";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 export default function DeleteAction() {
   const dispatch = useAppDispatch();
@@ -16,7 +17,9 @@ export default function DeleteAction() {
   return (
     <DropdownMenuItem className="text-red-600" onClick={handleDeleteClick}>
       Delete Task
-      <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+      <DropdownMenuShortcut>
+        <RiDeleteBinLine size={17} />
+      </DropdownMenuShortcut>
     </DropdownMenuItem>
   )
 }
