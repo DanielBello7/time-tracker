@@ -58,6 +58,7 @@
     "react-select-country-list": "^2.2.3",
     "recharts": "^2.12.1",
     "redux": "^5.0.1",
+    "sharp": "^0.33.2",
     "sib-api-v3-sdk": "^8.5.0",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.1",
