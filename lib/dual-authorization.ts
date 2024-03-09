@@ -11,7 +11,7 @@ export default async function dualAuthorization(
   const token = auth_header ? auth_header.split(' ')[1] : "";
   const response = validateJwt(token);
   const session = await getSession({ req });
-  if (session || response) return next();
+  if (session || response !== false) return next();
   throw new BaseError(401, "Unauthorized");
 }
 

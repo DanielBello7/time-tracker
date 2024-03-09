@@ -13,7 +13,11 @@ import { toast } from "sonner";
 import { useRouter } from "next/router";
 import { recoverPasswordContent } from "./content";
 
-function RecoverPassword() {
+type RecoverPasswordProps = {
+  bearer: string
+}
+
+function RecoverPassword({ bearer }: RecoverPasswordProps) {
   const router = useRouter();
   const {
     currentStepIndex,
@@ -33,8 +37,8 @@ function RecoverPassword() {
       return toast("Please fill in required fields");
     if (password !== confirm) return toast("Password's don't match");
     setIsLoading(true)
-    const user = await findUserUsingUseremail(email);
-    await updatePassword(user._id, password);
+    const user = await findUserUsingUseremail(email, bearer);
+    await updatePassword(user._id, password, bearer);
     setIsLoading(false)
     return Next();
   }
@@ -42,12 +46,12 @@ function RecoverPassword() {
   const handleInitialStep = async () => {
     if (!email.trim()) return toast("Type in your email");
     setIsLoading(true);
-    const response = await isEmailRegistered(email);
+    const response = await isEmailRegistered(email, bearer);
     if (!response) {
       setIsLoading(false);
       return toast("Email is not registered");
     }
-    await sendOtp(email);
+    await sendOtp(email, bearer);
     toast("One-Time-Password sent to your email");
     setIsLoading(false);
     return Next();

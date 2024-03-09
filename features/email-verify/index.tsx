@@ -14,9 +14,10 @@ import validateOtp from "@/apis/validate-otp";
 
 type EmailVerifyProps = {
   user: USER
+  bearer: string
 }
 
-export default function EmailVerify({ user }: EmailVerifyProps) {
+export default function EmailVerify({ user, bearer }: EmailVerifyProps) {
   const router = useRouter();
   const { email } = router.query;
   const useremail = email && typeof email === "string" ? email : "";
@@ -36,15 +37,15 @@ export default function EmailVerify({ user }: EmailVerifyProps) {
     setIsLoading(true);
     if (!text.trim()) return toast("Please enter your email");
     if (user.email !== text) return toast("Email not validated");
-    await sendOtp(text);
+    await sendOtp(text, bearer);
     toast("OTP sent to email");
     setIsLoading(false);
     return Next();
   }
 
   const handleAuthenticate = async () => {
-    await validateOtp(otpValue);
-    await updateStatus(user._id, { isEmailVerified: true });
+    await validateOtp(otpValue, bearer);
+    await updateStatus(user._id, { isEmailVerified: true }, bearer);
     toast("Email Authenticated");
     return Next();
   }

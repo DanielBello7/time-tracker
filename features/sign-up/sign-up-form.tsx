@@ -19,7 +19,11 @@ import FormInput from "@/components/authentication/auth-input";
 import FormSelect from "@/components/form/form-select";
 import AuthForm from "@/components/authentication/auth-form";
 
-export default function SignUpForm() {
+type SignUpFormProps = {
+  bearer: string
+}
+
+export default function SignUpForm({ bearer }: SignUpFormProps) {
   const [isLoading, setIsLoading] = React.useState(false);
   const options = React.useMemo(() => {
     const response = countryList().getData().map((item: any) => ({
@@ -49,6 +53,8 @@ export default function SignUpForm() {
         ...formData,
         phone: "undefined",
         position: "other"
+      }, {
+        headers: { "Authorization": `Bearer ${bearer}` }
       });
       toast("Registration Complete", { description: "Proceed to Login" });
       router.replace(`/register/email-verify?email=${formData.email}`);
@@ -58,6 +64,7 @@ export default function SignUpForm() {
       return setIsLoading(false);
     }
   }
+
   return (
     <AuthForm type="sign-up">
       <Card>

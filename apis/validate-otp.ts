@@ -1,8 +1,10 @@
 import axios from "axios";
 
 export default async function validateOtp(
-  otp: string
+  otp: string, token?: string
 ): Promise<void> {
-  await axios.post("/api/actions/validate-otp", { otp });
+  await axios.post("/api/actions/validate-otp", { otp }, {
+    headers: { "Authorization": `Bearer ${token}` }
+  });
 }
 

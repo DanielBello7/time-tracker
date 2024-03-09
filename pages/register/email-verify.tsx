@@ -2,9 +2,11 @@ import UsersService from "@/services/user.service";
 import EmailVerify from "@/features/email-verify";
 import type { USER } from "@/types/user.types";
 import type { GetServerSidePropsContext } from "next";
+import generateJwt from "@/lib/generate-jwt";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { email } = context.query;
+  const token = generateJwt({ isValid: true });
   if (!email || (email && typeof email !== "string")) {
     return {
       redirect: {
@@ -24,7 +26,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } else {
     return {
       props: {
-        user: JSON.parse(JSON.stringify(response))
+        user: JSON.parse(JSON.stringify(response)),
+        token
       }
     }
   }
@@ -33,9 +36,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 type EmailVerifyPageProps = {
   user: USER
+  token: string
 }
 
-export default function EmailVerifyPage({ user }: EmailVerifyPageProps) {
-  return <EmailVerify user={user} />
+export default function EmailVerifyPage({ user, token }: EmailVerifyPageProps) {
+  return <EmailVerify user={user} bearer={token} />
 }
 

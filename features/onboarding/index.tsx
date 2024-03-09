@@ -1,60 +1,63 @@
-import useMultistep from "@/hooks/use-multi-form";
-import Text from "@/components/text";
-import * as React from "react";
-import Logo from "@/components/logo";
-import AvatarSelect from "./avatar-select";
-import PositionSelect from "./position-select";
-import Finish from "./finish";
 import { onboardingContent } from "./content"
 import { toast } from "sonner";
 import { USER } from "@/types/user.types";
 import { useRouter } from "next/router";
+import Text from "@/components/text";
+import * as React from "react";
+import Logo from "@/components/logo";
 import ActionButtons from "./action-buttons";
 import ensureError from "@/lib/ensure-error";
 import updateAccount from "@/apis/update-account";
 import LogoutButton from "./logout-button";
 import updateStatus from "@/apis/update-status";
-
+import useOnboardingPages from "./use-onboarding-pages";
 
 type OnboardingProps = {
   user: USER
+  bearer: string
 }
 
-export default function Onboarding({ user }: OnboardingProps) {
-  const [selected, setSelected] = React.useState("");
-  const [position, setPosition] = React.useState("");
-  const [text, setText] = React.useState("");
+export default function Onboarding({ user, bearer }: OnboardingProps) {
   const router = useRouter();
+  const {
+    Next,
+    Back,
+    currentStepIndex,
+    isFirstStep,
+    isLastStep,
+    step,
+    selected,
+    position,
+    text
+  } = useOnboardingPages();
 
-  const { step, Next, currentStepIndex, Back, isLastStep, isFirstStep } = useMultistep([
-    <AvatarSelect
-      selected={selected}
-      setSelected={setSelected}
-    />,
-    <PositionSelect
-      position={position}
-      setPosition={setPosition}
-      setText={setText}
-      text={text}
-    />,
-    <Finish />
-  ]);
+  const handleInitial = async () => {
+    if (!selected.trim()) return toast("Please select an image");
+    await updateAccount(user._id, { avatar: selected }, bearer);
+    return Next();
+  }
+
+  const handlePosition = async () => {
+    if (!position.trim()) return toast("Please select a position");
+    if (position === "other" && !text.trim()) return toast("Please type in your role");
+    await updateAccount(user._id, { position: position }, bearer);
+    return Next();
+  }
+
+  const handleComplete = async () => {
+    await updateStatus(user._id, { isOnboarded: true }, bearer);
+    return router.replace("/dashboard");
+  }
 
   const onsubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       if (currentStepIndex === 0) {
-        if (!selected.trim()) return toast("Please select an image");
-        await updateAccount(user._id, { avatar: selected });
-        return Next();
+        return await handleInitial();
       } else if (currentStepIndex === 1) {
-        if (!position.trim()) return toast("Please select a position");
-        if (position === "other" && !text.trim()) return toast("Please type in your role");
-        await updateAccount(user._id, { position: position });
-        return Next();
+        return await handlePosition();
       } else if (currentStepIndex === 2) {
-        await updateStatus(user._id, { isOnboarded: true });
-        return router.replace("/dashboard");
+        return await handleComplete();
       } else return
     } catch (error) {
       const err = ensureError(error);
