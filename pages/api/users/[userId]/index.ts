@@ -3,8 +3,9 @@ import BaseError from "@/lib/base-error";
 import dualAuthorization from "@/lib/dual-authorization";
 import handleError from "@/lib/handle-error";
 import router from "@/lib/router";
-import UsersService from "@/services/user.service";
+import UserService from "@/services/user.service";
 import joi from "joi";
+
 
 const patchBodySchema = joi.object({
   country: joi.string(),
@@ -26,7 +27,7 @@ router.use(dualAuthorization).get("/api/users/:userId", async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
-  const response = await UsersService.findUserUsingId(value.userId);
+  const response = await UserService.findUserUsingId(value.userId);
   return res.json({
     status: "OK",
     msg: "success",
@@ -41,8 +42,8 @@ router.use(dualAuthorization).get("/api/users/:userId", async (req, res) => {
 router.use(authorization).delete("/api/users/:userId", async (req, res) => {
   const { value, error } = querySchema.validate(req.query);
   if (error) throw new BaseError(401, error.details[0].message);
-  await UsersService.findUserUsingId(value.userId);
-  await UsersService.deleteUser(value.userId);
+  await UserService.findUserUsingId(value.userId);
+  await UserService.deleteUser(value.userId);
   return res.json({ msg: "user account deleted" });
 });
 
@@ -67,7 +68,7 @@ router.use(authorization).patch("/api/users/:userId", async (req, res) => {
   if (bodyError)
     throw new BaseError(401, bodyError.details[0].message);
 
-  const response = await UsersService.updateUserUsingId(queryValue.userId, {
+  const response = await UserService.updateUserUsingId(queryValue.userId, {
     country: bodyValue.country,
     name: bodyValue.name,
     phone: bodyValue.phone,
@@ -81,5 +82,6 @@ router.use(authorization).patch("/api/users/:userId", async (req, res) => {
     payload: response
   });
 });
+
 
 export default router.handler({ onError: handleError });

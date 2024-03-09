@@ -36,23 +36,23 @@ export default function CreateTaskPreview() {
         <Badge variant={formData.type === "story" ? "destructive" : "default"} className="my-4 capitalize">
           {formData.type}
         </Badge>
-
-        <p className="text-[#64748B]">
-          {
-            !formData.body.trim()
-              ?
-              `Lorem ipsum dolor sit, amet consectetur 
-              adipisicing elit. Explicabo sed nemo et deleniti 
-              porro harum vel impedit doloremque beatae, 
-              nisi eius quas laborum corrupti, placeat 
-              nobis officiis sint, omnis ipsum!`
-              :
-              (formData.body).split("\n").map((item, idx) => (
-                <p key={idx} className="mb-5">{item}</p>
-              ))
-          }
-        </p>
-
+        {
+          !formData.body.trim()
+            ?
+            <p className="text-[#64748B]">
+              Lorem ipsum dolor sit, amet consectetur
+              adipisicing elit. Explicabo sed nemo et deleniti
+              porro harum vel impedit doloremque beatae,
+              nisi eius quas laborum corrupti, placeat
+              nobis officiis sint, omnis ipsum!
+            </p>
+            :
+            (formData.body).split("\n").map((item, idx) => (
+              <p key={idx} className="mb-5 text-[#64748B]">
+                {item}
+              </p>
+            ))
+        }
         <div className="mt-5">
           <p className="text-sm text-[#4891FF]">TAGS</p>
           <div className="mt-2">

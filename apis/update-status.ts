@@ -4,8 +4,12 @@ import axios from "axios";
 export default async function updateStatus(
   userId: string, data: UPDATE_USER, token?: string
 ): Promise<void> {
-  await axios.patch(`/api/users/${userId}/status`, data, {
-    headers: { "Authorization": `Bearer ${token}` }
-  });
+  if (token) {
+    await axios.patch(`/api/users/${userId}/status`, data, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+  } else {
+    await axios.patch(`/api/users/${userId}/status`, data);
+  }
 }
 

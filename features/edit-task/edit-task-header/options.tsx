@@ -13,12 +13,15 @@ import { useCreateTask } from "@/features/create-task/context";
 import { useRouter } from "next/router";
 import { FaEllipsisV } from "react-icons/fa";
 import { toast } from "sonner";
+import { useAppDispatch } from "@/store/hooks";
+import { updateTask as updateStoreTask } from "@/store/tasks-slice"
 import ensureError from "@/lib/ensure-error";
 
 export default function EditTaskHeaderOptions() {
   const { formData } = useCreateTask();
   const router = useRouter();
   const { id } = router.query;
+  const dispatch = useAppDispatch();
 
   const handleCancel = () => {
     router.back();
@@ -28,8 +31,9 @@ export default function EditTaskHeaderOptions() {
     if (id && typeof id === "string") {
       updateTask(id, { ...formData })
         .then(() => {
+          dispatch(updateStoreTask({ id: [id], updates: formData }));
           toast("Task updated");
-          router.replace(`/dashboard/tasks/${id}`)
+          router.replace(`/dashboard/tasks/${id}`);
         })
         .catch((error) => {
           const err = ensureError(error);

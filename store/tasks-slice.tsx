@@ -1,6 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { SHARED_TASK } from "@/types/shared-task.types";
 import type { TASK } from "@/types/task.types";
+import { DeepPartial } from "./types";
+import updateObject from "@/lib/update-object";
 
 type INITIAL_STATE = {
   tasks: TASK[]
@@ -28,6 +30,18 @@ const taskSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
+    updateTask: (state, action: PayloadAction<{ id: string[], updates: DeepPartial<TASK> }>) => {
+      const corrected = state.tasks.map((item) => {
+        if (!action.payload.id.includes(item._id)) return item;
+        const modified = updateObject(item, action.payload.updates as any);
+        item = modified;
+        return item;
+      });
+      return {
+        ...state,
+        tasks: corrected
+      }
+    },
     updatePage: (state, action: PayloadAction<number>) => {
       return {
         ...state,
@@ -125,7 +139,8 @@ export const {
   setSearch,
   setTaskType,
   updateSharedTaskHasMore,
-  updateSharedTaskPage
+  updateSharedTaskPage,
+  updateTask
 } = taskSlice.actions;
 export default taskSlice.reducer;
 
