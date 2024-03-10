@@ -13,7 +13,7 @@ const querySchema = joi.object({
 // secured
 // get the metrics for a particular user
 // http://localhost:3000/api/users/:userId/metrics [get]
-router.use(authorization).get("/api/users/:userId/metrics", async (req, res) => {
+router.get("/api/users/:userId/metrics", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

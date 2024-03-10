@@ -12,7 +12,7 @@ const querySchema = joi.object({
 // dual secured
 // get users by email
 // http://localhost:3000/api/users/:email [get]
-router.use(dualAuthorization).get("/api/users/email/:email", async (req, res) => {
+router.get("/api/users/email/:email", dualAuthorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

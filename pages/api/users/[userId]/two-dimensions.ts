@@ -5,7 +5,6 @@ import joi from "joi";
 import BaseError from "@/lib/base-error";
 import metricsService from "@/services/metrics.service";
 
-
 const querySchema = joi.object({
   userId: joi.string().required()
 });
@@ -13,7 +12,7 @@ const querySchema = joi.object({
 // secured
 // get the analytics for a particular user
 // http://localhost:3000/api/users/:userId/two-dimensions [get]
-router.use(authorization).get("/api/users/:userId/two-dimensions", async (req, res) => {
+router.get("/api/users/:userId/two-dimensions", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error) throw new BaseError(400, error.details[0].message);
   const response = await metricsService.getUserInsightsData(value.userId);

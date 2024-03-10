@@ -12,7 +12,7 @@ const querySchema = joi.object({
 // secured
 // get the analytics for a particular user
 // http://localhost:3000/api/users/:userId/three-dimensions [get]
-router.use(authorization).get("/api/users/:userId/three-dimensions", async (req, res) => {
+router.get("/api/users/:userId/three-dimensions", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

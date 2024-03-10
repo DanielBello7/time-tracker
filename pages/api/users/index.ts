@@ -35,7 +35,7 @@ const querySchema = joi.object({
 // secured
 // get users
 // http://localhost:3000/api/users?...rest [get]
-router.use(authorization).get("/api/users", async (req, res) => {
+router.get("/api/users", authorization, async (req, res) => {
   const { value } = querySchema.validate(req.query);
   const { page, limit, ...rest } = value;
   const response = await UsersService.getUsers(rest, { page, limit });
@@ -50,7 +50,7 @@ router.use(authorization).get("/api/users", async (req, res) => {
 // dual secured
 // create new user
 // http://localhost:3000/api/users [post]
-router.use(dualAuthorization).post("/api/users", async (req, res, _) => {
+router.post("/api/users", dualAuthorization, async (req, res, _) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error) throw new BaseError(400, error.details[0].message);
   const required: NEW_USER = {

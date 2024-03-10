@@ -40,7 +40,7 @@ const querySchema = joi.object({
 // secured
 // create task
 // http://localhost:3000/api/tasks [post]
-router.use(authorization).post("/api/tasks", async (req, res) => {
+router.post("/api/tasks", authorization, async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -56,7 +56,7 @@ router.use(authorization).post("/api/tasks", async (req, res) => {
 // secured
 // get tasks
 // http://localhost:3000/api/tasks [get]
-router.use(authorization).get("/api/tasks", async (req, res) => {
+router.get("/api/tasks", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -75,7 +75,7 @@ router.use(authorization).get("/api/tasks", async (req, res) => {
 // secured
 // delete tasks 
 // http://localhost:3000/api/tasks [delete]
-router.use(authorization).delete("/api/tasks", async (req, res) => {
+router.delete("/api/tasks", authorization, async (req, res) => {
   const { error, value } = deleteBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

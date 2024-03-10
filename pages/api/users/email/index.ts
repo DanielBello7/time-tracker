@@ -13,7 +13,7 @@ const postBodySchema = joi.object({
 // secured
 // update user email
 // http://localhost:3000/api/users/email [patch]
-router.use(authorization).patch("/api/users/email", async (req, res) => {
+router.patch("/api/users/email", authorization, async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

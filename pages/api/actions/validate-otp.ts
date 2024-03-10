@@ -12,7 +12,7 @@ const postBodySchema = joi.object({
 // dual secured
 // send otp email
 // http://localhost:3000/api/actions/validate-otp/ [post]
-router.use(dualAuthorization).post("/api/actions/validate-otp", async (req, res) => {
+router.post("/api/actions/validate-otp", dualAuthorization, async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

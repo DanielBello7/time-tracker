@@ -40,7 +40,7 @@ const deleteBodySchema = joi.object({
 // secured
 // get user shared tasks
 // http://localhost:3000/api/shared-tasks [get]
-router.use(authorization).get("/api/shared-tasks", async (req, res) => {
+router.get("/api/shared-tasks", authorization, async (req, res) => {
   const { value } = querySchema.validate(req.query);
   const { page, limit, ...rest } = value;
   const response = await SharedTaskService.getSharedTasks(rest, { page, limit });
@@ -55,7 +55,7 @@ router.use(authorization).get("/api/shared-tasks", async (req, res) => {
 // secured
 // create shared tasks
 // http://localhost:3000/api/shared-tasks [post]
-router.use(authorization).post("/api/shared-tasks", async (req, res) => {
+router.post("/api/shared-tasks", authorization, async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -115,7 +115,7 @@ router.use(authorization).post("/api/shared-tasks", async (req, res) => {
 // secured
 // delete shared tasks
 // http://localhost:3000/api/shared-tasks [delete]
-router.use(authorization).delete("/api/shared-tasks", async (req, res) => {
+router.delete("/api/shared-tasks", authorization, async (req, res) => {
   const { error, value } = deleteBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

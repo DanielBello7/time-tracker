@@ -21,7 +21,7 @@ const querySchema = joi.object({
 // secured
 // search shared-tasks
 // http://localhost:3000/api/shared-tasks/search/:text?...rest [get]
-router.use(authorization).get("/api/shared-tasks/search/:text", async (req, res) => {
+router.get("/api/shared-tasks/search/:text", authorization, async (req, res) => {
   const { value, error } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);

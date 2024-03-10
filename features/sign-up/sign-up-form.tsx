@@ -56,7 +56,7 @@ export default function SignUpForm({ bearer }: SignUpFormProps) {
       }, {
         headers: { "Authorization": `Bearer ${bearer}` }
       });
-      toast("Registration Complete", { description: "Proceed to Login" });
+      toast("Registration Complete", { description: "Proceed to verify account" });
       router.replace(`/register/email-verify?email=${formData.email}`);
     } catch (error) {
       const err = ensureError(error);

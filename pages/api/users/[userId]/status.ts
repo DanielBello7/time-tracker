@@ -19,7 +19,7 @@ const querySchema = joi.object({
 // dual secured
 // update user
 // http://localhost:3000/api/users/:userId/status [patch]
-router.use(dualAuthorization).patch("/api/users/:userId/status", async (req, res) => {
+router.patch("/api/users/:userId/status", dualAuthorization, async (req, res) => {
   const {
     error: bodyError,
     value: bodyValue

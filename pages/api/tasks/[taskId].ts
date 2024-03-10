@@ -24,7 +24,7 @@ const patchBodySchema = joi.object({
 // secured
 // get one task
 // http://localhost:3000/api/tasks/:taskId [get]
-router.use(authorization).get("/api/tasks/:taskId", async (req, res) => {
+router.get("/api/tasks/:taskId", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -40,7 +40,7 @@ router.use(authorization).get("/api/tasks/:taskId", async (req, res) => {
 // secured
 // update one task
 // http://localhost:3000/api/tasks/:taskId [patch]
-router.use(authorization).patch("/api/tasks/:taskId", async (req, res) => {
+router.patch("/api/tasks/:taskId", authorization, async (req, res) => {
   const {
     error: queryError,
     value: queryValue

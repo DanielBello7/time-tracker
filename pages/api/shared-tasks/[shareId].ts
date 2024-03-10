@@ -19,7 +19,7 @@ const patchSchema = joi.object({
 // secured
 // get user shared tasks
 // http://localhost:3000/api/shared-tasks/:id [get]
-router.use(authorization).get("/api/shared-tasks/:id", async (req, res) => {
+router.get("/api/shared-tasks/:id", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -35,7 +35,7 @@ router.use(authorization).get("/api/shared-tasks/:id", async (req, res) => {
 // secured
 // update a shared task status
 // http://localhost:3000/api/shared-tasks/status [patch]
-router.use(authorization).patch("/api/shared-tasks/status", async (req, res) => {
+router.patch("/api/shared-tasks/status", authorization, async (req, res) => {
   const { error, value } = patchSchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

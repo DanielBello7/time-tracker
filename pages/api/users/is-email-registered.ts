@@ -12,7 +12,7 @@ const postBodyQuery = joi.object({
 // dual secured
 // check if email is registered
 // http://localhost:3000/api/users/is-email-registered [post]
-router.use(dualAuthorization).post("/api/users/is-email-registered", async (req, res) => {
+router.post("/api/users/is-email-registered", dualAuthorization, async (req, res) => {
   const { error, value } = postBodyQuery.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);

@@ -6,7 +6,6 @@ import router from "@/lib/router";
 import UserService from "@/services/user.service";
 import joi from "joi";
 
-
 const patchBodySchema = joi.object({
   country: joi.string(),
   name: joi.string(),
@@ -23,7 +22,7 @@ const querySchema = joi.object({
 // dual secured
 // find user
 // http://localhost:3000/api/users/:userId [get]
-router.use(dualAuthorization).get("/api/users/:userId", async (req, res) => {
+router.get("/api/users/:userId", dualAuthorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error)
     throw new BaseError(400, error.details[0].message);
@@ -39,7 +38,7 @@ router.use(dualAuthorization).get("/api/users/:userId", async (req, res) => {
 // secured
 // delete user
 // http://localhost:3000/api/users/:userId [delete]
-router.use(authorization).delete("/api/users/:userId", async (req, res) => {
+router.delete("/api/users/:userId", authorization, async (req, res) => {
   const { value, error } = querySchema.validate(req.query);
   if (error) throw new BaseError(401, error.details[0].message);
   await UserService.findUserUsingId(value.userId);
@@ -51,7 +50,7 @@ router.use(authorization).delete("/api/users/:userId", async (req, res) => {
 // secured
 // update user
 // http://localhost:3000/api/users/:userId [patch]
-router.use(authorization).patch("/api/users/:userId", async (req, res) => {
+router.patch("/api/users/:userId", authorization, async (req, res) => {
   const {
     error: bodyError,
     value: bodyValue

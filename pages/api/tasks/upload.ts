@@ -14,7 +14,7 @@ const postBodySchema = joi.object({
 // secured
 // import tasks
 // http://localhost:3000/api/tasks/upload [post]
-router.use(authorization).post("/api/tasks/upload", async (req, res) => {
+router.post("/api/tasks/upload", authorization, async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
