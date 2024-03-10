@@ -9,6 +9,7 @@ import DeleteSharedTaskDialog from "@/components/dialogs/delete-shared-task-dial
 import DeleteTaskDialog from "@/components/dialogs/delete-task-dialog";
 import ShareTaskDialog from "@/components/dialogs/share-task-dialog";
 import { AnimatePresence, motion } from "framer-motion";
+import ToTopButton from "./to-top-button";
 
 type DashboardLayoutProps = {
     children: React.ReactNode[] | React.ReactNode
@@ -18,7 +19,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const { isLoading } = useFetchResources();
 
     const main = classNames({
-        "w-full 2xl:container 2xl:p-0 md:border h-screen overflow-hidden flex": true
+        "w-full 2xl:container 2xl:p-0 md:border md:h-screen md:overflow-hidden flex": true
     });
 
     if (isLoading) return <LoadingScreen />
@@ -34,14 +35,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     <Sidebar />
                 </div>
                 <Separator className="hidden md:block border" />
-                <div className={"w-full h-full flex flex-col overflow-hidden md:w-9/12 xl:w-10/12"}>
+                <div className={"w-full md:h-full flex flex-col md:overflow-hidden md:w-9/12 xl:w-10/12"}>
                     <div className="w-full">
                         <DashboardHeader />
                     </div>
                     <Separator className="border" />
-                    <div className="flex flex-col grow overflow-hidden">
+                    <div className="flex flex-col md:grow md:overflow-hidden relative">
                         <AnimatePresence mode="wait">
                             {children}
+                            <ToTopButton />
                         </AnimatePresence>
                     </div>
                 </div>

@@ -24,9 +24,9 @@ export default function Container(props: DashboardBodyLayoutProps) {
   } = props;
 
   const gridclass = classNames({
-    "overflow-y-scroll overflow-x-hidden": true,
+    "md:overflow-y-scroll md:overflow-x-hidden": true,
     "w-full p-3": true,
-    "grow": true,
+    "md:grow": true,
     "grid grid-cols-1 md:grid-cols-2": grid ? true : false,
     "lg:grid-cols-3": grid ? true : false,
     "xl:grid-cols-4 gap-3": grid ? true : false,
