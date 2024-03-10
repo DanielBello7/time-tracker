@@ -1,0 +1,52 @@
+name: core-task integration
+on: 
+    push:
+        branches:
+            -   main
+defaults: 
+    run:
+        shell: bash
+        working-directory: ./
+jobs:
+    checkout:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: 'checkout repository'
+                uses: actions/checkout@v3
+    build:
+        runs-on: ubuntu-latest
+        needs: ['checkout']
+        steps:
+            -   name: 'checkout repository'
+                uses: actions/checkout@v3
+            -   name: 'install depencencies'
+                run: npm install
+            -   name: 'build project'
+                run: npm run build
+    deploy:
+        runs-on: ubuntu-latest
+        needs: ['checkout', 'build']
+        steps:
+            -   name: Setup Node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 20.6.1
+            -   name: Reload Bash
+                run:  |
+                    source ~/.bashrc
+                    npm --version
+                    node --version
+            -   name: 'deploy'
+                uses: appleboy/ssh-action@v1.0.0
+                with:
+                    host: ${{secrets.SSH_HOST}}
+                    username: ${{secrets.SSH_USERNAME}}
+                    key: ${{secrets.SSH_KEY}}
+                    port: ${{secrets.SSH_PORT}}
+                    script: |
+                        ${{secrets.SSH_COMMAND}}
+                        ${{secrets.SSH_COMMAND_2}}
+                        export NVM_DIR=~/.nvm
+                        source ~/.nvm/nvm.sh
+                        npm install
+                        npm run deploy
