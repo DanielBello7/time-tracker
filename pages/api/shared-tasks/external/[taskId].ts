@@ -1,7 +1,7 @@
-import authorization from "@/lib/authorization";
-import router from "@/lib/router";
+import authorization from "@/middlewares/authorization";
+import router from "@/config/router";
 import joi from "joi";
-import handleError from "@/lib/handle-error";
+import handleError from "@/middlewares/handle-error";
 import BaseError from "@/lib/base-error";
 import ExternalSharedTaskService from "@/services/external-shared-task.service";
 

@@ -1,9 +1,9 @@
-import router from "@/lib/router";
-import handleError from "@/lib/handle-error";
+import router from "@/config/router";
+import handleError from "@/middlewares/handle-error";
 import joi from "joi";
 import BaseError from "@/lib/base-error";
 import UsersService from "@/services/user.service";
-import dualAuthorization from "@/lib/dual-authorization";
+import dualAuthorization from "@/middlewares/dual-authorization";
 
 const postBodySchema = joi.object({
   userId: joi.string().required(),

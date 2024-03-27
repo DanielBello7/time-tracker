@@ -1,9 +1,9 @@
-import authorization from "@/lib/authorization";
+import authorization from "@/middlewares/authorization";
 import SharedTaskService from "@/services/shared-task.service";
 import BaseError from "@/lib/base-error";
 import joi from "joi";
-import handleError from "@/lib/handle-error";
-import router from "@/lib/router";
+import handleError from "@/middlewares/handle-error";
+import router from "@/config/router";
 
 const querySchema = joi.object({
   shareId: joi.string().required()

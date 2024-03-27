@@ -9,11 +9,11 @@ import type { PaginateOptions, PaginateResult } from "mongoose";
 import type { PaginateFilterOptions } from "@/types/global.types";
 import TasksModel from "@/models/tasks.model";
 import UsersService from "./user.service";
-import validateId from "@/lib/validate-id";
+import isValidId from "@/lib/validate-id";
 import SharedTasksModel from "@/models/shared-tasks.model";
 import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
-import databaseConnection from "@/lib/database-connection";
+import databaseConnection from "@/config/database-connection";
 import toJson from "@/lib/to-json";
 
 databaseConnection();
@@ -38,7 +38,7 @@ async function searchTasksUsingTaskTitle(
 }
 
 async function findTaskUsingId(id: string): Promise<TASK> {
-  validateId(id);
+  isValidId(id);
   const response = await TasksModel.findOne({ _id: id })
     .populate({ path: "createdBy", select: "-password" });
   if (response) return toJson(response);
@@ -65,7 +65,7 @@ async function getTasks(
 async function createNewTasks(
   userId: string, data: NEW_TASK[]
 ): Promise<TASK[]> {
-  validateId(userId);
+  isValidId(userId);
   await UsersService.findUserUsingId(userId);
   const response = await Promise.all(data.map(async (item) => {
     try {
@@ -90,7 +90,7 @@ async function createNewTasks(
 async function updateTask(
   taskId: string, updates: Partial<UPDATE_TASK> = {}
 ): Promise<TASK> {
-  validateId(taskId);
+  isValidId(taskId);
   await findTaskUsingId(taskId);
   const santized = objectSanitize(updates);
   const response = await TasksModel.findOneAndUpdate(
@@ -105,7 +105,7 @@ async function updateTask(
 async function deleteTasks(taskIds: string[]): Promise<void> {
   await Promise.all(taskIds.map(async (item) => {
     try {
-      validateId(item);
+      isValidId(item);
       await TasksModel.deleteOne({ _id: item });
     } catch { null }
   }));

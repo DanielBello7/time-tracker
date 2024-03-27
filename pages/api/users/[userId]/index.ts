@@ -1,8 +1,8 @@
-import authorization from "@/lib/authorization";
+import authorization from "@/middlewares/authorization";
 import BaseError from "@/lib/base-error";
-import dualAuthorization from "@/lib/dual-authorization";
-import handleError from "@/lib/handle-error";
-import router from "@/lib/router";
+import dualAuthorization from "@/middlewares/dual-authorization";
+import handleError from "@/middlewares/handle-error";
+import router from "@/config/router";
 import UserService from "@/services/user.service";
 import joi from "joi";
 

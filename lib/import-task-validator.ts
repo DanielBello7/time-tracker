@@ -1,9 +1,9 @@
 import joi from "joi";
-import validateId from "./validate-id";
+import isValidId from "./validate-id";
 
 export const importTaskSchema = joi.object({
   _id: joi.string().required().custom((val, _) => {
-    validateId(val);
+    isValidId(val);
     return val
   }),
   type: joi.string().valid("story", "bug").required(),

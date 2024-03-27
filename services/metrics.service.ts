@@ -8,7 +8,7 @@ import type {
   TWO_DIMENSIONS_CHART_DATA,
   THREE_DIMENSIONS_CHART_DATA
 } from "@/types/stats.types";
-import databaseConnection from "@/lib/database-connection";
+import databaseConnection from "@/config/database-connection";
 
 databaseConnection();
 

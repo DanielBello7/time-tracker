@@ -1,11 +1,11 @@
 import { NEW_USER } from "@/types/user.types";
 import UsersService from "@/services/user.service";
-import router from "@/lib/router";
-import handleError from "@/lib/handle-error";
+import router from "@/config/router";
+import handleError from "@/middlewares/handle-error";
 import joi from "joi";
 import BaseError from "@/lib/base-error";
-import authorization from "@/lib/authorization";
-import dualAuthorization from "@/lib/dual-authorization";
+import authorization from "@/middlewares/authorization";
+import dualAuthorization from "@/middlewares/dual-authorization";
 
 const postBodySchema = joi.object({
   country: joi.string().required(),

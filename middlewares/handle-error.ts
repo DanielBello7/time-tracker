@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import convertError from "./convert-error";
+import convertError from "../lib/convert-error";
 
 export default function handleError(
   err: unknown, _: NextApiRequest, res: NextApiResponse

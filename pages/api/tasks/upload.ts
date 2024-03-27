@@ -1,6 +1,6 @@
-import authorization from "@/lib/authorization";
-import router from "@/lib/router";
-import handleError from "@/lib/handle-error";
+import authorization from "@/middlewares/authorization";
+import router from "@/config/router";
+import handleError from "@/middlewares/handle-error";
 import joi from "joi";
 import { importTaskSchema } from '@/lib/import-task-validator';
 import BaseError from "@/lib/base-error";

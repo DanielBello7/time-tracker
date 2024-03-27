@@ -1,8 +1,8 @@
-import authorization from "@/lib/authorization";
+import authorization from "@/middlewares/authorization";
 import TaskService from "@/services/task.service";
-import router from "@/lib/router";
+import router from "@/config/router";
 import joi from "joi";
-import handleError from "@/lib/handle-error";
+import handleError from "@/middlewares/handle-error";
 import BaseError from "@/lib/base-error";
 
 const querySchema = joi.object({

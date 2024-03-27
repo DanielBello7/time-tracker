@@ -6,6 +6,7 @@ type VARIABLES = {
   APP_EMAIL_NAME: string
   HASH: number
   EMAIL_SECRET: string
+  TESTING: string
 }
 
 const MONGO_DB_URL = process.env.MONGO_DB_URL as string ?? "";
@@ -15,7 +16,8 @@ const NEXT_AUTH_URL = process.env.NEXTAUTH_URL as string ?? "";
 const HASH = process.env.HASH as string ?? "3";
 const BREVO_SECRET = process.env.BREVO_SECRET as string ?? "";
 const APP_EMAIL = process.env.APP_EMAIL as string ?? "";
-const APP_NAME = process.env.APP_NAME as string ?? ""
+const APP_NAME = process.env.APP_NAME as string ?? "";
+const TESTING = process.env.TESTING as string ?? "";
 
 const LIVE: VARIABLES = {
   MONGO_DB_URL,
@@ -24,7 +26,8 @@ const LIVE: VARIABLES = {
   APP_EMAIL,
   APP_EMAIL_NAME: APP_NAME,
   EMAIL_SECRET: BREVO_SECRET,
-  HASH: parseInt(HASH)
+  HASH: parseInt(HASH),
+  TESTING
 }
 
 const LOCAL: VARIABLES = {
@@ -34,7 +37,8 @@ const LOCAL: VARIABLES = {
   AUTH_SECRET,
   NEXT_AUTH_URL,
   EMAIL_SECRET: BREVO_SECRET,
-  HASH: parseInt(HASH)
+  HASH: parseInt(HASH),
+  TESTING
 }
 
 const ENV = NODE_ENV === "development" ? LOCAL : LIVE;

@@ -5,7 +5,7 @@ import {
 import BaseError from "@/lib/base-error";
 import ExternalSharedTasksModel from "@/models/external-shared.model";
 import objectSanitize from "@/lib/object-sanitize";
-import databaseConnection from "@/lib/database-connection";
+import databaseConnection from "@/config/database-connection";
 import toJson from "@/lib/to-json";
 
 databaseConnection();
@@ -16,11 +16,7 @@ async function findExternalSharedTaskUsingTaskId(
   const response = await ExternalSharedTasksModel.findOne({ taskId })
     .populate([
       { path: "sharedBy", select: "-password" },
-      {
-        path: "taskId", populate: [
-          { path: "createdBy", select: "-password" }
-        ]
-      }
+      { path: "taskId" }
     ]);
   if (response) return toJson(response);
   throw new BaseError(404, "unable to find task");
@@ -32,11 +28,7 @@ async function findExternalSharedTaskUsingId(
   const response = await ExternalSharedTasksModel.findOne({ _id: sharedId })
     .populate([
       { path: "sharedBy", select: "-password" },
-      {
-        path: "taskId", populate: [
-          { path: "createdBy", select: "-password" }
-        ]
-      }
+      { path: "taskId" }
     ]);
   if (response) return toJson(response);
   throw new BaseError(404, "unable to find task");

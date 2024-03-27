@@ -3,11 +3,11 @@ import type { PaginateResult, PaginateOptions } from "mongoose";
 import { PaginateFilterOptions } from "@/types/global.types";
 import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
-import validateId from "@/lib/validate-id";
+import isValidId from "@/lib/validate-id";
 import UserService from "./user.service";
 import TaskService from "./task.service";
 import SharedTasksModel from "@/models/shared-tasks.model";
-import databaseConnection from "@/lib/database-connection";
+import databaseConnection from "@/config/database-connection";
 import toJson from "@/lib/to-json";
 
 databaseConnection();
@@ -47,7 +47,7 @@ async function searchSharedTasksUsingTaskTitle(
 async function findSharedTaskUsingId(
   sharedTaskId: string
 ): Promise<SHARED_TASK> {
-  validateId(sharedTaskId);
+  isValidId(sharedTaskId);
   const response = await SharedTasksModel.findOne({ _id: sharedTaskId })
     .populate([
       { path: "sharedTo", select: "-password" },
@@ -82,7 +82,7 @@ async function getSharedTasks(
 async function createNewSharedTasks(
   taskId: string, from: string, toEmail: string
 ): Promise<SHARED_TASK> {
-  validateId(taskId);
+  isValidId(taskId);
 
   await UserService.findUserUsingId(from);
   const sharedToUser = await UserService.findUserUsingEmail(toEmail);
@@ -101,7 +101,7 @@ async function createNewSharedTasks(
 async function deleteSharedTasks(taskIds: string[]): Promise<void> {
   await Promise.all(taskIds.map(async (item) => {
     try {
-      validateId(item);
+      isValidId(item);
       await SharedTasksModel.deleteOne({ _id: item });
     } catch { null }
   }));

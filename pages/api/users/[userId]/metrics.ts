@@ -1,7 +1,7 @@
-import authorization from "@/lib/authorization";
+import authorization from "@/middlewares/authorization";
 import type { STATS } from "@/types/stats.types";
-import handleError from "@/lib/handle-error";
-import router from "@/lib/router";
+import handleError from "@/middlewares/handle-error";
+import router from "@/config/router";
 import joi from "joi";
 import BaseError from "@/lib/base-error";
 import MetricsService from "@/services/metrics.service";

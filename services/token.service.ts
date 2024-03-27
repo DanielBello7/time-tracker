@@ -1,5 +1,5 @@
 import type { NEW_TOKEN, TOKEN } from "@/types/tokens.types";
-import validateId from "@/lib/validate-id";
+import isValidId from "@/lib/validate-id";
 import BaseError from "@/lib/base-error";
 import toJson from "@/lib/to-json";
 import TokenModel from "@/models/token.model";
@@ -11,7 +11,7 @@ async function findTokenUsingOtp(value: string): Promise<TOKEN> {
 }
 
 async function findTokenUsingId(tokenId: string): Promise<TOKEN> {
-  validateId(tokenId);
+  isValidId(tokenId);
   const response = await TokenModel.findOne({ _id: tokenId });
   if (response) return toJson(response);
   throw new BaseError(404, "token unavailable");

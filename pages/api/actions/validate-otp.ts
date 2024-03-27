@@ -1,9 +1,9 @@
-import router from "@/lib/router";
-import handleError from "@/lib/handle-error";
+import router from "@/config/router";
+import handleError from "@/middlewares/handle-error";
 import BaseError from "@/lib/base-error";
 import joi from "joi";
 import tokenService from "@/services/token.service";
-import dualAuthorization from "@/lib/dual-authorization";
+import dualAuthorization from "@/middlewares/dual-authorization";
 
 const postBodySchema = joi.object({
   otp: joi.string().required(),

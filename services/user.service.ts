@@ -5,8 +5,8 @@ import { PaginateFilterOptions } from "@/types/global.types";
 import bcrypt from "bcrypt";
 import UsersModel from "@/models/users.model";
 import BaseError from "@/lib/base-error";
-import databaseConnection from "@/lib/database-connection";
-import validateId from "@/lib/validate-id";
+import databaseConnection from "@/config/database-connection";
+import isValidId from "@/lib/validate-id";
 import objectSanitize from "@/lib/object-sanitize";
 import toJson from "@/lib/to-json";
 
@@ -32,7 +32,7 @@ async function createNewUser(data: NEW_USER): Promise<USER> {
 }
 
 async function findUserUsingId(id: string): Promise<USER> {
-  validateId(id);
+  isValidId(id);
   const response = await UsersModel.findOne({ _id: id });
   if (response) return response
   throw new BaseError(404, "user not registered");
@@ -64,7 +64,7 @@ async function getUsers(
 async function updateUserUsingId(
   userId: string, updates: Partial<UPDATE_USER> = {}
 ): Promise<USER> {
-  validateId(userId);
+  isValidId(userId);
   await findUserUsingId(userId);
   const sanitized = objectSanitize(updates);
   const response = await UsersModel.findOneAndUpdate(
@@ -91,7 +91,7 @@ async function updateUserUsingEmail(
 }
 
 async function deleteUser(userId: string): Promise<void> {
-  validateId(userId);
+  isValidId(userId);
   await UsersModel.deleteOne({ _id: userId });
 }
 

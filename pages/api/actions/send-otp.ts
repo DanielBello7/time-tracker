@@ -1,12 +1,12 @@
-import router from "@/lib/router";
-import handleError from "@/lib/handle-error";
+import router from "@/config/router";
+import handleError from "@/middlewares/handle-error";
 import generator from "otp-generator";
 import BaseError from "@/lib/base-error";
 import joi from "joi";
 import sendEmail from "@/lib/send-email";
-import otpEmail from "@/emails/otp-email";
+import otpEmail from "@/templates/otp-email";
 import tokenService from "@/services/token.service";
-import dualAuthorization from "@/lib/dual-authorization";
+import dualAuthorization from "@/middlewares/dual-authorization";
 
 const postBodySchema = joi.object({
   email: joi.string().email().required(),
