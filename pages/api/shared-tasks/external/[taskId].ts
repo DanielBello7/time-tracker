@@ -41,7 +41,7 @@ router.patch("/api/shared-tasks/external/:taskId", authorization, async (req, re
   if (error)
     throw new BaseError(400, error.details[0].message);
 
-  const response = await ExternalSharedTaskService.updateExternalSharedTaskStatus(value.taskId, {
+  const response = await ExternalSharedTaskService.updateExternalSharedTaskStatusUsingTaskId(value.taskId, {
     isActive: val.isActive
   }, false);
 

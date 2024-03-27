@@ -48,12 +48,6 @@ const UserSchema = new mongoose.Schema<USER_DOC>({
   }
 }, { timestamps: true });
 
-UserSchema.set("toJSON", {
-  transform(_doc, ret) {
-    delete ret.__v;
-  }
-});
-
 UserSchema.pre("save", async function (next: mongoose.CallbackWithoutResultAndOptionalError) {
   try {
     const user: USER_DOC = this;

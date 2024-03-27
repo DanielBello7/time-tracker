@@ -11,7 +11,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     try {
       const findShared = await ExternalSharedTaskService.findExternalSharedTaskUsingId(id);
       if (!findShared.isActive) throw new Error("Task unavailable");
-      await ExternalSharedTaskService.updateExternalSharedTaskStatus(findShared.taskId._id, {
+      await ExternalSharedTaskService.updateExternalSharedTaskStatusUsingTaskId(findShared.taskId._id, {
         isRead: true
       }, false);
       return {

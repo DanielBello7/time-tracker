@@ -1,6 +1,12 @@
-import type { NEW_TASK, TASK, TASK_DOC, UPDATE_TASK } from "@/types/task.types";
+import {
+  type TASKS_FILTER,
+  type NEW_TASK,
+  type TASK,
+  type UPDATE_TASK,
+  type TASK_DOC,
+} from "@/types/task.types";
 import type { PaginateOptions, PaginateResult } from "mongoose";
-import type { PAGINATE_OPTIONS_FILTER } from "./shared-task.service";
+import type { PaginateFilterOptions } from "@/types/global.types";
 import TasksModel from "@/models/tasks.model";
 import UsersService from "./user.service";
 import validateId from "@/lib/validate-id";
@@ -8,64 +14,52 @@ import SharedTasksModel from "@/models/shared-tasks.model";
 import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
 import databaseConnection from "@/lib/database-connection";
+import toJson from "@/lib/to-json";
 
 databaseConnection();
 
-export type TASKS_FILTER = {
-  type: "story" | "bug"
-  timeSpent: number
-  timeInterval: "seconds" | "minutes" | "hours"
-  shortCode: number
-  dateStarted: string
-  createdBy: string
-  createdAt: string
-  dateFinished: string
-}
-
 async function searchTasksUsingTaskTitle(
-  title: string,
-  filter?: Partial<TASKS_FILTER>,
-  paginateOptions?: Partial<PAGINATE_OPTIONS_FILTER>
+  title: string, filter: Partial<TASKS_FILTER> = {}, paginate: Partial<PaginateFilterOptions> = {}
 ): Promise<PaginateResult<TASK_DOC>> {
-  const sanitizedOptions = objectSanitize(paginateOptions ?? {});
-  const sanitizedFilter = objectSanitize(filter ?? {});
+  const paginated = objectSanitize(paginate);
+  const sanitized = objectSanitize(filter);
 
   const options: PaginateOptions = {
     limit: 1000,
     sort: { createdAt: "descending" },
     populate: [{ path: "createdBy", select: "-password" }],
-    ...sanitizedOptions
+    ...paginated
   }
 
-  const response = await TasksModel.paginate({ title: { $regex: title }, ...sanitizedFilter }, options);
-  return response;
+  return await TasksModel.paginate({
+    title: { $regex: title },
+    ...sanitized
+  }, options);
 }
 
-async function findTaskUsingId(id: string): Promise<TASK_DOC> {
+async function findTaskUsingId(id: string): Promise<TASK> {
   validateId(id);
-  const response = await TasksModel.findOne({ _id: id }).populate({
-    path: "createdBy",
-    select: "-password"
-  });
-  if (response) return response;
+  const response = await TasksModel.findOne({ _id: id })
+    .populate({ path: "createdBy", select: "-password" });
+  if (response) return toJson(response);
   throw new BaseError(404, "task not found");
 }
 
 async function getTasks(
-  filter?: TASKS_FILTER,
-  paginateOptions?: PAGINATE_OPTIONS_FILTER
+  filter: Partial<TASKS_FILTER> = {}, paginate: Partial<PaginateFilterOptions> = {}
 ): Promise<PaginateResult<TASK>> {
-  const sanitized = objectSanitize(filter ?? {});
-  const sanitizedOptions = objectSanitize(paginateOptions ?? {});
+  const paginated = objectSanitize(paginate);
+  const sanitized = objectSanitize(filter);
 
   const options: PaginateOptions = {
     limit: 1000,
     sort: { createdAt: "descending" },
     populate: [{ path: "createdBy", select: "-password" }],
-    ...sanitizedOptions
+    ...paginated
   }
-  const response = await TasksModel.paginate({ ...sanitized }, options);
-  return response as any;
+  return await TasksModel.paginate({
+    ...sanitized
+  }, options);
 }
 
 async function createNewTasks(
@@ -73,7 +67,6 @@ async function createNewTasks(
 ): Promise<TASK[]> {
   validateId(userId);
   await UsersService.findUserUsingId(userId);
-
   const response = await Promise.all(data.map(async (item) => {
     try {
       const newTask = await new TasksModel({
@@ -88,20 +81,14 @@ async function createNewTasks(
         createdBy: userId,
         dateFinished: item.dateFinished,
       }).save();
-      const findItem = await TasksModel.findOne({ _id: newTask._id }).populate({
-        path: "createdBy",
-        select: "-password"
-      });
-      if (findItem) return findItem
-      throw new Error("error finding item");
+      return await findTaskUsingId(newTask._id as unknown as string);
     } catch (error) { return false }
   }));
-
-  return response.filter((item) => item !== false) as any;
+  return response.filter((item): item is TASK => item !== false);
 }
 
 async function updateTask(
-  taskId: string, updates: UPDATE_TASK
+  taskId: string, updates: Partial<UPDATE_TASK> = {}
 ): Promise<TASK> {
   validateId(taskId);
   await findTaskUsingId(taskId);
@@ -110,14 +97,17 @@ async function updateTask(
     { _id: taskId },
     { $set: { ...santized } },
     { upsert: false, new: true }
-  ).populate([{ path: "createdBy", select: "-password" }]) as unknown;
-  return response as TASK
+  );
+  if (response) return await findTaskUsingId(response._id as unknown as string);
+  throw new BaseError(404, "error updating task");
 }
 
 async function deleteTasks(taskIds: string[]): Promise<void> {
   await Promise.all(taskIds.map(async (item) => {
-    validateId(item);
-    await TasksModel.deleteOne({ _id: item });
+    try {
+      validateId(item);
+      await TasksModel.deleteOne({ _id: item });
+    } catch { null }
   }));
 }
 
@@ -160,9 +150,7 @@ async function handleUploadedTask(item: TASK, uploaderId: string): Promise<void>
   return
 }
 
-async function saveUploadedImports(
-  userId: string, uploads: TASK[]
-): Promise<void> {
+async function saveUploadedImports(userId: string, uploads: TASK[]): Promise<void> {
   await Promise.all(uploads.map(async (item) => {
     return await handleUploadedTask(item, userId);
   }));

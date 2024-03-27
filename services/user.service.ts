@@ -1,38 +1,25 @@
-import type { UPDATE_USER, NEW_USER, USER } from "@/types/user.types";
+import type { UPDATE_USER, NEW_USER, USER, USERS_FILTER } from "@/types/user.types";
 import type { PaginateOptions, PaginateResult } from "mongoose";
 import { variables } from "@/constants";
+import { PaginateFilterOptions } from "@/types/global.types";
 import bcrypt from "bcrypt";
 import UsersModel from "@/models/users.model";
 import BaseError from "@/lib/base-error";
 import databaseConnection from "@/lib/database-connection";
 import validateId from "@/lib/validate-id";
 import objectSanitize from "@/lib/object-sanitize";
-import { PAGINATE_OPTIONS_FILTER } from "./shared-task.service";
+import toJson from "@/lib/to-json";
 
 databaseConnection();
 
-export type USERS_FILTER = {
-  avatar: string | null
-  name: string
-  position: string
-  email: string
-  isEmailVerified: boolean
-  isOnboarded: boolean
-  country: string
-  phone: string
-  allowNotifications: boolean
-  createdAt: string
-}
-
-async function confirmIfEmailIsRegistered(email: string): Promise<boolean> {
+async function isEmailRegistered(email: string): Promise<boolean> {
   const response = await UsersModel.findOne({ email });
   if (response) return true
   return false
 }
 
 async function createNewUser(data: NEW_USER): Promise<USER> {
-  const check = await UsersModel.findOne({ email: data.email });
-  if (check) throw new BaseError(401, "user already registered");
+  if (await isEmailRegistered(data.email)) throw new BaseError(401, "user already registered");
   const response = await new UsersModel({
     name: data.name,
     position: data.position,
@@ -41,9 +28,7 @@ async function createNewUser(data: NEW_USER): Promise<USER> {
     country: data.country,
     password: data.password
   }).save();
-  const findNewUser = await UsersModel.findOne({ _id: response._id }).select("-password");
-  if (findNewUser) return findNewUser;
-  throw new BaseError(500, "cannot find newly created user");
+  return await findUserUsingId(response._id as unknown as string);
 }
 
 async function findUserUsingId(id: string): Promise<USER> {
@@ -55,47 +40,54 @@ async function findUserUsingId(id: string): Promise<USER> {
 
 async function findUserUsingEmail(email: string): Promise<USER> {
   const response = await UsersModel.findOne({ email });
-  if (response) return response;
+  if (response) return toJson(response);
   throw new BaseError(404, "user not registered");
 }
 
 async function getUsers(
-  filter?: USERS_FILTER, paginateOptions?: PAGINATE_OPTIONS_FILTER
+  filter: Partial<USERS_FILTER> = {}, paginate: Partial<PaginateFilterOptions> = {}
 ): Promise<PaginateResult<USER>> {
-  const sanitizedFilter = objectSanitize(filter ?? {});
-  const sanitizedOptions = objectSanitize(paginateOptions ?? {});
+  const paginated = objectSanitize(paginate);
+  const sanitized = objectSanitize(filter);
 
   const options: PaginateOptions = {
     limit: 1000,
     select: "-password",
-    ...sanitizedOptions
+    ...paginated
   }
 
-  const response = await UsersModel.paginate({ ...sanitizedFilter }, options);
-  return response as any;
+  return await UsersModel.paginate({
+    ...sanitized
+  }, options);
 }
 
 async function updateUserUsingId(
-  id: string, updates: UPDATE_USER
+  userId: string, updates: Partial<UPDATE_USER> = {}
 ): Promise<USER> {
-  validateId(id);
-  await findUserUsingId(id);
+  validateId(userId);
+  await findUserUsingId(userId);
   const sanitized = objectSanitize(updates);
   const response = await UsersModel.findOneAndUpdate(
-    { _id: id }, { $set: { ...sanitized } }, { upsert: false, new: true }
+    { _id: userId },
+    { $set: { ...sanitized } },
+    { upsert: false, new: true }
   ).select("-password");
-  return response as USER;
+  if (response) return toJson(response);
+  throw new BaseError(500, "error updating user");
 }
 
 async function updateUserUsingEmail(
-  email: string, updates: UPDATE_USER
+  email: string, updates: Partial<UPDATE_USER> = {}
 ): Promise<USER> {
   await findUserUsingEmail(email);
   const sanitized = objectSanitize(updates);
   const response = await UsersModel.findOneAndUpdate(
-    { email }, { $set: { ...sanitized } }, { upsert: false, new: true }
+    { email },
+    { $set: { ...sanitized } },
+    { upsert: false, new: true }
   ).select("-password");
-  return response as USER;
+  if (response) return toJson(response);
+  throw new BaseError(500, "error updating user");
 }
 
 async function deleteUser(userId: string): Promise<void> {
@@ -118,7 +110,8 @@ async function updateUserEmail(userId: string, newEmail: string): Promise<USER> 
     { $set: { email: newEmail } },
     { upsert: false, new: true }
   );
-  return response as any
+  if (response) return toJson(response);
+  throw new BaseError(500, "error updating user");
 }
 
 async function updateUserPassword(
@@ -140,15 +133,8 @@ async function validateUserEmail(userId: string): Promise<void> {
   );
 }
 
-async function checkEmail(email: string): Promise<boolean> {
-  const response = await UsersModel.findOne({ email });
-  if (response) return true;
-  return false;
-}
-
 export default {
   updateUserEmail,
-  checkEmail,
   updateUserPassword,
   validateUserEmail,
   findUserUsingEmail,
@@ -159,6 +145,7 @@ export default {
   createNewUser,
   updateUserUsingEmail,
   updateUserUsingId,
-  confirmIfEmailIsRegistered
+  isEmailRegistered
 }
+
 

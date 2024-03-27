@@ -27,12 +27,6 @@ const ExternalSharedTaskSchema = new mongoose.Schema<EXTERNAL_SHARED_TASK_DOC>({
   }
 }, { timestamps: true });
 
-ExternalSharedTaskSchema.set("toJSON", {
-  transform(_doc, ret) {
-    delete ret.__v
-  },
-});
-
 ExternalSharedTaskSchema.plugin(paginate);
 const initial = mongoose.models["external-shared-tasks"] as unknown as mongoose.PaginateModel<EXTERNAL_SHARED_TASK_DOC, {}, {}>
 const ExternalSharedTasksModel = initial || mongoose.model<EXTERNAL_SHARED_TASK_DOC, mongoose.PaginateModel<EXTERNAL_SHARED_TASK_DOC>>("external-shared-tasks", ExternalSharedTaskSchema);

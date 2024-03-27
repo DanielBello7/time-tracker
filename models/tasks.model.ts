@@ -48,12 +48,6 @@ const TaskSchema = new mongoose.Schema<TASK_DOC>({
   }
 }, { timestamps: true });
 
-TaskSchema.set("toJSON", {
-  transform(_doc, ret) {
-    delete ret.__v
-  },
-});
-
 TaskSchema.plugin(paginate);
 const initial = mongoose.models["tasks"] as unknown as mongoose.PaginateModel<TASK_DOC, {}, {}>
 const TasksModel = initial || mongoose.model<TASK_DOC, mongoose.PaginateModel<TASK_DOC>>("tasks", TaskSchema);

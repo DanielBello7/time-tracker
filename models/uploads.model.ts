@@ -22,12 +22,6 @@ const UploadSchema = new mongoose.Schema<UPLOAD_DOC>({
   }
 }, { timestamps: true });
 
-UploadSchema.set("toJSON", {
-  transform(_doc, ret, _options) {
-    delete ret.__v
-  },
-});
-
 UploadSchema.plugin(paginate);
 const initial = mongoose.models["uploads"] as unknown as mongoose.PaginateModel<UPLOAD_DOC, {}, {}>
 const UploadsModel = initial || mongoose.model<UPLOAD_DOC, mongoose.PaginateModel<UPLOAD_DOC>>("uploads", UploadSchema);

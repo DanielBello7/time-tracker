@@ -9,6 +9,10 @@ const TokenSchema = new mongoose.Schema<TOKEN_DOC>({
   otp: {
     type: String,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    expires: 300
   }
 }, { timestamps: true });
 

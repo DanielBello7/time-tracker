@@ -64,7 +64,7 @@ router.post("/api/shared-tasks", authorization, async (req, res) => {
   const filtered: SHARED[] = Array.from(new Set(value.tasks));
 
   const seperatedPromises = filtered.map(async (current) => {
-    const check = await UsersService.confirmIfEmailIsRegistered(current.sharedTo)
+    const check = await UsersService.isEmailRegistered(current.sharedTo)
     return { check, ...current }
   });
 

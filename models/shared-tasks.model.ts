@@ -28,12 +28,6 @@ const SharedTaskSchema = new mongoose.Schema<SHARED_TASK_DOC>({
   }
 }, { timestamps: true });
 
-SharedTaskSchema.set("toJSON", {
-  transform(_doc, ret) {
-    delete ret.__v
-  },
-});
-
 SharedTaskSchema.plugin(paginate);
 const initial = mongoose.models["shared-tasks"] as unknown as mongoose.PaginateModel<SHARED_TASK_DOC, {}, {}>
 const SharedTasksModel = initial || mongoose.model<SHARED_TASK_DOC, mongoose.PaginateModel<SHARED_TASK_DOC>>("shared-tasks", SharedTaskSchema);
