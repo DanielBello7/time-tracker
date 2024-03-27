@@ -25,11 +25,8 @@ const querySchema = joi.object({
 // http://localhost:3000/api/tasks/search/:text?...rest [get]
 router.get("/api/tasks/search/:text", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-
+  if (error) throw new BaseError(400, error.details[0].message);
   const { text, page, limit, ...rest } = value;
-
   const response = await TaskService.searchTasksUsingTaskTitle(text, rest, { page, limit });
   return res.json({
     msg: "success",

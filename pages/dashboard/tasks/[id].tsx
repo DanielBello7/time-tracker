@@ -13,7 +13,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const response = await TasksService.findTaskUsingId(id);
     return {
       props: {
-        task: JSON.parse(JSON.stringify(response))
+        task: response
       }
     }
   } catch (error) {

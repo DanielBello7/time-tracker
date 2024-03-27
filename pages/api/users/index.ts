@@ -16,7 +16,7 @@ const postBodySchema = joi.object({
   position: joi.string().required()
 });
 
-const querySchema = joi.object({
+const usersQuerySchema = joi.object({
   avatar: joi.string(),
   name: joi.string(),
   position: joi.string(),
@@ -36,7 +36,7 @@ const querySchema = joi.object({
 // get users
 // http://localhost:3000/api/users?...rest [get]
 router.get("/api/users", authorization, async (req, res) => {
-  const { value } = querySchema.validate(req.query);
+  const { value } = usersQuerySchema.validate(req.query);
   const { page, limit, ...rest } = value;
   const response = await UsersService.getUsers(rest, { page, limit });
   return res.json({

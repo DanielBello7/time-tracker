@@ -43,7 +43,7 @@ router.patch("/api/shared-tasks/external/:taskId", authorization, async (req, re
 
   const response = await ExternalSharedTaskService.updateExternalSharedTaskStatusUsingTaskId(value.taskId, {
     isActive: val.isActive
-  }, false);
+  });
 
   return res.json({
     status: "OK",

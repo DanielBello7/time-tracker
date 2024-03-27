@@ -16,7 +16,7 @@ router.post("/api/users/is-email-registered", dualAuthorization, async (req, res
   const { error, value } = postBodyQuery.validate(req.body);
   if (error)
     throw new BaseError(400, error.details[0].message);
-  const response = await UsersService.checkEmail(value.email);
+  const response = await UsersService.isEmailRegistered(value.email);
   return res.json({
     msg: "success",
     status: "OK",

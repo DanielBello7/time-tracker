@@ -14,7 +14,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     SharedTaskService.updateSharedTaskStatus(id, { isRead: true });
     return {
       props: {
-        task: JSON.parse(JSON.stringify(response))
+        task: response
       }
     }
   } catch (error) {
