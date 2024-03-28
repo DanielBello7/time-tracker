@@ -21,6 +21,7 @@ async function databaseConnection(): Promise<void> {
       await UsersModel.createIndexes();
       await TasksModel.createIndexes();
     });
+
     cached.conn = response;
   } catch { return }
 }

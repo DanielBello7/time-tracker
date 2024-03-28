@@ -33,8 +33,8 @@ async function createNewUser(data: NEW_USER): Promise<USER> {
 
 async function findUserUsingId(id: string): Promise<USER> {
   isValidId(id);
-  const response = await UsersModel.findOne({ _id: id });
-  if (response) return response
+  const response = await UsersModel.findOne({ _id: id }).select("-password");
+  if (response) return toJson(response);
   throw new BaseError(404, "user not registered");
 }
 
