@@ -20,7 +20,7 @@ type WEEK_TASK_METRICS = TASK_METRICS & {
 async function getUserWeekTasks(
   userId: string, offset: number = 0, type?: "bug" | "story",
 ): Promise<TASK[]> {
-  await UsersService.findUserUsingId(userId);
+  await UsersService.findUserUsingIdWithoutPassword(userId);
   const [weekStart, weekEnd] = getWeekLimitDates(offset);
   const sanitized = objectSanitize({
     createdBy: userId,

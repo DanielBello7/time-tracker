@@ -1,9 +1,9 @@
-import { USER } from "@/types/user.types";
+import { USER_WITH_PASSWORD } from "@/types/user.types";
 import axios from "axios";
 
 export default async function findUserUsingUseremail(
   email: string, token?: string
-): Promise<USER> {
+): Promise<USER_WITH_PASSWORD> {
   if (token) {
     const response = await axios.get(`/api/users/email/${email}`, {
       headers: { "Authorization": `Bearer ${token}` }

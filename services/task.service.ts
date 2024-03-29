@@ -15,6 +15,7 @@ import BaseError from "@/lib/base-error";
 import objectSanitize from "@/lib/object-sanitize";
 import databaseConnection from "@/config/database-connection";
 import toJson from "@/lib/to-json";
+import userService from "./user.service";
 
 databaseConnection();
 
@@ -62,11 +63,29 @@ async function getTasks(
   }, options);
 }
 
+async function createTask(createdBy: string, data: NEW_TASK): Promise<TASK> {
+  isValidId(createdBy);
+  await userService.findUserUsingIdWithoutPassword(createdBy);
+  const response = await new TasksModel({
+    shortCode: Math.floor(Math.random() * 9999999),
+    title: data.title,
+    type: data.type,
+    timeSpent: data.timeSpent,
+    timeInterval: data.timeInterval,
+    body: data.body,
+    tags: data.tags,
+    dateStarted: data.dateStarted,
+    createdBy,
+    dateFinished: data.dateFinished,
+  }).save();
+  return await findTaskUsingId(response._id);
+}
+
 async function createNewTasks(
   userId: string, data: NEW_TASK[]
 ): Promise<TASK[]> {
   isValidId(userId);
-  await UsersService.findUserUsingId(userId);
+  await UsersService.findUserUsingIdWithoutPassword(userId);
   const response = await Promise.all(data.map(async (item) => {
     try {
       const newTask = await new TasksModel({
@@ -164,6 +183,7 @@ export default {
   findTaskUsingId,
   updateTask,
   searchTasksUsingTaskTitle,
-  saveUploadedImports
+  saveUploadedImports,
+  createTask
 }
 

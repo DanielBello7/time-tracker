@@ -1,4 +1,4 @@
-import type { USER } from "@/types/user.types";
+import type { USER_WITH_PASSWORD } from "@/types/user.types";
 import { useRouter } from "next/router";
 import { content } from "./content";
 import { toast } from "sonner";
@@ -13,7 +13,7 @@ import * as React from "react";
 import validateOtp from "@/apis/validate-otp";
 
 type EmailVerifyProps = {
-  user: USER
+  user: USER_WITH_PASSWORD
   bearer: string
 }
 

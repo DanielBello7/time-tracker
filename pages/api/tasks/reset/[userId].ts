@@ -15,8 +15,7 @@ const querySchema = joi.object({
 // http://localhost:3000/api/tasks/reset/:userId [delete]
 router.delete("/api/tasks/reset/:userId", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
+  if (error) throw new BaseError(400, error.details[0].message);
   await TaskService.deleteAllUserTasks(value.userId);
   return res.json({
     msg: "success",

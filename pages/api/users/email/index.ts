@@ -15,8 +15,7 @@ const postBodySchema = joi.object({
 // http://localhost:3000/api/users/email [patch]
 router.patch("/api/users/email", authorization, async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
+  if (error) throw new BaseError(400, error.details[0].message);
   const response = await UsersService.updateUserEmail(value.userId, value.newEmail)
   return res.json({
     msg: "OK",

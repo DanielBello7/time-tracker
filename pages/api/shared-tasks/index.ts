@@ -9,31 +9,31 @@ import UsersService from "@/services/user.service";
 import sendEmail from "@/lib/send-email";
 
 type SHARED = {
-  taskId: string
-  sharedTo: string
+	taskId: string
+	sharedTo: string
 }
 
 const querySchema = joi.object({
-  sharedBy: joi.string(),
-  sharedTo: joi.string(),
-  taskId: joi.string(),
-  isRead: joi.boolean(),
-  isActive: joi.boolean(),
-  createdAt: joi.string(),
-  page: joi.number(),
-  limit: joi.number()
+	sharedBy: joi.string(),
+	sharedTo: joi.string(),
+	taskId: joi.string(),
+	isRead: joi.boolean(),
+	isActive: joi.boolean(),
+	createdAt: joi.string(),
+	page: joi.number(),
+	limit: joi.number()
 });
 
 const postBodySchema = joi.object({
-  tasks: joi.array().items(joi.object({
-    taskId: joi.string().required(),
-    sharedTo: joi.string().email().required(),
-  })).required(),
-  sharedBy: joi.string().required()
+	tasks: joi.array().items(joi.object({
+		taskId: joi.string().required(),
+		sharedTo: joi.string().email().required(),
+	})).required(),
+	sharedBy: joi.string().required()
 });
 
 const deleteBodySchema = joi.object({
-  tasks: joi.array().items(joi.string()).required()
+	tasks: joi.array().items(joi.string()).required()
 });
 
 
@@ -41,14 +41,14 @@ const deleteBodySchema = joi.object({
 // get user shared tasks
 // http://localhost:3000/api/shared-tasks [get]
 router.get("/api/shared-tasks", authorization, async (req, res) => {
-  const { value } = querySchema.validate(req.query);
-  const { page, limit, ...rest } = value;
-  const response = await SharedTaskService.getSharedTasks(rest, { page, limit });
-  return res.json({
-    status: "OK",
-    msg: "success",
-    payload: response
-  });
+	const { value } = querySchema.validate(req.query);
+	const { page, limit, ...rest } = value;
+	const response = await SharedTaskService.getSharedTasks(rest, { page, limit });
+	return res.json({
+		status: "OK",
+		msg: "success",
+		payload: response
+	});
 });
 
 
@@ -56,59 +56,58 @@ router.get("/api/shared-tasks", authorization, async (req, res) => {
 // create shared tasks
 // http://localhost:3000/api/shared-tasks [post]
 router.post("/api/shared-tasks", authorization, async (req, res) => {
-  const { error, value } = postBodySchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
+	const { error, value } = postBodySchema.validate(req.body);
+	if (error) throw new BaseError(400, error.details[0].message);
 
-  const userSharingTasks = await UsersService.findUserUsingId(value.sharedBy);
-  const filtered: SHARED[] = Array.from(new Set(value.tasks));
+	const userSharingTasks = await UsersService.findUserUsingIdWithoutPassword(value.sharedBy);
+	const filtered: SHARED[] = Array.from(new Set(value.tasks));
 
-  const seperatedPromises = filtered.map(async (current) => {
-    const check = await UsersService.isEmailRegistered(current.sharedTo)
-    return { check, ...current }
-  });
+	const seperatedPromises = filtered.map(async (current) => {
+		const check = await UsersService.isEmailRegistered(current.sharedTo)
+		return { check, ...current }
+	});
 
-  const seperated = await Promise.all(seperatedPromises);
+	const seperated = await Promise.all(seperatedPromises);
 
-  const results = seperated.reduce((total: any, current: any) => {
-    const { check, ...rest } = current
-    if (!check) total.notRegistered = [...(total.notRegistered || []), rest]
-    else total.registered = [...(total.registered || []), rest]
-    return total
-  }, { registered: [], notRegistered: [] });
+	const results = seperated.reduce((total: any, current: any) => {
+		const { check, ...rest } = current
+		if (!check) total.notRegistered = [...(total.notRegistered || []), rest]
+		else total.registered = [...(total.registered || []), rest]
+		return total
+	}, { registered: [], notRegistered: [] });
 
-  const registered = await Promise.all(results.registered.map(async (item: SHARED) => {
-    try {
-      return await SharedTaskService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
-    } catch (error) { return false }
-  }));
+	const registered = await Promise.all(results.registered.map(async (item: SHARED) => {
+		try {
+			return await SharedTaskService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
+		} catch (error) { return false }
+	}));
 
-  results.notRegistered.forEach(async (item: { taskId: any; sharedTo: string }) => {
-    try {
-      const external = await ExternalSharedTaskService.createNewExternalSharedTask({
-        taskId: item.taskId,
-        sharedTo: item.sharedTo,
-        sharedBy: value.sharedBy
-      });
-      sendEmail({
-        subject: "New Shared Task",
-        to: [{ email: item.sharedTo }],
-        textContent: `You've been shared an activity 
+	results.notRegistered.forEach(async (item: { taskId: any; sharedTo: string }) => {
+		try {
+			const external = await ExternalSharedTaskService.createNewExternalSharedTask({
+				taskId: item.taskId,
+				sharedTo: item.sharedTo,
+				sharedBy: value.sharedBy
+			});
+			sendEmail({
+				subject: "New Shared Task",
+				to: [{ email: item.sharedTo }],
+				textContent: `You've been shared an activity 
         task by ${userSharingTasks.name}, ${userSharingTasks.email}. Please 
         click the link below - ${external._id}`
-      });
-    } catch (error) {
-      return
-    }
-  });
+			});
+		} catch (error) {
+			return
+		}
+	});
 
-  return res.json({
-    status: "OK",
-    msg: results.notRegistered.length > 0
-      ? `task shared, but some ${results.notRegistered.length} users shared to aren't registered`
-      : "tasks shared",
-    payload: registered.filter((item) => item !== false)
-  });
+	return res.json({
+		status: "OK",
+		msg: results.notRegistered.length > 0
+			? `task shared, but some ${results.notRegistered.length} users shared to aren't registered`
+			: "tasks shared",
+		payload: registered.filter((item) => item !== false)
+	});
 });
 
 
@@ -116,14 +115,13 @@ router.post("/api/shared-tasks", authorization, async (req, res) => {
 // delete shared tasks
 // http://localhost:3000/api/shared-tasks [delete]
 router.delete("/api/shared-tasks", authorization, async (req, res) => {
-  const { error, value } = deleteBodySchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-  await SharedTaskService.deleteSharedTasks(value.tasks);
-  return res.json({
-    status: "OK",
-    msg: "tasks deleted"
-  });
+	const { error, value } = deleteBodySchema.validate(req.body);
+	if (error) throw new BaseError(400, error.details[0].message);
+	await SharedTaskService.deleteSharedTasks(value.tasks);
+	return res.json({
+		status: "OK",
+		msg: "tasks deleted"
+	});
 });
 
 

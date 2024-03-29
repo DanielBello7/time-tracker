@@ -2,7 +2,7 @@ import type { NEW_TASK } from "@/types/task.types";
 import { faker } from "@faker-js/faker";
 
 export default function taskSeed(
-    daysAgoFinished: number = 0, daysAgoStarted: number = 0
+    daysAgoFinished: number = 1, daysAgoStarted: number = 1
 ): NEW_TASK {
     const random = Math.floor(Math.random() * 10);
     const tags = Array.from(new Array(random), () => {
@@ -16,10 +16,10 @@ export default function taskSeed(
     return {
         body: faker.lorem.paragraphs(4),
         dateFinished: faker.date.recent({
-            days: daysAgoFinished ?? 0
+            days: daysAgoFinished
         }).toISOString(),
         dateStarted: faker.date.recent({
-            days: daysAgoStarted ? -daysAgoStarted : Math.floor(Math.random() * 10)
+            days: daysAgoStarted ?? Math.floor(Math.random() * 10)
         }).toISOString(),
         tags,
         timeInterval: interval,

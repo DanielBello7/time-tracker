@@ -6,11 +6,11 @@ import BaseError from "@/lib/base-error";
 import ExternalSharedTaskService from "@/services/external-shared-task.service";
 
 const querySchema = joi.object({
-  taskId: joi.string().required()
+	taskId: joi.string().required()
 });
 
 const patchSchema = joi.object({
-  isActive: joi.boolean()
+	isActive: joi.boolean()
 });
 
 
@@ -18,17 +18,14 @@ const patchSchema = joi.object({
 // find external shared-task
 // http://localhost:3000/api/shared-tasks/external/:taskId [get]
 router.get("/api/shared-tasks/external/:taskId", authorization, async (req, res) => {
-  const { error, value } = querySchema.validate(req.query);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-
-  const response = await ExternalSharedTaskService.findExternalSharedTaskUsingTaskId(value.taskId);
-
-  return res.json({
-    status: "OK",
-    msg: "success",
-    payload: response
-  });
+	const { error, value } = querySchema.validate(req.query);
+	if (error) throw new BaseError(400, error.details[0].message);
+	const response = await ExternalSharedTaskService.findExternalSharedTaskUsingTaskId(value.taskId);
+	return res.json({
+		status: "OK",
+		msg: "success",
+		payload: response
+	});
 });
 
 
@@ -36,20 +33,18 @@ router.get("/api/shared-tasks/external/:taskId", authorization, async (req, res)
 // update external shared task status
 // http://localhost:3000/api/shared-tasks/external/:taskId [patch]
 router.patch("/api/shared-tasks/external/:taskId", authorization, async (req, res) => {
-  const { error, value } = querySchema.validate(req.query);
-  const { value: val } = patchSchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
+	const { error, value } = querySchema.validate(req.query);
+	const { value: val } = patchSchema.validate(req.body);
+	if (error) throw new BaseError(400, error.details[0].message);
+	const response = await ExternalSharedTaskService.updateExternalSharedTaskStatusUsingTaskId(value.taskId, {
+		isActive: val.isActive
+	});
 
-  const response = await ExternalSharedTaskService.updateExternalSharedTaskStatusUsingTaskId(value.taskId, {
-    isActive: val.isActive
-  });
-
-  return res.json({
-    status: "OK",
-    msg: "success",
-    payload: response
-  });
+	return res.json({
+		status: "OK",
+		msg: "success",
+		payload: response
+	});
 });
 
 

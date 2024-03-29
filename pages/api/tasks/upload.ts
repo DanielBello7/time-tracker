@@ -16,11 +16,8 @@ const postBodySchema = joi.object({
 // http://localhost:3000/api/tasks/upload [post]
 router.post("/api/tasks/upload", authorization, async (req, res) => {
   const { error, value } = postBodySchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-
+  if (error) throw new BaseError(400, error.details[0].message);
   await TaskService.saveUploadedImports(value.userId, value.tasks);
-
   return res.json({
     status: "OK",
     msg: "success"

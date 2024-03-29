@@ -1,9 +1,24 @@
 import type { Document } from "mongoose";
 
-export type USER = {
+export type USER_WITH_PASSWORD = {
 	_id: string
 	avatar: string | null
 	password: string
+	name: string
+	position: string
+	email: string
+	isEmailVerified: boolean
+	isOnboarded: boolean
+	country: string
+	phone: string
+	allowNotifications: boolean
+	createdAt: string
+	updatedAt: string
+}
+
+export type USER_WITHOUT_PASSWORD = {
+	_id: string
+	avatar: string | null
 	name: string
 	position: string
 	email: string

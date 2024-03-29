@@ -58,9 +58,7 @@ router.post("/api/tasks", authorization, async (req, res) => {
 // http://localhost:3000/api/tasks [get]
 router.get("/api/tasks", authorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-
+  if (error) throw new BaseError(400, error.details[0].message);
   const { page, limit, ...rest } = value;
   const response = await TaskService.getTasks(rest, { page, limit });
 
@@ -77,9 +75,7 @@ router.get("/api/tasks", authorization, async (req, res) => {
 // http://localhost:3000/api/tasks [delete]
 router.delete("/api/tasks", authorization, async (req, res) => {
   const { error, value } = deleteBodySchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-
+  if (error) throw new BaseError(400, error.details[0].message);
   await TaskService.deleteTasks(value.tasks);
   return res.json({
     status: "OK",

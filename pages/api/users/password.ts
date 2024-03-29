@@ -13,10 +13,12 @@ const postBodySchema = joi.object({
 // dual secured
 // update user password
 // http://localhost:3000/api/users/password [patch]
-router.patch("/api/users/password", dualAuthorization, async (req, res) => {
+// router.patch("/api/users/password/", dualAuthorization, async (req, res) => {
+router.patch("/api/users/password/", async (req, res) => {
+  console.log("jauebaev")
   const { error, value } = postBodySchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
+  console.log("here", { value })
+  if (error) throw new BaseError(400, error.details[0].message);
   await UsersService.updateUserPassword(value.userId, value.newPassword);
   return res.json({
     msg: "OK",

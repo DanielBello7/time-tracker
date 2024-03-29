@@ -1,6 +1,6 @@
 import { onboardingContent } from "./content"
 import { toast } from "sonner";
-import { USER } from "@/types/user.types";
+import { USER_WITH_PASSWORD } from "@/types/user.types";
 import { useRouter } from "next/router";
 import Text from "@/components/text";
 import * as React from "react";
@@ -13,7 +13,7 @@ import updateStatus from "@/apis/update-status";
 import useOnboardingPages from "./use-onboarding-pages";
 
 type OnboardingProps = {
-  user: USER
+  user: USER_WITH_PASSWORD
   bearer: string
 }
 

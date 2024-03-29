@@ -84,7 +84,7 @@ async function createNewSharedTasks(
 ): Promise<SHARED_TASK> {
   isValidId(taskId);
 
-  await UserService.findUserUsingId(from);
+  await UserService.findUserUsingIdWithoutPassword(from);
   const sharedToUser = await UserService.findUserUsingEmail(toEmail);
 
   if (sharedToUser._id === from) throw new BaseError(400, "you cannot share to yourself");

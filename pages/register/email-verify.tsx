@@ -1,6 +1,6 @@
 import UsersService from "@/services/user.service";
 import EmailVerify from "@/features/email-verify";
-import type { USER } from "@/types/user.types";
+import type { USER_WITH_PASSWORD } from "@/types/user.types";
 import type { GetServerSidePropsContext } from "next";
 import generateJwt from "@/lib/generate-jwt";
 
@@ -35,7 +35,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 
 type EmailVerifyPageProps = {
-  user: USER
+  user: USER_WITH_PASSWORD
   token: string
 }
 

@@ -1,7 +1,7 @@
 import Onboarding from "@/features/onboarding";
 import generateJwt from "@/lib/generate-jwt";
 import usersService from "@/services/user.service";
-import { USER } from "@/types/user.types";
+import { USER_WITH_PASSWORD } from "@/types/user.types";
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
@@ -36,7 +36,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 type OnboardingPageProps = {
-  user: USER
+  user: USER_WITH_PASSWORD
   token: string
 }
 

@@ -24,9 +24,8 @@ const querySchema = joi.object({
 // http://localhost:3000/api/users/:userId [get]
 router.get("/api/users/:userId", dualAuthorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-  const response = await UserService.findUserUsingId(value.userId);
+  if (error) throw new BaseError(400, error.details[0].message);
+  const response = await UserService.findUserUsingIdWithoutPassword(value.userId);
   return res.json({
     status: "OK",
     msg: "success",
@@ -41,7 +40,7 @@ router.get("/api/users/:userId", dualAuthorization, async (req, res) => {
 router.delete("/api/users/:userId", authorization, async (req, res) => {
   const { value, error } = querySchema.validate(req.query);
   if (error) throw new BaseError(401, error.details[0].message);
-  await UserService.findUserUsingId(value.userId);
+  await UserService.findUserUsingIdWithoutPassword(value.userId);
   await UserService.deleteUser(value.userId);
   return res.json({ msg: "user account deleted" });
 });
@@ -61,11 +60,8 @@ router.patch("/api/users/:userId", authorization, async (req, res) => {
     value: queryValue
   } = querySchema.validate(req.query);
 
-  if (queryError)
-    throw new BaseError(401, queryError.details[0].message);
-
-  if (bodyError)
-    throw new BaseError(401, bodyError.details[0].message);
+  if (queryError) throw new BaseError(401, queryError.details[0].message);
+  if (bodyError) throw new BaseError(401, bodyError.details[0].message);
 
   const response = await UserService.updateUserUsingId(queryValue.userId, {
     country: bodyValue.country,

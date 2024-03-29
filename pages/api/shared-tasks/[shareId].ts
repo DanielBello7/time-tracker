@@ -6,13 +6,7 @@ import handleError from "@/middlewares/handle-error";
 import router from "@/config/router";
 
 const querySchema = joi.object({
-  shareId: joi.string().required()
-});
-
-const patchSchema = joi.object({
-  shareId: joi.string().required(),
-  isActive: joi.boolean(),
-  isRead: joi.boolean()
+	shareId: joi.string().required()
 });
 
 
@@ -20,36 +14,14 @@ const patchSchema = joi.object({
 // get user shared tasks
 // http://localhost:3000/api/shared-tasks/:id [get]
 router.get("/api/shared-tasks/:id", authorization, async (req, res) => {
-  const { error, value } = querySchema.validate(req.query);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-  const response = await SharedTaskService.findSharedTaskUsingId(value.shareId);
-  return res.json({
-    status: "OK",
-    msg: "success",
-    payload: response
-  });
-});
-
-
-// secured
-// update a shared task status
-// http://localhost:3000/api/shared-tasks/status [patch]
-router.patch("/api/shared-tasks/status", authorization, async (req, res) => {
-  const { error, value } = patchSchema.validate(req.body);
-  if (error)
-    throw new BaseError(400, error.details[0].message);
-
-  const response = await SharedTaskService.updateSharedTaskStatus(value.shareId, {
-    isActive: value.isActive,
-    isRead: value.isRead
-  });
-
-  return res.json({
-    status: "OK",
-    msg: "success",
-    payload: response
-  });
+	const { error, value } = querySchema.validate(req.query);
+	if (error) throw new BaseError(400, error.details[0].message);
+	const response = await SharedTaskService.findSharedTaskUsingId(value.shareId);
+	return res.json({
+		status: "OK",
+		msg: "success",
+		payload: response
+	});
 });
 
 

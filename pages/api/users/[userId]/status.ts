@@ -30,11 +30,8 @@ router.patch("/api/users/:userId/status", dualAuthorization, async (req, res) =>
     value: queryValue
   } = querySchema.validate(req.query);
 
-  if (queryError)
-    throw new BaseError(401, queryError.details[0].message);
-
-  if (bodyError)
-    throw new BaseError(401, bodyError.details[0].message);
+  if (queryError) throw new BaseError(401, queryError.details[0].message);
+  if (bodyError) throw new BaseError(401, bodyError.details[0].message);
 
   const response = await UsersService.updateUserUsingId(queryValue.userId, {
     isEmailVerified: bodyValue.isEmailVerified,
