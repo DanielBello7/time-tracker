@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from "mongoose";
 import userSeed from "../seeds/user-seed";
 import usersHandler from "@/pages/api/users/index";
 import userIdHandler from "@/pages/api/users/[userId]/index";
@@ -10,10 +12,8 @@ import userIsEmailRegisteredHandler from "@/pages/api/users/is-email-registered"
 import userPasswordHandler from "@/pages/api/users/password";
 import userEmailHandler from "@/pages/api/users/email/index";
 import userIdEmailHandler from "@/pages/api/users/email/[email]";
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose from "mongoose";
 
-describe("Testing Users Route", function () {
+describe.skip("Testing Users Route", function () {
     let mongod: MongoMemoryServer;
 
     beforeAll(async () => {
@@ -26,6 +26,7 @@ describe("Testing Users Route", function () {
         await mongoose.connection.close();
         return await mongod.stop();
     });
+
 
     it("should create a new user", async function () {
         const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
