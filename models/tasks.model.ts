@@ -45,6 +45,10 @@ const TaskSchema = new mongoose.Schema<TASK_DOC>({
   dateFinished: {
     type: Date,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: new Date()
   }
 }, { timestamps: true });
 

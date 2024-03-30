@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose from "mongoose";
 import userService from "@/services/user.service";
 import userSeed from "../seeds/user-seed";
 import taskSeed from "../seeds/task-seed";
@@ -16,18 +14,7 @@ import sharedTaskService from "@/services/shared-task.service";
 import externalSharedTaskService from "@/services/external-shared-task.service";
 
 describe.skip("Testing Shared Task Route", function () {
-    let mongod: MongoMemoryServer;
 
-    beforeAll(async () => {
-        const response = await MongoMemoryServer.create();
-        mongod = response;
-        return await mongoose.connect(response.getUri());
-    });
-
-    afterAll(async () => {
-        await mongoose.connection.close();
-        return await mongod.stop();
-    });
 
     it("should return a searched for shared task", async function () {
         const user1 = await userService.createNewUser(userSeed());

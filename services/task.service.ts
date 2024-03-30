@@ -77,6 +77,7 @@ async function createTask(createdBy: string, data: NEW_TASK): Promise<TASK> {
     dateStarted: data.dateStarted,
     createdBy,
     dateFinished: data.dateFinished,
+    createdAt: data.createdAt
   }).save();
   return await findTaskUsingId(response._id);
 }
@@ -99,6 +100,7 @@ async function createNewTasks(
         dateStarted: item.dateStarted,
         createdBy: userId,
         dateFinished: item.dateFinished,
+        createdAt: item.createdAt
       }).save();
       return await findTaskUsingId(newTask._id as unknown as string);
     } catch (error) { return false }

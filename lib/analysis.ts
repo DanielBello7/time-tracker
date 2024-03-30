@@ -1,3 +1,4 @@
+import decimal from "decimal.js";
 /**
  * this checks if a date given falls within a stipulated week offsetted from the current week
  * @param dateToCheck Date
@@ -67,7 +68,10 @@ export function getPercentageChangeDifference(
   currentAmount: number, previousAmount: number
 ): number {
   if (previousAmount < 1) return 0
-  const differenceInPercent = ((currentAmount - previousAmount) / previousAmount) * 100
-  return Math.floor(differenceInPercent);
+  const prevAmount = new decimal(previousAmount);
+  const currAmount = new decimal(currentAmount);
+  const difference = currAmount.minus(prevAmount).dividedBy(prevAmount).times(100);
+  const rounded = difference.toDecimalPlaces(2);
+  return rounded.toNumber();
 }
 

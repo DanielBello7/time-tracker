@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose from "mongoose";
 import userSeed from "../seeds/user-seed";
 import taskUploadHandler from "@/pages/api/tasks/upload";
 import taskResetHandler from "@/pages/api/tasks/reset/[userId]";
@@ -13,18 +11,7 @@ import taskIdHandler from "@/pages/api/tasks/[taskId]";
 import taskHandler from "@/pages/api/tasks/index";
 
 describe.skip("Testing Tasks Route", function () {
-    let mongod: MongoMemoryServer;
 
-    beforeAll(async () => {
-        const response = await MongoMemoryServer.create();
-        mongod = response;
-        return await mongoose.connect(response.getUri());
-    });
-
-    afterAll(async () => {
-        await mongoose.connection.close();
-        return await mongod.stop();
-    });
 
     it("should return a paginated list of tasks", async function () {
         const user = await userService.createNewUser(userSeed());

@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose from "mongoose";
 import userSeed from "../seeds/user-seed";
 import usersHandler from "@/pages/api/users/index";
 import userIdHandler from "@/pages/api/users/[userId]/index";
@@ -14,18 +12,6 @@ import userEmailHandler from "@/pages/api/users/email/index";
 import userIdEmailHandler from "@/pages/api/users/email/[email]";
 
 describe.skip("Testing Users Route", function () {
-    let mongod: MongoMemoryServer;
-
-    beforeAll(async () => {
-        const response = await MongoMemoryServer.create();
-        mongod = response;
-        return await mongoose.connect(response.getUri());
-    });
-
-    afterAll(async () => {
-        await mongoose.connection.close();
-        return await mongod.stop();
-    });
 
 
     it("should create a new user", async function () {
