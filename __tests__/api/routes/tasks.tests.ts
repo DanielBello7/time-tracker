@@ -1,16 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
-import userSeed from "../seeds/user-seed";
+import userSeed from "../../seeds/user-seed";
 import taskUploadHandler from "@/pages/api/tasks/upload";
 import taskResetHandler from "@/pages/api/tasks/reset/[userId]";
 import taskSearchHandler from "@/pages/api/tasks/search/[text]";
 import userService from "@/services/user.service";
 import taskService from "@/services/task.service";
-import taskSeed from "../seeds/task-seed";
+import taskSeed from "../../seeds/task-seed";
 import taskIdHandler from "@/pages/api/tasks/[taskId]";
 import taskHandler from "@/pages/api/tasks/index";
 
-describe.skip("Testing Tasks Route", function () {
+describe("Testing Tasks Route", function () {
 
 
     it("should return a paginated list of tasks", async function () {

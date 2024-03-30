@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import userService from "@/services/user.service";
-import userSeed from "../seeds/user-seed";
-import taskSeed from "../seeds/task-seed";
+import userSeed from "../../seeds/user-seed";
+import taskSeed from "../../seeds/task-seed";
 import taskService from "@/services/task.service";
 import sharedTaskExternalHandler from "@/pages/api/shared-tasks/external/[taskId]";
 import sharedTaskIdHandler from "@/pages/api/shared-tasks/[shareId]";
@@ -13,7 +13,7 @@ import sharedTaskStatusHandler from "@/pages/api/shared-tasks/status";
 import sharedTaskService from "@/services/shared-task.service";
 import externalSharedTaskService from "@/services/external-shared-task.service";
 
-describe.skip("Testing Shared Task Route", function () {
+describe("Testing Shared Task Route", function () {
 
 
     it("should return a searched for shared task", async function () {

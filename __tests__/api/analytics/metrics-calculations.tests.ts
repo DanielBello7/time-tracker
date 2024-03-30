@@ -1,11 +1,11 @@
 import metricsService from '@/services/metrics.service';
 import taskService from "@/services/task.service";
-import userSeed from "../seeds/user-seed";
+import userSeed from "../../seeds/user-seed";
 import userService from "@/services/user.service";
 import moment from "moment";
-import taskSeed from "../seeds/task-seed";
+import taskSeed from "../../seeds/task-seed";
 
-describe.only("Testing Stories Analytics", function () {
+describe("Testing Stories Analytics", function () {
 
     it("should return accurate task metrics", async function () {
         const user = await userService.createNewUser(userSeed());

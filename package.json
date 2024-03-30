@@ -7,7 +7,9 @@
     "dev": "NODE_ENV=development next dev",
     "start": "NODE_ENV=production next start",
     "deploy": "NODE_ENV=production npm run build && pm2 startOrRestart ecosystem.config.cjs",
-    "test": "TESTING=test jest"
+    "test:frontend": "TESTING=test jest --config=jest.frontend.config.ts",
+    "test:api": "TESTING=test jest --config=jest.api.config.ts",
+    "test": "npm run test:frontend && npm run test:api"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
