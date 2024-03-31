@@ -196,9 +196,10 @@ export default function CreateInputFields({ type }: CreateInputFieldsProps) {
 						value={formData.timeSpent.toString()}
 						onChange={(e) => {
 							const value = e.currentTarget.value;
+							const parsed = parseFloat(value) ? parseFloat(value) : parseInt("0");
 							setFormData({
 								...formData,
-								timeSpent: value === "" ? parseInt("0") : parseInt(value)
+								timeSpent: parsed
 							});
 						}}
 						pattern="[0-9]*"

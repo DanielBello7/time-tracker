@@ -51,7 +51,7 @@ export default function LinkedTaskPage({ error, task }: LinkedTaskPageProps) {
 		<div className="w-full">
 			<Header />
 			<div className="container mx-auto pt-24">
-				<div className="w-8/12 mx-auto">
+				<div className="md:w-8/12 mx-auto">
 					<SelectedTask error={error} task={task} showHeader={false} />
 				</div>
 			</div>
