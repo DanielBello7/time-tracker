@@ -17,9 +17,9 @@ export default function TaskUserDetails({ task }: TaskUserDetailsProps) {
       </p>
       <UserInfo
         email={task.createdBy.email}
+        img={task.createdBy.avatar}
         name={task.createdBy.name}
         size="md"
-        img={task.createdBy.avatar}
       />
       <div className="my-5 space-y-3">
         <SubInfo msg={getDate(task.dateFinished)} title="task finished at" />

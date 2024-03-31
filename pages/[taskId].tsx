@@ -17,7 +17,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			return {
 				props: {
 					error: null,
-					task: findShared.taskId
+					task: {
+						...findShared.taskId,
+						createdBy: findShared.sharedBy
+					}
 				}
 			}
 		} catch {

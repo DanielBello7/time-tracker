@@ -1,5 +1,6 @@
 import type { NEW_TASK } from "@/types/task.types";
 import * as React from "react";
+import moment from "moment";
 
 type CreateTaskContextType = {
 	formData: NEW_TASK
@@ -25,8 +26,8 @@ const initialData: NEW_TASK = {
 	timeInterval: "minutes",
 	body: "",
 	tags: [],
-	dateStarted: new Date().toISOString(),
-	dateFinished: new Date().toISOString()
+	dateStarted: moment().startOf("day").toISOString(),
+	dateFinished: moment().endOf("day").toISOString()
 }
 
 export function CreateTaskContextProvider(props: CreateTaskContextProviderProps) {

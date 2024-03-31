@@ -18,7 +18,7 @@ import createTask from "@/apis/create-task";
 import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
 import maxPeriodCalculator from "@/lib/max-period-calculator";
-import getDate from "@/lib/get-date";
+import moment from "moment";
 
 type CreateInputFieldsProps = {
 	type: "create" | "edit"
@@ -60,7 +60,7 @@ export default function CreateInputFields({ type }: CreateInputFieldsProps) {
 			new Date(value.dateStarted), new Date(value.dateFinished), value.timeInterval
 		)
 		if (maxPeriod < value.timeSpent) {
-			return toast(`Invalid time spent. Cannot spend more than ${maxPeriod.toLocaleString()} ${value.timeInterval} between ${getDate(value.dateStarted)} and ${getDate(value.dateFinished)}`)
+			return toast(`Invalid time spent. Cannot spend more than ${maxPeriod.toLocaleString()} ${value.timeInterval} between dates selected`)
 		}
 		setIsLoading(true);
 		try {
@@ -158,10 +158,13 @@ export default function CreateInputFields({ type }: CreateInputFieldsProps) {
 			<FormDatePicker
 				title="Date Started"
 				sub="Add information about the date the task was started"
-				change={(e) => setFormData({
-					...formData,
-					dateStarted: e
-				})}
+				change={(e) => {
+					const date = moment(e).startOf("day").toISOString();
+					setFormData({
+						...formData,
+						dateStarted: date
+					})
+				}}
 				required={true}
 				isLoading={type === "edit" ? true : isLoading}
 				value={formData.dateStarted}
@@ -170,10 +173,13 @@ export default function CreateInputFields({ type }: CreateInputFieldsProps) {
 			<FormDatePicker
 				title="Date Finished"
 				sub="Add information about the date the task was finished"
-				change={(e) => setFormData({
-					...formData,
-					dateFinished: e
-				})}
+				change={(e) => {
+					const date = moment(e).endOf("day").toISOString();
+					setFormData({
+						...formData,
+						dateFinished: date
+					})
+				}}
 				required={true}
 				topLimit={new Date(formData.dateStarted)}
 				isLoading={type === "edit" ? true : isLoading}

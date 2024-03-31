@@ -355,7 +355,7 @@ export default function otpEmail(code: string): string {
                                     class="r11-i nl2go-default-textstyle"
                                     style="color: #3b3f44; font-family: arial, helvetica, sans-serif; font-size: 18px; word-break: break-word; line-height: 1.5; text-align: center;"
                                   >
-                                    <div><h1 class="default-heading1" style="margin: 0; color: #1f2d3d; font-family: arial, helvetica, sans-serif; font-size: 36px; word-break: break-word;">CodeTask</h1></div>
+                                    <div><h1 class="default-heading1" style="margin: 0; color: #1f2d3d; font-family: arial, helvetica, sans-serif; font-size: 36px; word-break: break-word;">CoreTask</h1></div>
                                   </td>
                                 </tr>
                               </table>
@@ -372,8 +372,8 @@ export default function otpEmail(code: string): string {
                                       line-height: 1.5;
                                       word-break: break-word;
                                       padding-bottom: 15px;
-                                      padding-left: 87px;
-                                      padding-right: 87px;
+                                      padding-left: 50px;
+                                      padding-right: 50px;
                                       padding-top: 15px;
                                       text-align: center;
                                     "
@@ -425,7 +425,7 @@ export default function otpEmail(code: string): string {
                                                 class="r16-i nl2go-default-textstyle"
                                                 style="font-family: arial, helvetica, sans-serif; word-break: break-word; color: #3b3f44; font-size: 18px; line-height: 1.5; text-align: center;"
                                               >
-                                                <div><p style="margin: 0; font-size: 14px;">Thursday 23rd July 2024</p></div>
+                                              <div><p style="margin: 0; font-size: 14px;">${new Date().toLocaleDateString("en-us", { dateStyle: "full" })}</p></div>
                                               </td>
                                             </tr>
                                           </table>
@@ -442,7 +442,7 @@ export default function otpEmail(code: string): string {
                                                 style="font-family: arial, helvetica, sans-serif; word-break: break-word; color: #3b3f44; font-size: 18px; line-height: 1.5; text-align: center;"
                                               >
                                                 <div>
-                                                  <p style="margin: 0; font-size: 14px;"><span style="font-size: 11px;">@2024 CodeTask</span></p>
+                                                  <p style="margin: 0; font-size: 14px;"><span style="font-size: 11px;">@2024 CoreTask</span></p>
                                                 </div>
                                               </td>
                                             </tr>
