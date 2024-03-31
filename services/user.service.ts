@@ -51,8 +51,14 @@ async function findUserUsingIdWithPassword(id: string): Promise<USER_WITH_PASSWO
 	throw new BaseError(404, "user not registered");
 }
 
-async function findUserUsingEmail(email: string): Promise<USER_WITHOUT_PASSWORD> {
+async function findUserUsingEmailWithoutPassword(email: string): Promise<USER_WITHOUT_PASSWORD> {
 	const response = await UsersModel.findOne({ email }).select("-password");
+	if (response) return toJson(response);
+	throw new BaseError(404, "user not registered");
+}
+
+async function findUserUsingEmailWithPassword(email: string): Promise<USER_WITH_PASSWORD> {
+	const response = await UsersModel.findOne({ email });
 	if (response) return toJson(response);
 	throw new BaseError(404, "user not registered");
 }
@@ -92,7 +98,7 @@ async function updateUserUsingId(
 async function updateUserUsingEmail(
 	email: string, updates: Partial<UPDATE_USER> = {}
 ): Promise<USER_WITHOUT_PASSWORD> {
-	await findUserUsingEmail(email);
+	await findUserUsingEmailWithoutPassword(email);
 	const sanitized = objectSanitize(updates);
 	const response = await UsersModel.findOneAndUpdate(
 		{ email },
@@ -150,7 +156,7 @@ export default {
 	updateUserEmail,
 	updateUserPassword,
 	validateUserEmail,
-	findUserUsingEmail,
+	findUserUsingEmailWithoutPassword,
 	deleteUser,
 	getUsers,
 	findUserUsingIdWithoutPassword,
@@ -159,7 +165,8 @@ export default {
 	createNewUser,
 	updateUserUsingEmail,
 	updateUserUsingId,
-	isEmailRegistered
+	isEmailRegistered,
+	findUserUsingEmailWithPassword
 }
 
 

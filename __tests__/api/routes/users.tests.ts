@@ -13,7 +13,6 @@ import userIdEmailHandler from "@/pages/api/users/email/[email]";
 
 describe("Testing Users Route", function () {
 
-
     it("should create a new user", async function () {
         const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
             url: "/api/users/",

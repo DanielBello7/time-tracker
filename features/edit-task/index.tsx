@@ -13,6 +13,7 @@ export default function EditTask({ error, task }: EditTaskProps) {
   return (
     <CreateTask
       header={EditTaskHeader}
+      type="edit"
       defautValues={{
         body: task.body,
         dateFinished: task.dateFinished as string,

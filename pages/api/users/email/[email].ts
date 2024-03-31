@@ -15,7 +15,7 @@ const querySchema = joi.object({
 router.get("/api/users/email/:email", dualAuthorization, async (req, res) => {
   const { error, value } = querySchema.validate(req.query);
   if (error) throw new BaseError(400, error.details[0].message);
-  const response = await UsersService.findUserUsingEmail(value.email);
+  const response = await UsersService.findUserUsingEmailWithoutPassword(value.email);
   return res.json({
     status: "OK",
     msg: "success",

@@ -56,7 +56,6 @@ export type NEW_TASK = {
 	tags: string[]
 	dateStarted: string
 	dateFinished: string
-	createdAt?: Date
 }
 
 export type UPDATE_TASK = {

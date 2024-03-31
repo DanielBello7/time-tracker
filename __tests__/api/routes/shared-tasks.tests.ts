@@ -15,7 +15,6 @@ import externalSharedTaskService from "@/services/external-shared-task.service";
 
 describe("Testing Shared Task Route", function () {
 
-
     it("should return a searched for shared task", async function () {
         const user1 = await userService.createNewUser(userSeed());
         const user2 = await userService.createNewUser(userSeed());

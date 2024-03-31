@@ -15,7 +15,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       }
     }
   }
-  const response = await UsersService.findUserUsingEmail(email);
+  const response = await UsersService.findUserUsingEmailWithoutPassword(email);
   if (response.isEmailVerified) {
     return {
       redirect: {

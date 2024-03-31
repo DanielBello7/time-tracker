@@ -184,7 +184,7 @@ const config: Config = {
     '<rootDir>/node_modules/',
     '<rootDir>/.next/',
     '<rootDir>/__tests__/seeds/',
-    '<rootDir>/__tests__/frontend/'
+    '<rootDir>/__tests__/pages/'
   ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files

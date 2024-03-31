@@ -36,7 +36,7 @@ async function getUserWeekTasks(
 
 	const sanitized = objectSanitize({
 		createdBy: userId,
-		createdAt: { $gte: weekStart, $lte: weekEnd },
+		dateFinished: { $gte: weekStart, $lte: weekEnd },
 		type
 	});
 	const response = await TasksModel.find(sanitized).populate([{ path: "createdBy", select: "-password" }]);

@@ -9,7 +9,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context);
   const token = generateJwt({ isValid: true });
   if (session && session.user && session.user.email) {
-    const response = await usersService.findUserUsingEmail(session.user.email)
+    const response = await usersService.findUserUsingEmailWithoutPassword(session.user.email)
     if (response.isOnboarded) {
       return {
         redirect: {

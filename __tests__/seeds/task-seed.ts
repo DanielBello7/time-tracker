@@ -3,10 +3,8 @@ import { faker } from "@faker-js/faker";
 import moment from "moment";
 
 export default function taskSeed(
-    daysAgoFinishedOffset: number = 0,
-    daysAgoStartedOffset: number = -1,
-    createdAt?: Date,
-    type?: "bug" | "story"
+    daysAgoFinished: string = moment().add(0, "days").toISOString(),
+    type?: "bug" | "story",
 ): NEW_TASK {
 
     const random = Math.floor(Math.random() * 10);
@@ -21,9 +19,8 @@ export default function taskSeed(
         timeSpent: Math.floor(Math.random() * 20),
         title: faker.lorem.sentence(),
         type: type ?? selectedType,
-        dateStarted: moment().add(daysAgoStartedOffset, "days").toISOString(),
-        dateFinished: moment().add(daysAgoFinishedOffset, "days").toISOString(),
-        createdAt
+        dateStarted: moment(daysAgoFinished).add(-3, "days").toISOString(),
+        dateFinished: daysAgoFinished
     }
 }
 

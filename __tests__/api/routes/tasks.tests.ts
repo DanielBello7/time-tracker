@@ -12,7 +12,6 @@ import taskHandler from "@/pages/api/tasks/index";
 
 describe("Testing Tasks Route", function () {
 
-
     it("should return a paginated list of tasks", async function () {
         const user = await userService.createNewUser(userSeed());
         await taskService.createNewTasks(user._id, Array.from(new Array(3), () => {

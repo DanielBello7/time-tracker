@@ -11,7 +11,7 @@ export default async function dualAuthorization(
 ) {
   if (isTestMode()) return await next();
   const auth_header = req.headers['authorization'];
-  const token = auth_header ? auth_header.split(' ')[1] : "";
+  const token = auth_header ? auth_header.split(' ')[1] : "";;
 
   const response = validateJwt(token);
   const session = await getServerSession(req, res, authenticationOptions);

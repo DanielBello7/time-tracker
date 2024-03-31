@@ -9,15 +9,16 @@ import { NEW_TASK } from "@/types/task.types";
 type CreateTaskProps = {
   defautValues?: NEW_TASK
   header?: (() => React.ReactElement)
+  type?: "edit" | "create"
 }
 
 export default function CreateTask(props: CreateTaskProps) {
-  const { defautValues, header } = props;
+  const { defautValues, header, type } = props;
   return (
     <CreateTaskContextProvider defaultValue={defautValues}>
       <Container header={header ?? CreateTaskHeader} className="flex lg:px-8" useAnimationContainer={true}>
         <div className="w-full md:w-11/12 lg:w-7/12">
-          <CreateInputFields />
+          <CreateInputFields type={type ?? "create"} />
         </div>
         <div className="hidden lg:block md:w-5/12">
           <CreateTaskPreview />

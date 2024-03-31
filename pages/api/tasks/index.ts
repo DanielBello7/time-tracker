@@ -14,8 +14,7 @@ const postBodySchema = joi.object({
 		body: joi.string().required(),
 		tags: joi.array().items(joi.string()).required(),
 		dateStarted: joi.string().required(),
-		dateFinished: joi.string().required(),
-		createdAt: joi.string()
+		dateFinished: joi.string().required()
 	})).required(),
 	userId: joi.string().required()
 });

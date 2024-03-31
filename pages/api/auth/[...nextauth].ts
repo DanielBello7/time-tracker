@@ -18,7 +18,7 @@ export const authenticationOptions: NextAuthOptions = {
         try {
           await databaseConnection();
           const { email, password }: any = credentials;
-          const response = await UserService.findUserUsingEmail(email);
+          const response = await UserService.findUserUsingEmailWithPassword(email);
           const confirm = bcrypt.compareSync(password, response.password);
           if (confirm) return response
           return null

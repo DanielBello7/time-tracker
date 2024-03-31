@@ -11,14 +11,14 @@ describe("Testing Stories Analytics", function () {
         const user = await userService.createNewUser(userSeed());
 
         await taskService.createNewTasks(user._id, [
-            taskSeed(-1, -4, moment().startOf("week").add(2, "days").toDate(), "bug"),
-            taskSeed(-3, -6, moment().startOf("week").add(1, "days").toDate(), "bug"),
-            taskSeed(-2, -9, moment().startOf("week").add(4, "days").toDate(), "bug"),
-            taskSeed(-3, -9, moment().startOf("week").add(3, "days").toDate(), "story"),
-            taskSeed(-3, -9, moment().startOf("week").add(0, "days").toDate(), "story"),
-            taskSeed(-2, -5, moment().startOf("week").add(-1, "weeks").add(2, "days").toDate(), "bug"),
-            taskSeed(-2, -3, moment().startOf("week").add(-1, "weeks").add(1, "days").toDate(), "story"),
-            taskSeed(-2, -3, moment().startOf("week").add(-1, "weeks").add(4, "days").toDate(), "story"),
+            taskSeed(moment().startOf("week").add(2, "days").toISOString(), "bug"),
+            taskSeed(moment().startOf("week").add(1, "days").toISOString(), "bug"),
+            taskSeed(moment().startOf("week").add(4, "days").toISOString(), "bug"),
+            taskSeed(moment().startOf("week").add(3, "days").toISOString(), "story"),
+            taskSeed(moment().startOf("week").add(0, "days").toISOString(), "story"),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(2, "days").toISOString(), "bug"),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(1, "days").toISOString(), "story"),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(4, "days").toISOString(), "story"),
         ]);
 
         const response = await metricsService.calculateWeekTaskMetrics(user._id, 0);

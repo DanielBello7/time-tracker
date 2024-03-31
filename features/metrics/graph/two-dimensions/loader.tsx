@@ -15,7 +15,7 @@ export default function TwoDimensionChartLoader() {
   const getTempData = () => {
     return Array.from(new Array(3), (_, idx) => {
       return {
-        name: ['Previous Week', 'Last Week', 'Current Week'][idx],
+        name: ['Current Week', 'Last Week', 'Previous Week'][idx],
         uv: Math.floor(Math.random() * 5000) + 1000,
         pv: Math.floor(Math.random() * 5000) + 1000,
       }

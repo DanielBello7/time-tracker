@@ -41,14 +41,14 @@ describe("Testing Stories Analytics", function () {
         const user = await userService.createNewUser(userSeed());
 
         await taskService.createNewTasks(user._id, [
-            taskSeed(-1, -4, moment().startOf("week").add(2, "days").toDate()),
-            taskSeed(-3, -6, moment().startOf("week").add(1, "days").toDate()),
-            taskSeed(-2, -9, moment().startOf("week").add(4, "days").toDate()),
-            taskSeed(-3, -9, moment().startOf("week").add(3, "days").toDate()),
-            taskSeed(-3, -9, moment().startOf("week").add(0, "days").toDate()),
-            taskSeed(-2, -5, moment().startOf("week").add(-1, "weeks").add(2, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-1, "weeks").add(1, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-1, "weeks").add(4, "days").toDate()),
+            taskSeed(moment().startOf("week").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(4, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(3, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(0, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(4, "days").toISOString()),
         ]);
 
         const response = await metricsService.calculateUserWeekTasksMetrics(user._id, 0);
@@ -60,22 +60,22 @@ describe("Testing Stories Analytics", function () {
         const user = await userService.createNewUser(userSeed());
 
         await taskService.createNewTasks(user._id, [
-            taskSeed(-1, -4, moment().startOf("week").add(2, "days").toDate()),
-            taskSeed(-3, -6, moment().startOf("week").add(1, "days").toDate()),
-            taskSeed(-2, -9, moment().startOf("week").add(4, "days").toDate()),
-            taskSeed(-3, -9, moment().startOf("week").add(3, "days").toDate()),
-            taskSeed(-3, -9, moment().startOf("week").add(0, "days").toDate()),
+            taskSeed(moment().startOf("week").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(4, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(3, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(0, "days").toISOString()),
 
-            taskSeed(-2, -5, moment().startOf("week").add(-1, "weeks").add(2, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-1, "weeks").add(1, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-1, "weeks").add(4, "days").toDate()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(4, "days").toISOString()),
 
-            taskSeed(-2, -5, moment().startOf("week").add(-2, "weeks").add(2, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-2, "weeks").add(4, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-2, "weeks").add(1, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-2, "weeks").add(4, "days").toDate()),
-            taskSeed(-2, -4, moment().startOf("week").add(-2, "weeks").add(1, "days").toDate()),
-            taskSeed(-2, -7, moment().startOf("week").add(-2, "weeks").add(1, "days").toDate()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(4, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(4, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(1, "days").toISOString()),
         ]);
 
         const expected = -50;
@@ -88,16 +88,14 @@ describe("Testing Stories Analytics", function () {
         const user = await userService.createNewUser(userSeed());
 
         await taskService.createNewTasks(user._id, [
-            taskSeed(-1, -4, moment().startOf("week").add(2, "days").toDate()),
-
-            taskSeed(-2, -5, moment().startOf("week").add(-1, "weeks").add(2, "days").toDate()),
-
-            taskSeed(-2, -5, moment().startOf("week").add(-2, "weeks").add(2, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-2, "weeks").add(4, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-2, "weeks").add(1, "days").toDate()),
-            taskSeed(-2, -3, moment().startOf("week").add(-2, "weeks").add(4, "days").toDate()),
-            taskSeed(-2, -4, moment().startOf("week").add(-2, "weeks").add(1, "days").toDate()),
-            taskSeed(-2, -7, moment().startOf("week").add(-2, "weeks").add(1, "days").toDate()),
+            taskSeed(moment().startOf("week").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(4, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(4, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(1, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-2, "weeks").add(1, "days").toISOString()),
         ]);
 
         const expected = 0;
@@ -110,8 +108,8 @@ describe("Testing Stories Analytics", function () {
         const user = await userService.createNewUser(userSeed());
 
         await taskService.createNewTasks(user._id, [
-            taskSeed(-2, -5, moment().startOf("week").add(-1, "weeks").add(2, "days").toDate()),
-            taskSeed(-2, -5, moment().startOf("week").add(-1, "weeks").add(1, "days").toDate()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(2, "days").toISOString()),
+            taskSeed(moment().startOf("week").add(-1, "weeks").add(1, "days").toISOString()),
         ]);
 
         const expected = -100;

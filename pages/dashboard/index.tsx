@@ -8,7 +8,7 @@ import { GetServerSidePropsContext } from "next";
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const session = await getSession(context);
 	if (session && session.user && session.user.email) {
-		const response = await UsersService.findUserUsingEmail(session.user.email);
+		const response = await UsersService.findUserUsingEmailWithoutPassword(session.user.email);
 		if (!response.isOnboarded) {
 			return {
 				redirect: {
