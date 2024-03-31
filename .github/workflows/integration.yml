@@ -49,4 +49,5 @@ jobs:
                         export NVM_DIR=~/.nvm
                         source ~/.nvm/nvm.sh
                         npm install
+                        export NODE_OPTIONS="--max-old-space-size=8192"
                         npm run deploy
