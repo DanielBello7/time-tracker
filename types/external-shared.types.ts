@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export type EXTERNAL_SHARED_TASK = {
 	_id: string
-	sharedTo: string
+	sharedTo: string[]
 	sharedBy: {
 		_id: string
 		avatar: string | null
@@ -41,7 +41,7 @@ export type EXTERNAL_SHARED_TASK = {
 
 export interface EXTERNAL_SHARED_TASK_DOC extends mongoose.Document {
 	_id: string
-	sharedTo: string
+	sharedTo: string[]
 	sharedBy: typeof mongoose.Types.ObjectId
 	taskId: typeof mongoose.Types.ObjectId
 	isActive: boolean

@@ -7,6 +7,8 @@ import handleError from "@/middlewares/handle-error";
 import joi from "joi";
 import UsersService from "@/services/user.service";
 import sendEmail from "@/lib/send-email";
+import shareTask from "@/templates/share-task";
+import { EXTERNAL_SHARED_TASK } from "@/types/external-shared.types";
 
 type SHARED = {
 	taskId: string
@@ -59,15 +61,13 @@ router.post("/api/shared-tasks", authorization, async (req, res) => {
 	const { error, value } = postBodySchema.validate(req.body);
 	if (error) throw new BaseError(400, error.details[0].message);
 
-	const userSharingTasks = await UsersService.findUserUsingIdWithoutPassword(value.sharedBy);
+	await UsersService.findUserUsingIdWithoutPassword(value.sharedBy);
 	const filtered: SHARED[] = Array.from(new Set(value.tasks));
 
-	const seperatedPromises = filtered.map(async (current) => {
+	const seperated = await Promise.all(filtered.map(async (current) => {
 		const check = await UsersService.isEmailRegistered(current.sharedTo)
 		return { check, ...current }
-	});
-
-	const seperated = await Promise.all(seperatedPromises);
+	}));
 
 	const results = seperated.reduce((total: any, current: any) => {
 		const { check, ...rest } = current
@@ -77,28 +77,36 @@ router.post("/api/shared-tasks", authorization, async (req, res) => {
 	}, { registered: [], notRegistered: [] });
 
 	const registered = await Promise.all(results.registered.map(async (item: SHARED) => {
-		try {
-			return await SharedTaskService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
-		} catch (error) { return false }
+		const check = await SharedTaskService.getSharedTasks({
+			sharedBy: value.sharedBy,
+			taskId: item.taskId,
+		});
+		const find = check.docs.filter((task) => task.sharedTo.email === item.sharedTo);
+		if (find.length > 0) return
+		return await SharedTaskService.createNewSharedTasks(item.taskId, value.sharedBy, item.sharedTo);
 	}));
 
 	results.notRegistered.forEach(async (item: { taskId: any; sharedTo: string }) => {
-		try {
-			const external = await ExternalSharedTaskService.createNewExternalSharedTask({
+		let external: EXTERNAL_SHARED_TASK;
+		const check = await ExternalSharedTaskService.checkIfExistsUsingTaskId(item.taskId);
+		if (check !== null) {
+			external = check;
+			if (!check.sharedTo.includes(item.sharedTo)) {
+				await ExternalSharedTaskService.addNewSharedToUsingTaskId(item.taskId, item.sharedTo);
+			}
+		}
+		else {
+			external = await ExternalSharedTaskService.createNewExternalSharedTask({
 				taskId: item.taskId,
 				sharedTo: item.sharedTo,
 				sharedBy: value.sharedBy
 			});
-			sendEmail({
-				subject: "New Shared Task",
-				to: [{ email: item.sharedTo }],
-				textContent: `You've been shared an activity 
-        task by ${userSharingTasks.name}, ${userSharingTasks.email}. Please 
-        click the link below - ${external._id}`
-			});
-		} catch (error) {
-			return
 		}
+		sendEmail({
+			to: [{ email: item.sharedTo }],
+			subject: "New Shared Task",
+			textContent: shareTask(external)
+		});
 	});
 
 	return res.json({

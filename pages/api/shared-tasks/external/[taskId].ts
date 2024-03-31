@@ -15,7 +15,7 @@ const patchSchema = joi.object({
 
 
 // secured
-// find external shared-task
+// find external shared-task using task id
 // http://localhost:3000/api/shared-tasks/external/:taskId [get]
 router.get("/api/shared-tasks/external/:taskId", authorization, async (req, res) => {
 	const { error, value } = querySchema.validate(req.query);
@@ -30,7 +30,7 @@ router.get("/api/shared-tasks/external/:taskId", authorization, async (req, res)
 
 
 // secured
-// update external shared task status
+// update external shared task status using task id
 // http://localhost:3000/api/shared-tasks/external/:taskId [patch]
 router.patch("/api/shared-tasks/external/:taskId", authorization, async (req, res) => {
 	const { error, value } = querySchema.validate(req.query);

@@ -9,60 +9,61 @@ import Text from "@/components/text";
 import readJsonFile from "@/lib/read-json-file";
 
 export default function ImportTaskTitle() {
-  const { setImported, imported } = useImportTask();
-  const click = () => {
-    const element = document.getElementById("select-task-input")!;
-    element.click();
-  }
+	const { setImported, imported } = useImportTask();
+	const click = () => {
+		const element = document.getElementById("select-task-input")!;
+		element.click();
+	}
 
-  const onchange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    const files = event.currentTarget.files as FileList;
-    const docs = Array.from(files);
-    const response = docs.filter((item) => item.type === "application/json");
-    const validated: TASK[] = []
+	const onchange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		event.preventDefault();
+		const files = event.currentTarget.files as FileList;
+		const docs = Array.from(files);
+		const response = docs.filter((item) => item.type === "application/json");
+		const validated: TASK[] = []
 
-    await Promise.all(response.map(async (item) => {
-      const data = await readJsonFile(item);
-      if (Array.isArray(data)) {
-        data.forEach((val) => {
-          const { error, value } = importTaskSchema.validate(val)
-          if (!error) validated.push(value);
-        });
-      }
-      const { value, error } = importTaskSchema.validate(data);
-      if (!error) return validated.push(value);
-    }));
+		await Promise.all(response.map(async (item) => {
+			const data = await readJsonFile(item);
+			if (Array.isArray(data)) {
+				data.forEach((val) => {
+					const { error, value } = importTaskSchema.validate(val)
+					if (!error) validated.push(value);
+				});
+			}
+			const { value, error } = importTaskSchema.validate(data);
+			if (!error) return validated.push(value);
+		}));
 
-    const check = imported.map((item) => item._id);
-    const newItemsToAdd = validated.filter((item) => !check.includes(item._id));
-    setImported([...imported, ...newItemsToAdd]);
-    if (validated.length > 0) toast("Selected Items uploaded");
-  }
+		const check = imported.map((item) => item._id);
+		const newItemsToAdd = validated.filter((item) => !check.includes(item._id));
+		setImported([...imported, ...newItemsToAdd]);
+		if (validated.length > 0) toast("Selected Items uploaded");
+		if (response.length > validated.length) toast("Some selected items are corrupted")
+	}
 
-  return (
-    <div className="w-full md:w-7/12 lg:w-5/12 mt-10">
-      <div className="flex items-center justify-between">
-        <Text>Select Tasks</Text>
-        <Button variant={"secondary"} type="button" onClick={click} size={"sm"}
-          className="rounded-full transition-all hover:scale-[1.05]">
-          <FaPlus size={10} />
-        </Button>
-      </div>
-      <Text type="sub" className="mt-2 pe-10">
-        Select task items you'd like to add to your account,
-        you can also import task items exported by other
-        users, which would become shared tasks.
-      </Text>
-      <Input
-        className="hidden"
-        type="file"
-        onChange={onchange}
-        accept="application/json"
-        multiple
-        id="select-task-input"
-      />
-    </div>
-  )
+	return (
+		<div className="w-full md:w-7/12 lg:w-5/12 mt-10">
+			<div className="flex items-center justify-between">
+				<Text>Select Tasks</Text>
+				<Button variant={"secondary"} type="button" onClick={click} size={"sm"}
+					className="rounded-full transition-all hover:scale-[1.05]">
+					<FaPlus size={10} />
+				</Button>
+			</div>
+			<Text type="sub" className="mt-2 pe-10">
+				Select task items you'd like to add to your account,
+				you can also import task items exported by other
+				users, which would become shared tasks.
+			</Text>
+			<Input
+				className="hidden"
+				type="file"
+				onChange={onchange}
+				accept="application/json"
+				multiple
+				id="select-task-input"
+			/>
+		</div>
+	)
 }
 

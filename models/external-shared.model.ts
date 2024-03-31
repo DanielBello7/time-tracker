@@ -3,28 +3,28 @@ import mongoose from "mongoose";
 import paginate from "mongoose-paginate-v2";
 
 const ExternalSharedTaskSchema = new mongoose.Schema<EXTERNAL_SHARED_TASK_DOC>({
-  sharedBy: {
-    type: mongoose.Types.ObjectId,
-    ref: "users",
-    required: true
-  },
-  sharedTo: {
-    type: String,
-    required: true
-  },
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  taskId: {
-    type: mongoose.Types.ObjectId,
-    ref: "tasks",
-    required: true
-  },
-  isRead: {
-    type: Boolean,
-    default: false
-  }
+	sharedBy: {
+		type: mongoose.Types.ObjectId,
+		ref: "users",
+		required: true
+	},
+	sharedTo: {
+		type: [String],
+		default: []
+	},
+	isActive: {
+		type: Boolean,
+		default: true
+	},
+	taskId: {
+		type: mongoose.Types.ObjectId,
+		ref: "tasks",
+		required: true
+	},
+	isRead: {
+		type: Boolean,
+		default: false
+	}
 }, { timestamps: true });
 
 ExternalSharedTaskSchema.plugin(paginate);

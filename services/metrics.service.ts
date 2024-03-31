@@ -11,6 +11,7 @@ import type {
 } from "@/types/stats.types";
 import databaseConnection from "@/config/database-connection";
 import toJson from "@/lib/to-json";
+import isValidId from "@/lib/validate-id";
 
 databaseConnection();
 
@@ -29,6 +30,7 @@ type WEEK_TASK_METRICS = TASK_METRICS & {
 async function getUserWeekTasks(
 	userId: string, offset: number = 0, type?: "bug" | "story",
 ): Promise<TASK[]> {
+	isValidId(userId);
 	await UsersService.findUserUsingIdWithoutPassword(userId);
 
 	const weekStart = moment().startOf("week").add(offset, "weeks").toDate();
@@ -54,6 +56,7 @@ async function getUserWeekTasks(
 async function calculateUserWeekTasksMetrics(
 	userId: string, offset: number = 0, type?: "bug" | "story"
 ): Promise<{ percentageDiff: number, currentWeekTasksCount: number, offset: number, type?: "bug" | "story", userId: string }> {
+	isValidId(userId);
 	const previousWeekTasksCount = (await getUserWeekTasks(userId, offset - 1, type)).length;
 	const currentWeekTasksCount = (await getUserWeekTasks(userId, offset, type)).length;
 	return {
@@ -75,6 +78,7 @@ async function calculateUserWeekTasksMetrics(
 async function calculateWeekTaskMetrics(
 	userId: string, offset: number = 0
 ): Promise<TASK_METRICS> {
+	isValidId(userId);
 	const taskMetricsForSelectedWeek = await calculateUserWeekTasksMetrics(userId, offset);
 	const storyMetricsForSelectedWeek = await calculateUserWeekTasksMetrics(userId, offset, "story");
 	const bugMetricsForSelectedWeek = await calculateUserWeekTasksMetrics(userId, offset, "bug");
@@ -103,6 +107,7 @@ async function calculateWeekTaskMetrics(
 async function calculate3WeeksTaskMetrics(
 	userId: string
 ): Promise<WEEK_TASK_METRICS[]> {
+	isValidId(userId);
 	const measurements = [
 		{ id: "current-week", offset: 0, title: "Current Week" },
 		{ id: "last-week", offset: -1, title: "Last Week" },
@@ -117,6 +122,7 @@ async function calculate3WeeksTaskMetrics(
 }
 
 async function getUserInsightsData(userId: string): Promise<TWO_DIMENSIONS_CHART_DATA[]> {
+	isValidId(userId);
 	const res = await calculate3WeeksTaskMetrics(userId);
 	const response: TWO_DIMENSIONS_CHART_DATA[] = res.map((item) => ({
 		name: item.title,
@@ -127,6 +133,7 @@ async function getUserInsightsData(userId: string): Promise<TWO_DIMENSIONS_CHART
 }
 
 async function getUserPercentageData(userId: string): Promise<THREE_DIMENSIONS_CHART_DATA[]> {
+	isValidId(userId);
 	const res = await calculate3WeeksTaskMetrics(userId);
 	const response: THREE_DIMENSIONS_CHART_DATA[] = res.map((item) => ({
 		name: item.title,
