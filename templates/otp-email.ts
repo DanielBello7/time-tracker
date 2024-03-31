@@ -321,10 +321,10 @@ export default function otpEmail(code: string): string {
                                     <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
                                       <tr>
                                         <td class="r2-c" align="center">
-                                          <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="57" class="r3-o" style="table-layout: fixed; width: 57px;">
+                                          <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="57" class="r3-o" style="table-layout: fixed; width: 207px;">
                                             <tr>
-                                              <td class="r8-i" style="font-size: 0px; line-height: 0px;">
-                                                <img src="https://img.mailinblue.com/5455808/images/content_library/original/65e644cab4f30c0e7a62f8e4.png" width="57" border="0" style="display: block; width: 100%;" />
+                                            <td class="r8-i" style="font-size: 0px; line-height: 0px; display: flex; justify-content: center;">
+                                                <img src="https://img.mailinblue.com/5455808/images/content_library/original/65e644cab4f30c0e7a62f8e4.png" width="57" border="0" style="display: block; width: 50%;" />
                                               </td>
                                             </tr>
                                           </table>
@@ -364,7 +364,6 @@ export default function otpEmail(code: string): string {
                                   <td
                                     align="center"
                                     valign="top"
-                                    class="r12-i nl2go-default-textstyle"
                                     style="
                                       color: #3b3f44;
                                       font-family: arial, helvetica, sans-serif;
@@ -372,13 +371,13 @@ export default function otpEmail(code: string): string {
                                       line-height: 1.5;
                                       word-break: break-word;
                                       padding-bottom: 15px;
-                                      padding-left: 50px;
-                                      padding-right: 50px;
+                                      padding-left: 10px;
+                                      padding-right: 10px;
                                       padding-top: 15px;
                                       text-align: center;
                                     "
                                   >
-                                    <div><p style="margin: 0;">If this was you please make use of the following one-time-verification code, else contact us;</p></div>
+                                  <div><p style="margin: 0;">Hey there, please make use of the following one-time-verification code, if this wasn't initiated by you please contact us;</p></div>
                                   </td>
                                 </tr>
                               </table>
@@ -466,7 +465,7 @@ export default function otpEmail(code: string): string {
         </tr>
       </table>
     </body>
-    </html>      
+    </html>
     `
   );
 }

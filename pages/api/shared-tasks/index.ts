@@ -105,7 +105,7 @@ router.post("/api/shared-tasks", authorization, async (req, res) => {
 		sendEmail({
 			to: [{ email: item.sharedTo }],
 			subject: "New Shared Task",
-			textContent: shareTask(external)
+			htmlContent: shareTask(external)
 		});
 	});
 

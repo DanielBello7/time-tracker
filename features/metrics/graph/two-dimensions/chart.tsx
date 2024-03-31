@@ -21,7 +21,7 @@ export default function TwoDimensionChart({ data }: TwoDimensionChartProps) {
         Two Dimensions
       </Text>
       <Text className="mb-5 tracking-tighter" sm type="sub">
-        Showing the Bugs insights and Stories insights for the past three weeks
+        Showing the <span className="text-[#8884d8] font-bold">Bugs</span> insights and <span className="text-[#4891FF] font-bold">Stories</span> insights for the past three weeks
       </Text>
       <ResponsiveContainer width="100%" height="90%">
         <BarChart data={data}>

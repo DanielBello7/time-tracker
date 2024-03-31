@@ -22,7 +22,7 @@ export default function ThreeDimensionChart({ data }: ThreeDimensionChartProps) 
         Three Dimensions
       </Text>
       <Text className="mb-5 tracking-tighter" sm type="sub">
-        Showing the % difference on Bugs, Stories and Total for three weeks
+        Showing the % difference on <span className="text-[#8884d8] font-bold">Bugs</span>, <span className="text-[#4891FF] font-bold">Stories</span> and <span className="text-[#f27c8b] font-bold">Total</span> for three weeks
       </Text>
       <ResponsiveContainer width="100%" height="90%">
         <BarChart data={data}>
