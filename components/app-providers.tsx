@@ -22,7 +22,7 @@ export default function AppProviders({ children, session }: AppProvidersProps) {
             <title>CoreTask | Task Manager</title>
             <link rel="icon" href="favicon.png" />
           </Head>
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {children}
           </AnimatePresence>
           <Toaster />
