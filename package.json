@@ -5,7 +5,7 @@
   "scripts": {
     "build": "NODE_ENV=production next build",
     "dev": "NODE_ENV=development next dev",
-    "start": "NODE_ENV=production next start",
+    "start": "NODE_ENV=production next start -p 9001",
     "deploy": "NODE_ENV=production npm run build && pm2 startOrRestart ecosystem.config.cjs",
     "test:pages": "TESTING=test jest --config=jest.pages.config.ts",
     "test:api": "TESTING=test jest --config=jest.api.config.ts",
