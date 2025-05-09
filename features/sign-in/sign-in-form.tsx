@@ -15,30 +15,35 @@ import sanitize from "@/lib/sanitize";
 import ensureError from "@/lib/ensure-error";
 import Spinner from "@/components/spinner";
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SignInForm() {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const router = useRouter();
 
+	const search = useSearchParams();
+	const preview = search.get("preview");
+	console.log(preview);
+
 	const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const formData = {
 			email: event.currentTarget.email.value,
-			password: event.currentTarget.password.value
-		}
+			password: event.currentTarget.password.value,
+		};
 		if (!sanitize(formData)) {
 			return toast("Incomplete fields", {
-				description: "Either the email or password has incomplete values"
+				description: "Either the email or password has incomplete values",
 			});
 		}
 		setIsLoading(true);
 		try {
 			const response = await signIn("credentials", {
 				...formData,
-				redirect: false
+				redirect: false,
 			});
-			if (response?.error && response.status === 401) throw new Error("Invalid credentials");
+			if (response?.error && response.status === 401)
+				throw new Error("Invalid credentials");
 			if (response?.error) throw response?.error;
 			toast("Login Successful", {
 				description: "Signing you in now....",
@@ -50,7 +55,7 @@ export default function SignInForm() {
 			toast("Error occured", { description: err.message });
 			return setIsLoading(false);
 		}
-	}
+	};
 
 	return (
 		<AuthForm type="sign-in">
@@ -70,6 +75,7 @@ export default function SignInForm() {
 							placeholder="user@example.com"
 							type="email"
 							isLoading={isLoading}
+							defaultValue={preview ? "kovomo5858@exitings.com" : ""}
 						/>
 						<FormInput
 							title="Password"
@@ -78,21 +84,20 @@ export default function SignInForm() {
 							placeholder="****************"
 							type="password"
 							isLoading={isLoading}
+							defaultValue={preview ? "guest" : ""}
 						/>
 					</form>
 				</CardContent>
 				<CardFooter>
-					<Button className="w-full" form="sign-in-form" type="submit"
+					<Button
+						className="w-full"
+						form="sign-in-form"
+						type="submit"
 						disabled={isLoading && true}>
-						{
-							isLoading
-								? <Spinner />
-								: "Continue"
-						}
+						{isLoading ? <Spinner /> : "Continue"}
 					</Button>
 				</CardFooter>
 			</Card>
 		</AuthForm>
-	)
+	);
 }
-
